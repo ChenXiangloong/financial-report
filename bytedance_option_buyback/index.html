@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>字节跳动员工期权历次回购价格调查（2018–2026.4）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+         background:#f5f6f8; color:#1f2329; line-height:1.65; font-size:14px; }
+  .wrap { max-width:1080px; margin:0 auto; padding:28px 20px 60px; }
+  header h1 { font-size:24px; font-weight:700; letter-spacing:.5px; }
+  header .sub { color:#6b7280; margin-top:8px; font-size:13px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin:22px 0 8px; }
+  .card { background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:16px 18px; }
+  .card .k { font-size:12px; color:#6b7280; }
+  .card .v { font-size:22px; font-weight:700; margin-top:4px; }
+  .card .d { font-size:12px; color:#6b7280; margin-top:4px; }
+  .up { color:#d4453a; } .down { color:#1e9e6a; } .flat { color:#6b7280; }
+  section { background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:22px 24px; margin-top:22px; }
+  section h2 { font-size:18px; font-weight:700; margin-bottom:4px; }
+  section .note { font-size:12px; color:#6b7280; margin-bottom:14px; }
+  .chart { width:100%; height:400px; }
+  .toggle { float:right; font-size:12px; }
+  .toggle button { border:1px solid #d1d5db; background:#fff; color:#374151; padding:3px 12px; cursor:pointer; }
+  .toggle button.on { background:#1f2329; color:#fff; border-color:#1f2329; }
+  .toggle button:first-child { border-radius:6px 0 0 6px; }
+  .toggle button:last-child { border-radius:0 6px 6px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; margin-top:6px; }
+  th, td { padding:7px 8px; text-align:right; border-bottom:1px solid #eef0f3; white-space:nowrap; }
+  th { background:#f9fafb; color:#374151; font-weight:600; }
+  td.yr, th:first-child, td:first-child { text-align:left; }
+  tr.ytd td { background:#fffaf9; }
+  .insights li { margin:8px 0 8px 18px; }
+  .src { font-size:12px; color:#6b7280; margin-top:18px; border-top:1px dashed #e5e7eb; padding-top:14px; }
+  .src li { margin:4px 0 4px 18px; }
+  .disc { font-size:12px; color:#9ca3af; margin-top:14px; background:#f9fafb; border:1px solid #eef0f3; border-radius:8px; padding:12px 14px; }
+  .hidden { display:none; }
+  .foot { text-align:center; color:#9ca3af; font-size:12px; margin-top:26px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>字节跳动员工期权历次回购价格调查（2018 – 2026.4）</h1>
+  <div class="sub">覆盖 15 轮回购 · 在职 / 离职双口径 · 税前价格 · 整理自公开媒体报道，未经字节跳动官方确认 · 数据截至 2026-10-18</div>
+</header>
+
+<div class="cards">
+  <div class="card"><div class="k">最新回购价（2026.4，在职）</div>
+    <div class="v"><span class="up">$229.5 /股</span></div>
+    <div class="d">较 2025.10 上涨 <b class="up">+14.5%</b>｜离职员工 $201.96</div></div>
+  <div class="card"><div class="k">2018 年以来累计涨幅</div>
+    <div class="v"><span class="up">约 22.9 倍</span></div>
+    <div class="d">≈$10 → $229.5（<b class="up">+2195%</b>，年化约 48%）</div></div>
+  <div class="card"><div class="k">较 2019.4 首次明码价</div>
+    <div class="v"><span class="up">5.2 倍</span></div>
+    <div class="d">$44 → $229.5（<b class="up">+421%</b>，年化约 27%）</div></div>
+  <div class="card"><div class="k">回购节奏</div>
+    <div class="v">每年 2 轮</div>
+    <div class="d">2021 年起固定为 4 月 / 10 月各一轮，价格从未下跌</div></div>
+  <div class="card"><div class="k">离职员工折扣（2026.4）</div>
+    <div class="v">约 88%</div>
+    <div class="d">$201.96 / $229.5｜早期 75 折，逐年收窄</div></div>
+</div>
+
+<section>
+  <h2>一、结论先行</h2>
+  <ul class="insights">
+    <li><b>十五年只涨不跌，且近年重新加速。</b>2018 年约 10 美元 → 2026 年 4 月 229.5 美元。2020–2021 年估值爆发期单轮涨幅最高（2021.4 单轮 +57.5%）；2023 年资本寒冬中明显放缓（155 → 160，其中 2023.4 持平，是唯一一次环比零涨幅）；2026 年这轮再度加速至 +14.5%，对应外部交易估值已升至约 5500–6000 亿美元。</li>
+    <li><b>回购已"制度化"。</b>字节自 2017 年起向员工提供期权回购机会，2019 年起基本每半年一次，2021 年起稳定为每年两轮（4 月、10 月）——在未上市公司中属少见的"类薪酬"流动性安排，被员工称为"定期存款"。</li>
+    <li><b>对离职员工越来越友好。</b>回购折扣从 2021–2022 年的 75 折，到 2023 年 8 折、2024 年 85 折、2025.10 起约 9 折（2026.4 为 201.96 / 229.5 ≈ 88%）。</li>
+    <li><b>内部回购价与外部估值存在价差。</b>2023.10 的 160 美元对应约 2235 亿美元估值；而 2026 年 2–4 月路透 / 南华早报报道的外部股权交易对应估值约 5500–6000 亿美元，明显高于员工回购的内部定价。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>二、历次回购价格走势 <span class="toggle"><button id="b-price-chart" class="on" onclick="sw('price','chart')">图表</button><button id="b-price-table" onclick="sw('price','table')">表格</button></span></h2>
+  <div class="note">在职员工回购价（红线）与离职员工回购价（灰虚线，2023.4 起才有连续披露）；均为税前价格；2018 年为媒体回溯的约数。</div>
+  <div id="price-chart" class="chart"></div>
+  <div id="price-table" class="hidden">
+    <table>
+      <thead><tr><th>回购时间</th><th>在职员工（美元/股）</th><th>环比涨幅</th><th>离职员工（美元/股）</th><th>离职/在职</th></tr></thead>
+      <tbody>
+<tr><td class="yr">2018</td><td>≈10</td><td class="flat">—</td><td>—</td><td>—</td></tr>
+<tr><td class="yr">2019.4</td><td>44</td><td class="flat">—</td><td>—</td><td>—</td></tr>
+<tr><td class="yr">2020.4</td><td>60</td><td class="up">+36.4%</td><td>—</td><td>—</td></tr>
+<tr><td class="yr">2020.10</td><td>80</td><td class="up">+33.3%</td><td>—</td><td>—</td></tr>
+<tr><td class="yr">2021.4</td><td>126</td><td class="up">+57.5%</td><td>100.80</td><td>80%</td></tr>
+<tr><td class="yr">2021.10</td><td>132</td><td class="up">+4.8%</td><td>—</td><td>—</td></tr>
+<tr><td class="yr">2022.4</td><td>142</td><td class="up">+7.6%</td><td>未开放</td><td>—</td></tr>
+<tr><td class="yr">2022.10</td><td>155</td><td class="up">+9.2%</td><td>155（仅限业务调整离职者）</td><td>100%</td></tr>
+<tr><td class="yr">2023.4</td><td>155</td><td class="flat">0.0%</td><td>124</td><td>80%</td></tr>
+<tr><td class="yr">2023.10</td><td>160</td><td class="up">+3.2%</td><td>128</td><td>80%</td></tr>
+<tr><td class="yr">2024.4</td><td>170.81</td><td class="up">+6.8%</td><td>145.19</td><td>85%</td></tr>
+<tr><td class="yr">2024.10</td><td>180.70</td><td class="up">+5.8%</td><td>153.60</td><td>85%</td></tr>
+<tr><td class="yr">2025.4</td><td>189.90</td><td class="up">+5.1%</td><td>161.42</td><td>85%</td></tr>
+<tr><td class="yr">2025.10</td><td>200.41</td><td class="up">+5.5%</td><td>180.37</td><td>90%</td></tr>
+<tr class="ytd"><td class="yr">2026.4</td><td><b>229.50</b></td><td class="up"><b>+14.5%</b></td><td>201.96</td><td>88%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>三、口径与数据说明</h2>
+  <ul class="insights">
+    <li><b>早期价格为媒体回溯口径。</b>2018 年 ≈10 美元、2019–2020 年各轮价格来自媒体回溯统计（CNMO / 21 世纪经济报道、蓝鲸财经、钜亨等），非官方邮件原文，不同信源略有出入（如 2020 年 4 月另有 48 美元"年终奖换购价"一说，与 60 美元回购价并存）。</li>
+    <li><b>2019.4 的 44 美元存在口径分歧。</b>当年 36 氪报道中 44 美元为"年终奖换购价"，同期实际回购价为在职 32.86 / 离职 26.29 美元；2023 年后新浪、凤凰、今日头条等均以 44 美元作为该轮回购价，本报告沿用该通行口径。</li>
+    <li><b>个别轮次月份按媒体惯例记录。</b>2021 年那轮实际 5 月底启动、6 月截止，表中记为 4 月；2023 年那轮 10 月 2 日发邮件、11 月 8 日开放申请，个别信源记为 12 月。</li>
+    <li><b>缺失点：</b>2019 年 10 月确有一次回购（邮件 10 月 13 日发出），价格未见公开报道，故图中缺失该点。</li>
+    <li><b>易混淆项：</b>2022 年 9 月字节另有一次<b>股东股票回购</b>（不超过 176.9 美元/股，动用不超 30 亿美元现金），属投资人退出安排，与员工期权回购是两回事，未计入本表。</li>
+    <li><b>参与限制：</b>所有价格均为税前；每轮回购额度通常不超过已归属期权总量的 70%–80%，且需首次归属满 1 年等条件，并非想卖就能卖。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>四、主要信源</h2>
+  <ul class="src">
+    <li>新浪财经《字节启动新一轮期权回购：在职员工每股 229.5 美元》（2026-04-15）</li>
+    <li>凤凰网 / IT 之家《字节新一轮期权回购：在职每股 229.5 美元，离职每股 201.96 美元》（2026-04-15）</li>
+    <li>网易《字节跳动估值 6000 亿美元！已超腾讯、阿里市值》（2026-04-15）</li>
+    <li>东方财富 / 蓝鲸财经《字节跳动开启新一轮期权回购 在职员工价格为每股 160 美元》（2023-11-08）</li>
+    <li>东方财富 / 21 世纪经济报道《字节加大高绩效员工激励：2024 年终激励方案三重提升》（2024-11-19）</li>
+    <li>新浪财经《闪电快讯：字节跳动再次开启期权回购 在职员工回购价格为每股 155 美元》（2023-04-13）</li>
+    <li>中华网财经 / 财经网《消息称字节跳动开启今年第二轮期权回购 一年半税前回报率近 300%》（2021-10-13）</li>
+    <li>腾讯新闻 / CNMO《字节跳动股票回购价 5 年涨 17 倍 每股达到 170 美元》（2024-03-06）</li>
+    <li>钜亨号《字节跳动期权涨至 200 美元！》（2025）</li>
+    <li>网易 / 36 氪《上市前的现金流游戏：字节跳动开启大范围期权换购》（2019）</li>
+    <li>凤凰网《错失上市良机，字节跳动如何向投资人交代？》（2022）</li>
+  </ul>
+  <div class="disc">本报告基于公开媒体报道整理，未经字节跳动官方确认；价格均为税前口径，且回购为不定期、限额的内部安排。仅供研究参考，不构成任何投资建议。</div>
+</section>
+
+<div class="foot">生成于 2026-10-18 · financial_report 仓库</div>
+
+</div>
+
+<script>
+function sw(id, mode){
+  document.getElementById(id+'-chart').classList.toggle('hidden', mode!=='chart');
+  document.getElementById(id+'-table').classList.toggle('hidden', mode!=='table');
+  document.getElementById('b-'+id+'-chart').classList.toggle('on', mode==='chart');
+  document.getElementById('b-'+id+'-table').classList.toggle('on', mode==='table');
+  if(mode==='chart'){ priceChart.resize(); }
+}
+var labels = ['2018','2019.4','2020.4','2020.10','2021.4','2021.10','2022.4','2022.10','2023.4','2023.10','2024.4','2024.10','2025.4','2025.10','2026.4'];
+var active = [10,44,60,80,126,132,142,155,155,160,170.81,180.7,189.9,200.41,229.5];
+var former = [null,null,null,null,null,null,null,null,124,128,145.19,153.6,161.42,180.37,201.96];
+var priceChart = echarts.init(document.getElementById('price-chart'));
+priceChart.setOption({
+  grid: { left: 64, right: 28, top: 48, bottom: 58 },
+  legend: { top: 0, right: 8, itemWidth: 18, itemHeight: 3, itemGap: 18,
+    textStyle: { fontSize: 12, color: '#6b7280' },
+    data: ['在职员工回购价', '离职员工回购价'] },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'line', lineStyle: { color: '#d1d5db' } },
+    backgroundColor: '#fff', borderColor: '#e5e7eb', textStyle: { color: '#1f2329', fontSize: 12 },
+    extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.08);',
+    formatter: function(ps){
+      var s = '<b>' + ps[0].axisValue + ' 回购</b>';
+      ps.forEach(function(p){
+        s += '<br/>' + p.marker + p.seriesName + '：' + (p.value == null ? '—' : '$' + p.value + '/股');
+      });
+      return s;
+    } },
+  xAxis: { type: 'category', data: labels, boundaryGap: false,
+    axisLabel: { rotate: 40, fontSize: 11, color: '#6b7280' },
+    axisLine: { lineStyle: { color: '#d1d5db' } }, axisTick: { show: false } },
+  yAxis: { type: 'value', min: 0, max: 250, interval: 50, name: '美元/股（税前）',
+    nameTextStyle: { fontSize: 11, color: '#6b7280' },
+    axisLabel: { fontSize: 11, color: '#6b7280', formatter: '${value}' },
+    splitLine: { lineStyle: { color: '#eef0f3' } } },
+  series: [
+    { name: '在职员工回购价', type: 'line', data: active, smooth: 0.25, symbolSize: 7,
+      lineStyle: { width: 2.5, color: '#d4453a' }, itemStyle: { color: '#d4453a', borderColor: '#fff', borderWidth: 1 },
+      label: { show: true, position: 'top', fontSize: 11, color: '#374151', distance: 6,
+        formatter: function(p){
+          if(p.dataIndex === 0){ return '≈10'; }
+          if(p.dataIndex === 14){ return '{strong|' + p.value + '}'; }
+          return p.value;
+        },
+        rich: { strong: { fontSize: 12, fontWeight: 'bold', color: '#d4453a' } } } },
+    { name: '离职员工回购价', type: 'line', data: former, smooth: 0.25, symbolSize: 6,
+      lineStyle: { width: 1.8, type: 'dashed', color: '#6b7280' }, itemStyle: { color: '#6b7280' } }
+  ]
+});
+window.addEventListener('resize', function(){ priceChart.resize(); });
+</script>
+
+</body>
+</html>
