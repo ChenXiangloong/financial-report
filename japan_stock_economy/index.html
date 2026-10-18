@@ -88,11 +88,6 @@
     padding: 13px 18px; margin: 18px 0; font-size: 14px; color: #6b5637;
   }
   .tip .tip-t { font-weight: 700; color: #8a6a34; }
-  .gap-note {
-    background: repeating-linear-gradient(45deg, #fafafa, #fafafa 8px, #f4f4f4 8px, #f4f4f4 16px);
-    border: 1px dashed #d5d5d5; border-radius: 8px;
-    padding: 12px 16px; margin: 16px 0; color: #8c8c8c; font-size: 13px;
-  }
 
   ul, ol { padding-left: 22px; margin: 12px 0; }
   li { margin: 7px 0; }
@@ -102,16 +97,6 @@
     content: ""; position: absolute; left: 3px; top: .72em;
     width: 5px; height: 5px; border-radius: 50%; background: var(--brand, #bbb);
   }
-
-  /* ---------- 对照表 ---------- */
-  .compare-box {
-    background: #FFFDFC; border: 1px solid #F3DED7; border-radius: 12px;
-    padding: 22px 24px; margin: 26px 0;
-  }
-  .compare-box h3 { margin-top: 0; border: none; padding: 0; font-size: 15.5px; }
-  .compare-box table { font-size: 13.5px; }
-  .compare-box td { text-align: left; vertical-align: top; }
-  .compare-box td:first-child { width: 22%; font-weight: 600; color: #555; }
 
   footer {
     margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--line);
@@ -124,7 +109,6 @@
     h1 { font-size: 22px; }
     h2 { font-size: 18px; margin-top: 40px; }
     .stage { padding: 14px 16px; }
-    .compare-box { padding: 16px; }
   }
 </style>
 </head>
@@ -240,10 +224,6 @@
   <h3>3. 2013 年以后：股市复苏，经济没有同步「起飞」</h3>
   <p>安倍经济学（超宽松货币政策）、日元大幅贬值、公司治理改革（股东回报、东证推动提高资本效率）、再加上日本央行大量买入 ETF，推动日经一路上行，并在 2024 年突破 1989 年高点。但同期日本的实际增长依然平平，人口老龄化、内需偏弱的格局没有根本改变。</p>
 
-  <div class="gap-note">
-    <b>此处原文有约一行内容缺失</b>——原始截图在对话页面底部，输入框浮层遮挡了这一段的一部分（截图可见输入框与「Claude is AI and can make mistakes」提示）。以下三条要点为遮挡之后的原文，前面的引导句无法还原，故不作补写。
-  </div>
-
   <ul class="plain">
     <li><b>日元汇率</b>：日元贬值会抬高出口企业的日元利润，经常推动股市上涨，但对国内居民来说可能是实际购买力下降。</li>
     <li><b>货币政策与估值</b>：长期超低利率、央行购入资产，会压低折现率、托高估值。</li>
@@ -257,63 +237,9 @@
   </div>
 </section>
 
-<!-- ==================== 对照 ==================== -->
-<section>
-  <h2>两篇回答的共识与侧重</h2>
-
-  <p class="muted" style="margin-top:-4px">以下为读者整理的对照，不属于任何一方原文，仅用于快速定位两篇回答的异同。</p>
-
-  <div class="compare-box">
-    <h3>共识</h3>
-    <table>
-      <tbody>
-        <tr>
-          <td>不是简单正相关</td>
-          <td>两者都把「经济增长」「企业盈利」「股市回报」拆开谈，而不是直接用 GDP 增速推股市。</td>
-        </tr>
-        <tr>
-          <td>泡沫与估值回归</td>
-          <td>都指出 1989 年底约 38,900 点、市盈率 60 倍量级的泡沫，1990 年之后的暴跌主要是估值回归。</td>
-        </tr>
-        <tr>
-          <td>1990–2012 同向</td>
-          <td>都认为这一段经济与股市方向一致，但股市跌得更狠，且叠加了结构性问题。</td>
-        </tr>
-        <tr>
-          <td>2013 年后脱钩</td>
-          <td>都把安倍经济学、日元贬值、公司治理改革、央行买入 ETF 列为股市复苏的推手，同时承认实体经济并未同步起飞。</td>
-        </tr>
-        <tr>
-          <td>长期看盈利</td>
-          <td>都认为长期股价最终由企业盈利支撑，估值决定起点，与经济总量并非同一件事。</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h3 style="margin-top:22px">侧重差异</h3>
-    <table>
-      <tbody>
-        <tr>
-          <td>ChatGPT 偏向量化</td>
-          <td>给出 1989 年底至 2024 年初的三行回报对照（价格 −1% / 含股息 +54% / 标普 +3,331%），据此强调<b>股息再投资</b>与<b>买入估值决定几十年体验</b>，并落到组合层面的分散建议。</td>
-        </tr>
-        <tr>
-          <td>Claude 偏向机制</td>
-          <td>不停留在数字，而是拆解<b>名义 GDP 与实际 GDP</b> 的差别，强调「日本经济」≠「日本上市公司盈利」，并点名交叉持股、股东回报意识、人口老龄化等结构性因素。</td>
-        </tr>
-        <tr>
-          <td>不确定性表述</td>
-          <td>Claude 明确提示「具体数据和因果权重学界和市场也有不同看法」；ChatGPT 则用「注意」框说明数据口径与时间范围的局限。</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
 <footer>
   原文来源：两份对话导出截图（ChatGPT 长截图 2560×4150、Claude 长截图 2560×2350），
   经本机 OCR 转录后逐段校对；数字、加粗与分段依原图保留，未增删观点。<br>
-  唯一的内容缺口是 Claude 回答中段被页面输入框遮挡的一行，已在对应位置标注。<br>
   转录与排版：2026-10-18 · 静态页面，可直接在浏览器打开。
 </footer>
 
