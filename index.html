@@ -21,61 +21,61 @@
 
 <a class="item" href="ashare_longterm/">
   <div class="t">A股长期投资：可行性与挑战（ChatGPT 与 Claude 的两种回答）</div>
-  <div class="d">同一组三问的两篇完整回答 · 是否长期持有 / 何时卖出 / 股债比例随年龄下降 · 序列风险·再平衡·生命周期配置 · 2026-10-19</div>
+  <div class="d">同一组三问的两篇完整回答 · 是否长期持有 / 何时卖出 / 股债比例随年龄下降 · 序列风险·再平衡·生命周期配置 · 2026-10-19 08:20</div>
 </a>
 
 <a class="item" href="japan_stock_economy/">
   <div class="t">日本股市与经济的长期关联（ChatGPT 与 Claude 的两种回答）</div>
-  <div class="d">同一提问的两篇完整回答 · 三阶段梳理 · 1989 年底至今回报对照（−1% / +54% / +3,331%）· 共识与侧重差异 · 2026-10-18</div>
+  <div class="d">同一提问的两篇完整回答 · 三阶段梳理 · 1989 年底至今回报对照（−1% / +54% / +3,331%）· 共识与侧重差异 · 2026-10-18 21:03</div>
 </a>
 
 <a class="item" href="bytedance_option_buyback/">
   <div class="t">字节跳动员工期权历次回购价格调查（2018–2026.10）</div>
-  <div class="d">16 轮回购价格全记录 · 在职/离职双口径 · 含可交互图表 · 2026-10-18</div>
+  <div class="d">16 轮回购价格全记录 · 在职/离职双口径 · 含可交互图表 · 2026-10-18 14:11</div>
 </a>
 
 <a class="item" href="hs300_vs_zz500_20y/">
   <div class="t">沪深300 vs 中证500：过去20年收益·波动·回撤全对比（2006–2025）</div>
-  <div class="d">年度收益率/波动率/最大回撤与修复时长对比 · 含可交互图表 · 数据截至 2026-10-16 · 2026-10-18</div>
+  <div class="d">年度收益率/波动率/最大回撤与修复时长对比 · 含可交互图表 · 数据截至 2026-10-16 · 2026-10-18 13:31</div>
 </a>
 
 <a class="item" href="qdii_analysis/article.html">
   <div class="t">QDII 美股基金限购分析：成因、历史与十年规模趋势</div>
-  <div class="d">整理自 ChatGPT 对话 · 含可交互图表（限购比例、规模变化、净流入对比）· 2026-10-18</div>
+  <div class="d">整理自 ChatGPT 对话 · 含可交互图表（限购比例、规模变化、净流入对比）· 2026-10-18 10:57</div>
 </a>
 
 <a class="item" href="portfolio_backtest/report.html">
   <div class="t">投资组合历史回测报告（2012-01 ~ 2026-10）</div>
-  <div class="d">双组合（60/40 与 30/70）回测 · 再平衡频率对比 · 入市时间的影响 · 13 张可交互图表 · 2026-10-18</div>
+  <div class="d">双组合（60/40 与 30/70）回测 · 再平衡频率对比 · 入市时间的影响 · 13 张可交互图表 · 2026-10-18 10:06</div>
 </a>
 
 <a class="item" href="bond_funds_19/">
   <div class="t">债券基金19只汇总评估：久期·信用·杠杆·回撤七维横评</div>
-  <div class="d">8只重点候选 + 其余11只同口径合并 · 分红再投资复权序列统一计算最大回撤（与官方季报误差≤0.18pp）· 功能位重排与5年互补组合 · 8张可交互图表 · 2026-10-19</div>
+  <div class="d">8只重点候选 + 其余11只同口径合并 · 分红再投资复权序列统一计算最大回撤（与官方季报误差≤0.18pp）· 功能位重排与5年互补组合 · 8张可交互图表 · 2026-10-19 12:26</div>
 </a>
 
 <p class="muted">页面均为静态 HTML，可直接在浏览器中打开。</p>
 
 <script>
-// 自动按发布日期从新到旧排序（取每条描述里最后一个 YYYY-MM-DD 作为发布日）；
-// 同发布日的文章按添加先后排，最新添加的排在最上面（源码中位置越靠后 = 添加越晚）
+// 自动按发布时间从新到旧排序：取每条描述里最后一个 "YYYY-MM-DD HH:MM"（时分可省略，省略按 00:00 计）；
+// ISO 式定宽字符串可直接按字典序比较即时间序；无任何日期的条目沉底
 (function () {
   var items = Array.prototype.slice.call(document.querySelectorAll('a.item'));
   if (items.length < 2) return;
-  function publishDate(el) {
+  function publishTime(el) {
     var d = el.querySelector('.d');
     var txt = d ? d.textContent : el.textContent;
-    var m = txt.match(/\d{4}-\d{2}-\d{2}/g);
-    return m ? m[m.length - 1] : null; // 最后出现的日期 = 发布日
+    var m = txt.match(/\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?/g);
+    if (!m) return null;
+    var s = m[m.length - 1];                        // 最后出现的日期(时间) = 发布时间
+    return s.length === 10 ? s + ' 00:00' : s.replace('T', ' '); // 无时分按 00:00 计
   }
-  items.forEach(function (el, i) { el.setAttribute('data-src-idx', i); });
   items.sort(function (a, b) {
-    var da = publishDate(a), db = publishDate(b);
-    if (da && db && da !== db) return db.localeCompare(da); // 发布日期：新 → 旧
-    if (da && !db) return -1;  // 有日期的在前
-    if (!da && db) return 1;   // 无日期的沉底
-    // 同发布日均有日期（或都无日期）：源码位置靠后（添加更晚）的排前面
-    return (+b.getAttribute('data-src-idx')) - (+a.getAttribute('data-src-idx'));
+    var ta = publishTime(a), tb = publishTime(b);
+    if (ta && tb) return ta < tb ? 1 : ta > tb ? -1 : 0; // 新 → 旧
+    if (ta && !tb) return -1;                       // 有时间的在前
+    if (!ta && tb) return 1;                        // 无时间的沉底
+    return 0;
   });
   var parent = items[0].parentNode;
   var anchor = document.querySelector('p.muted') || null;
