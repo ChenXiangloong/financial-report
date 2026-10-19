@@ -54,6 +54,18 @@
   .gpt .badge { background: var(--gpt); }
   .claude .badge { background: var(--claude); }
   .src-head .sub { color: #999; font-size: 12.5px; }
+  .src-link {
+    margin-left: auto; font-size: 12.5px; color: var(--brand);
+    text-decoration: none; white-space: nowrap; align-self: center;
+  }
+  .src-link:hover { text-decoration: underline; }
+  .src-link::before { content: "\2197\00a0"; }
+  .sources { margin-top: 46px; border-top: 1px solid var(--line); padding-top: 22px; }
+  .sources h2 { border-left-color: var(--line); margin-top: 0; }
+  .sources ul { list-style: none; padding-left: 0; margin: 12px 0; }
+  .sources li { padding: 9px 0; border-bottom: 1px dashed #ededed; font-size: 13.5px; color: #555; }
+  .sources a { color: var(--red); text-decoration: none; }
+  .sources a:hover { text-decoration: underline; }
   .gpt { --brand: var(--gpt); }
   .claude { --brand: var(--claude); }
 
@@ -131,6 +143,7 @@
   <div class="src-head">
     <span class="badge">ChatGPT</span>
     <span class="sub">原文转录 · 回答中带联网检索来源标注（IMF / CME Group / Reuters）</span>
+    <a class="src-link" href="source/%E6%97%A5%E6%9C%AC%E8%82%A1%E5%B8%82%E7%BB%8F%E6%B5%8E%E5%85%B3%E8%81%94%E5%88%86%E6%9E%90%20(10_19_2026%209%EF%BC%9A19%EF%BC%9A10%20AM).html" target="_blank" rel="noopener">原始对话</a>
   </div>
 
   <p>我认为：过去 40 年里，日本股市的长期走势与日本经济状况有很强的关联，但两者并不是简单的正相关。日本的经历恰好说明了一个重要的投资道理：经济长期增长，不代表股市一定上涨；经济长期低迷，也不代表股市永远没有好的投资回报。</p>
@@ -211,6 +224,7 @@
   <div class="src-head">
     <span class="badge">Claude</span>
     <span class="sub">原文转录 · 对话标题「日本股市与经济的长期关联」· Sonnet 5.5 Medium</span>
+    <a class="src-link" href="source/%E6%97%A5%E6%9C%AC%E8%82%A1%E5%B8%82%E4%B8%8E%E7%BB%8F%E6%B5%8E%E7%9A%84%E9%95%BF%E6%9C%9F%E5%85%B3%E8%81%94%20-%20Claude%20(10_19_2026%209%EF%BC%9A21%EF%BC%9A10%20AM).html" target="_blank" rel="noopener">原始对话</a>
   </div>
 
   <p>关联有，但不是简单的「经济好股市涨、经济差股市跌」，更准确地说：短中期关联松散，长期关联体现在盈利和估值上，而且中间被几个特殊因素严重扭曲过。</p>
@@ -237,10 +251,18 @@
   </div>
 </section>
 
+<div class="sources">
+  <h2>来源 · 原始对话</h2>
+  <ul>
+    <li>ChatGPT 对话原文：<a href="source/%E6%97%A5%E6%9C%AC%E8%82%A1%E5%B8%82%E7%BB%8F%E6%B5%8E%E5%85%B3%E8%81%94%E5%88%86%E6%9E%90%20(10_19_2026%209%EF%BC%9A19%EF%BC%9A10%20AM).html" target="_blank" rel="noopener">日本股市经济关联分析</a>（SingleFile 整页导出 · 2026-10-19 09:19）</li>
+    <li>Claude 对话原文：<a href="source/%E6%97%A5%E6%9C%AC%E8%82%A1%E5%B8%82%E4%B8%8E%E7%BB%8F%E6%B5%8E%E7%9A%84%E9%95%BF%E6%9C%9F%E5%85%B3%E8%81%94%20-%20Claude%20(10_19_2026%209%EF%BC%9A21%EF%BC%9A10%20AM).html" target="_blank" rel="noopener">日本股市与经济的长期关联</a>（SingleFile 整页导出 · 2026-10-19 09:21）</li>
+  </ul>
+  <p class="muted" style="margin-top:10px">本页正文由上述对话截图经本机 OCR 转录整理；如需核对完整上下文、原始配图与外链，可点击查看对应原始对话记录。</p>
+</div>
+
 <footer>
-  原文来源：两份对话导出截图（ChatGPT 长截图 2560×4150、Claude 长截图 2560×2350），
-  经本机 OCR 转录后逐段校对；数字、加粗与分段依原图保留，未增删观点。<br>
-  转录与排版：2026-10-18 · 静态页面，可直接在浏览器打开。
+  正文由两份对话导出截图经本机 OCR 转录整理，数字、加粗与分段依原图保留，未增删观点；完整原始对话见上方「来源 · 原始对话」一节。<br>
+  转录与排版：2026-10-18 · 来源对话导出：2026-10-19 · 静态页面，可直接在浏览器打开。
 </footer>
 
 </body>
