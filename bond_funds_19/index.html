@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>债券基金19只汇总评估报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#ffffff; --ink:#1f2329; --ink2:#4e5560; --ink3:#8a919c;
+    --line:#e3e6ea; --blue:#245bdb; --blue-soft:#eef3fe; --blue-line:#c9d8f7;
+    --up:#d93636; --up-soft:#fdeeee; --down:#0f9d58; --down-soft:#e9f7f0;
+    --orange:#e8830c; --orange-soft:#fdf3e4; --purple:#7b61ff; --purple-soft:#f1eeff;
+    --grey-soft:#f2f3f5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size:14px; line-height:1.65;}
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 20px 60px;}
+  /* ===== header ===== */
+  header.hero{background:linear-gradient(135deg,#ffffff 0%,#f0f4fd 100%); border:1px solid var(--line); border-radius:14px; padding:30px 34px; margin-bottom:22px;}
+  header.hero h1{font-size:24px; letter-spacing:.5px;}
+  header.hero h1 small{font-size:13px; font-weight:400; color:var(--ink3); margin-left:10px;}
+  .meta{margin-top:12px; display:flex; flex-wrap:wrap; gap:8px 18px; color:var(--ink2); font-size:12.5px;}
+  .meta b{color:var(--ink); font-weight:600;}
+  .toc{margin-top:16px; display:flex; flex-wrap:wrap; gap:6px;}
+  .toc a{font-size:12px; color:var(--blue); background:var(--blue-soft); border:1px solid var(--blue-line); border-radius:20px; padding:3px 12px; text-decoration:none;}
+  .toc a:hover{background:#dfe9fd;}
+  /* ===== sections ===== */
+  section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 30px; margin-bottom:22px;}
+  section>h2{font-size:18px; padding-bottom:12px; border-bottom:2px solid var(--ink); margin-bottom:16px; display:flex; align-items:baseline; gap:10px;}
+  section>h2 .no{color:var(--blue); font-size:13px; font-weight:700; letter-spacing:1px;}
+  h3{font-size:15px; margin:22px 0 10px; color:var(--ink);}
+  h3 .tag{font-size:11px; font-weight:600; color:var(--blue); background:var(--blue-soft); border-radius:4px; padding:2px 8px; margin-left:8px; vertical-align:2px;}
+  p{margin:8px 0; color:var(--ink2);}
+  p b, li b{color:var(--ink);}
+  .note{background:var(--grey-soft); border-left:3px solid var(--ink3); border-radius:0 8px 8px 0; padding:10px 14px; font-size:12.5px; color:var(--ink2); margin:12px 0;}
+  .note.blue{background:var(--blue-soft); border-left-color:var(--blue);}
+  .note.warn{background:var(--orange-soft); border-left-color:var(--orange);}
+  /* ===== conclusion cards ===== */
+  .concl{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0;}
+  .concl .c{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:#fcfcfd;}
+  .concl .c h4{font-size:13.5px; margin-bottom:6px;}
+  .concl .c p{font-size:12.5px; margin:0; color:var(--ink2);}
+  .concl .c.imp{border-color:#f0cfa8; background:#fffaf3;}
+  .concl .c.good{border-color:#bcdcc9; background:#f6fbf8;}
+  .concl .c.bad{border-color:#f0b8b8; background:#fff7f7;}
+  @media (max-width:900px){.concl{grid-template-columns:1fr;}}
+  /* ===== tables ===== */
+  .tbl-wrap{overflow-x:auto; margin:12px 0; border:1px solid var(--line); border-radius:10px;}
+  table{width:100%; border-collapse:collapse; font-size:12.5px; min-width:760px;}
+  th{background:#f7f8fa; color:var(--ink); font-weight:600; text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); white-space:nowrap;}
+  td{padding:7px 10px; border-bottom:1px solid #eef0f3; vertical-align:top; color:var(--ink2);}
+  tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#f8fafd;}
+  td.num, th.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  td.fund{white-space:nowrap; font-weight:600; color:var(--ink);}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11.5px; color:var(--ink3); font-weight:400; margin-left:4px;}
+  .src{display:inline-block; font-size:10.5px; border-radius:3px; padding:0 5px; margin-left:6px; vertical-align:1px; font-weight:600;}
+  .src.a{background:var(--blue-soft); color:var(--blue);}
+  .src.b{background:var(--purple-soft); color:var(--purple);}
+  .up{color:var(--up); font-weight:600;}
+  .down{color:var(--down); font-weight:600;}
+  .flat{color:var(--ink3);}
+  .badge{display:inline-block; font-size:11px; font-weight:600; border-radius:4px; padding:2px 8px; white-space:nowrap;}
+  .b-core{background:var(--blue); color:#fff;}
+  .b-keep{background:var(--blue-soft); color:var(--blue); border:1px solid var(--blue-line);}
+  .b-opt{background:var(--orange-soft); color:var(--orange); border:1px solid #f3d9b0;}
+  .b-cut{background:#fdeeee; color:var(--up); border:1px solid #f3c6c6;}
+  .b-out{background:var(--purple-soft); color:var(--purple); border:1px solid #d9d0f7;}
+  .b-hold{background:var(--grey-soft); color:var(--ink2); border:1px solid var(--line);}
+  /* ===== charts ===== */
+  .chart{width:100%; height:430px; margin:10px 0 4px;}
+  .chart.tall{height:520px;}
+  .chart.short{height:330px;}
+  .cap{font-size:12px; color:var(--ink3); text-align:center; margin:2px 0 14px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:900px){.grid2{grid-template-columns:1fr;}}
+  /* ===== lists ===== */
+  ol.risk{padding-left:20px; color:var(--ink2);}
+  ol.risk li{margin:10px 0;}
+  ol.risk li b{color:var(--ink);}
+  ul.dot{padding-left:18px; color:var(--ink2);}
+  ul.dot li{margin:5px 0;}
+  .foot{margin-top:26px; color:var(--ink3); font-size:12px; text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= HEADER ================= -->
+<header class="hero">
+  <h1>债券基金 19 只汇总评估报告<small>两步评估合并版 · 8 只重点候选 + 其余 11 只</small></h1>
+  <div class="meta">
+    <span><b>评估日期</b> 2026-10-18</span>
+    <span><b>持仓数据基准</b> 2026年二季报（2026-06-30）</span>
+    <span><b>净值数据截至</b> 2026-10-16</span>
+    <span><b>口径</b> 与两份分报告完全一致，可逐项回溯</span>
+  </div>
+  <nav class="toc">
+    <a href="#s1">结论先行</a><a href="#s2">口径说明</a><a href="#s3">19只总览</a><a href="#s4">久期</a>
+    <a href="#s5">信用持仓</a><a href="#s6">杠杆</a><a href="#s7">最大回撤</a><a href="#s8">近3年收益</a>
+    <a href="#s9">费率</a><a href="#s10">赎回限制</a><a href="#s11">功能位重排</a><a href="#s12">组合建议</a>
+    <a href="#s13">风险提示</a><a href="#s14">数据来源</a>
+  </nav>
+</header>
+
+<!-- ================= 1 结论先行 ================= -->
+<section id="s1">
+  <h2><span class="no">01</span>结论先行</h2>
+  <div class="concl">
+    <div class="c imp"><h4>① 两组硬重复：先去重，再配置</h4>
+      <p><b>003358 与 011062 跟踪同一个指数</b>（中债7-10年国开），久期、回撤几乎一致，二选一；<b>003949 / 000032 / 519188 主仓均为银行永续/二级资本债</b>，合计建议 ≤ 组合 25–30%，保留 1–2 只。</p></div>
+    <div class="c imp"><h4>② 短久期打底位 5 只挤在一起，只需留 2 只</h4>
+      <p>011489、021282、017173、015301、012931 功能重复。建议留 <b>021282</b>（90天锁定 / 费率 0.25% / 回撤 -0.39%）+ <b>011489</b>（6个月 / 0.50% / -0.39%），清退 012931、015301、017173。</p></div>
+    <div class="c bad"><h4>③ 两只"混债"必须移出债券仓位另算</h4>
+      <p><b>001258 兴业收益增强C</b> 股票约 16–18% + 转债 9.88%，近3年最大回撤 <b>-6.57%</b>、费率 1.30% 全场最贵——它是含权资产不是债券；<b>510080</b>（股票约 6–8%）是温和得多的含权工具，按风险预算保留 0–15%。</p></div>
+    <div class="c good"><h4>④ 11 只中真正增加新风险源的只有 4 只</h4>
+      <p><b>021282</b>（90天超短锁定）、<b>006337</b>（前五大仅 10.93% 全场最分散 + 零杠杆）、<b>007888</b>（中长久期骑乘）、<b>510080</b>（温和含权）。其余 7 只与已评估 8 只功能重复。</p></div>
+    <div class="c imp"><h4>⑤ 四个交易状态硬约束</h4>
+      <p><b>000032 暂停申购</b>（只能持有）；<b>004400 事实停购</b>（代销单日限 500 元）；<b>519973 一年定开当前封闭期</b>（约 2027-04 才开放，规模仅 2.6 亿 + 杠杆 1.27x）；007888 暂停大额申购。</p></div>
+    <div class="c good"><h4>⑥ 19 只 → 约 9 只即可覆盖全部功能位</h4>
+      <p>更新后 5 年组合：021282 15% + 011489 10% + 7-10指数 15% + 006670 20% + 二永 20–25% + 004897 10–15%（可选 510080 0–15%），加权久期约 3.5–4 年，估算回撤约 -0.8%~-1.0%。</p></div>
+  </div>
+  <div id="chart_overview" class="chart short"></div>
+  <p class="cap">图 0 · 19 只基金按功能位分布：重复集中在"短久期打底"（5只）与"产业/城投"（6只）两个功能位</p>
+</section>
+
+<!-- ================= 2 口径说明 ================= -->
+<section id="s2">
+  <h2><span class="no">02</span>数据口径说明（先约定，再比较）</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:110px">指标</th><th style="width:44%">口径</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">持仓 / 杠杆</td><td>2026年二季报（2026-06-30）</td><td>债券占净值比 &gt;100% 即存在质押回购杠杆</td></tr>
+      <tr><td class="fund">近3年收益</td><td><b>官方季报/中报"过去三年净值增长率"</b>（统一区间 2023-07-01~2026-06-30）</td><td>19只同区间同口径，不混用平台数字；021282 成立于 2024-05 无 3 年数，用"过去一年 / 自成立以来"</td></tr>
+      <tr><td class="fund">历史最大回撤</td><td><b>自行计算</b>：天天基金历史净值 + 精确分红记录重建<b>分红再投资复权序列</b>，峰谷法</td><td>统一区间：近3年 = 2023-10-17~2026-10-16；辅以共同最长区间 2021-06-10~2026-10-16（覆盖 2022-11 理财赎回潮）</td></tr>
+      <tr><td class="fund">久期</td><td><b>估算区间</b>（季报不披露组合久期）</td><td>依据：指数成分券期限 / 持仓结构 / 经理季报自述 / 回撤反推；已对照 2026Q2 行业均值锚定</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note blue"><b>口径验证</b>：自算复权序列 2023-07~2026-06 收益 vs 官方季报"过去三年"，19 只全部对上，最大偏差 0.18pp（其余 ≤0.05pp）。近1年最大回撤与私募排排网 / 阿牛数字逐一吻合。<b>过程中排除了一个陷阱</b>：平台"累计净值"是加法序列，会系统性低估多分红基金的收益（如万家：累计净值口径 7.47% vs 官方 10.39%）。</div>
+  <div class="note warn"><b>数据勘误</b>：部分第三方平台（如九方智投）将"长信富全纯债一年定开（<b>519941</b>）"的持仓与业绩混入 <b>519973</b> 页面。本报告 519973 全部数据改从天天基金官方公告原文（AN202607211827192768）重新核对，已剔除混淆（过去三年实为 10.45%，政金 23.76% + 企业债 15.57%）。</div>
+  <div class="note">久期锚点（2026Q2 行业统计）：中长期纯债基金加权久期 3.53–3.81 年（创多年新高），中长期利率债基约 4.54 年，短期纯债 1.09–1.72 年；行业平均杠杆约 118.2%。</div>
+</section>
+
+<!-- ================= 3 总览 ================= -->
+<section id="s3">
+  <h2><span class="no">03</span>19 只总览：基础画像与定位</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>基金（代码）</th><th>类型 / 基准</th><th>经理（任职起始）</th><th class="num">规模（亿元）</th><th class="num">久期估算</th><th>定位</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">广发景秀纯债A<span class="code">006670</span><span class="src a">候选</span></td><td>纯债 / 中债金融债财富指数</td><td>古渥（2025-08，约14个月）</td><td class="num">35.9</td><td class="num">4–5年</td><td>中久期<b>纯利率</b>，零信用债</td></tr>
+      <tr><td class="fund">长安泓源纯债A<span class="code">004897</span><span class="src a">候选</span></td><td>纯债 / 中债综合全价指数</td><td>孟楠</td><td class="num">A 11.2 / 合计 21.1</td><td class="num">2–4年</td><td><b>城投+产业信用</b>（中票/短融约80%）+ 利率波段</td></tr>
+      <tr><td class="fund">兴全稳泰A<span class="code">003949</span><span class="src a">候选</span></td><td>信用债 / 中证全债</td><td>王帅（2018-01，约8.8年）</td><td class="num">A 225.8 / 合计 354.4</td><td class="num">3–5年</td><td><b>银行永续债</b>为主 + 企业债</td></tr>
+      <tr><td class="fund">易方达7-10国开A<span class="code">003358</span><span class="src a">候选</span></td><td>指数债基 / 中债7-10年国开指数</td><td>杨真（2020-11）</td><td class="num">34.9</td><td class="num">7.5–8.5年</td><td><b>长久期纯利率</b>（指数化）</td></tr>
+      <tr><td class="fund">广发7-10国开E<span class="code">011062</span><span class="src a">候选</span></td><td>指数债基 / 同上（同一指数）</td><td>吴迪（2022-02）+ 古渥（2025-11）</td><td class="num">E 88.1 / 合计 307.6</td><td class="num">7.5–8.5年</td><td>同 003358，<b>重复敞口</b></td></tr>
+      <tr><td class="fund">易方达信用债A<span class="code">000032</span><span class="src a">候选</span></td><td>信用债 / 中债优选投资级信用债</td><td>纪玲云（2013-09，约13年）</td><td class="num">63.0</td><td class="num">3–4年</td><td><b>银行二永 + 商金债</b>信用增强</td></tr>
+      <tr><td class="fund">万家信用恒利A<span class="code">519188</span><span class="src a">候选</span></td><td>信用债 / 中债总全价</td><td>苏谋东（2013-08，约13年）</td><td class="num">A 18.8 / 合计约 70</td><td class="num">3–4年</td><td><b>几乎纯银行二级资本债</b></td></tr>
+      <tr><td class="fund">创金合信双季享A<span class="code">011489</span><span class="src a">候选</span></td><td>中短债 / 中债综合(1-3年)</td><td>王一兵（2021-06）+ 张贺章</td><td class="num">A 27.3 / 合计 33.7</td><td class="num">1.5–2.5年</td><td><b>短久期票息</b>打底（6个月锁定）</td></tr>
+      <tr><td class="fund">平安双季盈A<span class="code">012931</span><span class="src b">其余</span></td><td>纯债·6个月持有 / 中债综合财富×90%+1年定存×10%</td><td>张恒（2021-12）</td><td class="num">A 2.99+C 3.38 = 6.37</td><td class="num">3–4年</td><td>产业中票为主 + 利率波段</td></tr>
+      <tr><td class="fund">博时双季乐A<span class="code">015301</span><span class="src b">其余</span></td><td>纯债·6个月持有 / 同上</td><td>张李陵（2024-03）、李禹成</td><td class="num">A 12.0+C 0.5 = 12.5</td><td class="num">3.5–5年</td><td>中票 + <b>超长利率债</b></td></tr>
+      <tr><td class="fund">金信民兴A<span class="code">004400</span><span class="src b">其余</span></td><td>纯债 / 中债总指数×95%+活期×5%</td><td>杨杰、刘雨卉</td><td class="num">A 9.44（C 41.9+E 12.7）</td><td class="num">2–3年</td><td>中等期限信用债票息</td></tr>
+      <tr><td class="fund">长盛全债A/B<span class="code">510080</span><span class="src b">其余</span></td><td>指数增强·含股票 / 标普中国全债×92%+沪深300×8%</td><td>王贵君（2021-09）</td><td class="num">A/B 36.4（+C/D=55.2）</td><td class="num">≈5年</td><td>全债指数 + <b>股票增强</b></td></tr>
+      <tr><td class="fund">华安安浦A<span class="code">006337</span><span class="src b">其余</span></td><td>纯债 / 中债综合全价×90%+1年定存×10%</td><td>李振宇（2022-11）、倪逸芸（2025-06）</td><td class="num">A 61.7（+C/E≈105）</td><td class="num">3–4年</td><td>金融债<b>高度分散</b></td></tr>
+      <tr><td class="fund">招商产业A<span class="code">217022</span><span class="src b">其余</span></td><td>混债(一级) / 三年期定存(税后)</td><td>刘万锋（2025-03）</td><td class="num">A 132.4（总 139.9）</td><td class="num">2.5–3.5年</td><td>产业债 + 保险永续 + AMC</td></tr>
+      <tr><td class="fund">农银汇理金盈A<span class="code">007888</span><span class="src b">其余</span></td><td>纯债 / 中债综合全价(总值)</td><td>郭振宇（2019-09，约7年）</td><td class="num">A 114.4+C 3.0 = 117.4</td><td class="num">4–5年</td><td>政金 + 银行债<b>骑乘</b> + 长债交易</td></tr>
+      <tr><td class="fund">兴业收益增强C<span class="code">001258</span><span class="src b">其余</span></td><td>混债(二级) / 中债综合×73%+沪深300×15%+中证转债×12%</td><td>周鸣（2015-05）、丁进</td><td class="num">C 89.4（A 184.8=274）</td><td class="num">债底3–4年<br>+含权弹性</td><td><b>股票 + 转债</b>增强</td></tr>
+      <tr><td class="fund">创金合信季安盈C<span class="code">017173</span><span class="src b">其余</span></td><td>纯债·3个月持有 / 中债新综合财富(1-3年)×90%+1年定存×10%</td><td>黄佳祥（2023-02）</td><td class="num">C 5.8</td><td class="num">2–3年</td><td>短端票息 + 银行永续</td></tr>
+      <tr><td class="fund">长信纯债一年定开A<span class="code">519973</span><span class="src b">其余</span></td><td>纯债·一年定开 / 1年定存(税后)×1.3+1.1%（2026-07-27起）</td><td>刘婧、杜国昊、朱黎明（2025-10增聘）</td><td class="num">A 2.46+C 0.14 = 2.60</td><td class="num">3–4年</td><td>政金 + 城投短融 + 二永，高杠杆</td></tr>
+      <tr><td class="fund">上银慧元利A<span class="code">021282</span><span class="src b">其余</span></td><td>中短债·90天持有 / 中债总全价×80%+活期×20%</td><td>蔡唯峰（2024-05）、周岳洋</td><td class="num">A 56.9+C 12.2 = 69.0</td><td class="num">2–3年</td><td>中短久期信用 + 二永</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= 4 久期 ================= -->
+<section id="s4">
+  <h2><span class="no">04</span>核心指标 ① 久期：利率风险的直接度量</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>基金</th><th class="num">久期估算</th><th>主要依据</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">003358 / 011062</td><td class="num"><b>7.5–8.5年</b></td><td>指数成分券待偿期 6.5–10 年（中债指数编制说明），19 只中最长</td></tr>
+      <tr><td class="fund">006670</td><td class="num"><b>4–5年</b></td><td>持仓为 10 年政金债（21农发10/21国开15等）+ 26超长特别国债01 占 5.98%；2025-02/03 回撤 -1.57%（同期 7-10 指数 -2.8%~-3.1%）反推有效久期 ≈5</td></tr>
+      <tr><td class="fund">510080</td><td class="num"><b>≈5年</b></td><td>经理自述"组合久期略低于指数"（标普中国全债指数久期约 5–6 年）；2021-09/10 回撤 -2.63% 反推</td></tr>
+      <tr><td class="fund">007888</td><td class="num"><b>4–5年</b></td><td>经理自述"重点配置 2–4 年信用债和 7–9 年政策性金融债，中性偏积极久期，灵活开展 10 年和 30 年长债交易"（哑铃型）</td></tr>
+      <tr><td class="fund">003949</td><td class="num"><b>3–5年</b></td><td>银行永续债（5+N，估值按赎回权）+ 二级资本债（5+5）+ 企业债 29%</td></tr>
+      <tr><td class="fund">015301</td><td class="num"><b>3.5–5年</b></td><td>25超长特别国债02/05（30年期）合计占净值 8.76% + 中票 71.75%；2025-07→09 回撤 -1.68% 反推</td></tr>
+      <tr><td class="fund">000032</td><td class="num"><b>3–4年</b></td><td>经理自述"久期维持在基准到基准偏低"，配置 5-7 年利率债 + 二永</td></tr>
+      <tr><td class="fund">519188</td><td class="num"><b>3–4年</b></td><td>几乎纯二级资本债（5+5 结构）</td></tr>
+      <tr><td class="fund">012931</td><td class="num"><b>3–4年</b></td><td>中票 69.78% + 企业债 20.97%；2024-09/10 回撤 -1.22%</td></tr>
+      <tr><td class="fund">006337</td><td class="num"><b>3–4年</b></td><td>金融债 58.14%（政金 18.35%）+ 中票 22.90%；回撤 -1.12%</td></tr>
+      <tr><td class="fund">519973</td><td class="num"><b>3–4年</b></td><td>政金 23.76% + 城投短融 15.57% + 二永 3.96%；2025-01→03 回撤 -1.13%</td></tr>
+      <tr><td class="fund">004897</td><td class="num"><b>2–4年</b></td><td>短久期高票息城投打底，二季度增配 5-30 年利率债做波段，久期摆动大</td></tr>
+      <tr><td class="fund">217022</td><td class="num"><b>2.5–3.5年</b></td><td>中票 40.02% + 存单 7.12% + 短融 3.54%，无杠杆，回撤仅 -0.73%</td></tr>
+      <tr><td class="fund">004400</td><td class="num"><b>2–3年</b></td><td>经理自述"精选中等期限信用债、维持中短久期"</td></tr>
+      <tr><td class="fund">021282</td><td class="num"><b>2–3年</b></td><td>经理自述"维持中短久期、中低杠杆"；回撤 -0.39%</td></tr>
+      <tr><td class="fund">017173</td><td class="num"><b>2–3年</b></td><td>基准中债新综合财富(1-3年)指数；回撤 -0.38%</td></tr>
+      <tr><td class="fund">011489</td><td class="num"><b>1.5–2.5年</b></td><td>基准中债综合全价(1-3年)指数；年化波动率仅 0.42–0.53%</td></tr>
+      <tr><td class="fund">001258</td><td class="num">债底 3–4年<br><b>含权弹性主导</b></td><td>转债 9.88% + 股票约 16–18%，收益/回撤由权益驱动</td></tr>
+    </tbody>
+  </table></div>
+  <div id="chart_duration" class="chart tall"></div>
+  <p class="cap">图 1 · 久期估算区间（条带为估算上下限；虚线为 2026Q2 中长期纯债行业均值 3.67 年）</p>
+  <p><b>解读</b>：若利率上行 100bp，静态价格冲击约为 久期×100bp×债券仓位——003358/011062 约 <span class="down">-7.5%~-8.5%</span>（未含杠杆），006670/510080/007888 约 <span class="down">-4%~-5%</span>，短端三只基本免疫。<b>长久期是收益主力也是波动主力</b>。特别注意：<b>015301 名为"中短债"（平台分类亦然），实际持有 30 年超长特别国债，久期是 19 只纯债中第二长的</b>，与名称给人的印象不符。</p>
+</section>
+
+<!-- ================= 5 信用持仓 ================= -->
+<section id="s5">
+  <h2><span class="no">05</span>核心指标 ② 信用评级及持仓分布（2026-06-30）</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:150px">基金</th><th style="width:27%">信用债敞口</th><th style="width:32%">前五大重仓（占净值比）</th><th>信用风险要点</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">006670</td><td><b>0</b>（国债 17.75% + 政策性金融债 77.44%）</td><td>21农发10 24.08%、21国开15 11.95%、25国开15 10.75%、22国开05 10.62%、26超长特别国债01 5.98%</td><td>准主权信用，<b>零信用风险</b>；但集中度极高（前五合计 63.4%）</td></tr>
+      <tr><td class="fund">003358</td><td><b>0</b>（纯国开债）</td><td>25国开10 15.89%、25国开05 13.98%、26国开05 12.54%、24国开10 11.96%、25国开15 11.43%</td><td>同上，指数化分散</td></tr>
+      <tr><td class="fund">011062</td><td><b>0</b>（同指数）</td><td>23国开05 25.21%、24国开05 17.35%、22国开20 17.09%、25国开15 10.87%、23国开10 10.28%（2025-12-31）</td><td>同上</td></tr>
+      <tr><td class="fund">003949</td><td><b>高</b>：金融债 73.49%（政金仅 5.13%）+ 企业债 29.18% + 中票 4.38%</td><td>25工行永续债01BC 3.56%、24广发银行永续债01 2.99%、25平安银行永续债01BC 2.48%、25北京银行永续债01 2.46%、24华夏银行永续债01 2.42%</td><td><b>前五大全是银行永续债</b>（合计 13.91%），行业集中度极高；现金仅 0.22%</td></tr>
+      <tr><td class="fund">000032</td><td><b>高</b>：金融债 85.62%（政金 6.20%）+ 中票 12.78% + 企业债 3.61% + 其他 9.78%</td><td>26中信银行永续债01BC 4.94%、26超长特别国债04 3.37%、25建行二级资本债03BC 3.35%、25浦发银行01 3.34%、24南京银行01 3.16%</td><td>永续 + 二级 + 商金债混合，单一发行主体 ≤5%，分散度好于 003949</td></tr>
+      <tr><td class="fund">519188</td><td><b>极高</b>：金融债 100.10%（政金 5.18% + 中票 1.14%）</td><td>22邮储银行二级01 8.16%、22农业银行二级01 5.68%、22光大银行二级资本债01A 4.31%、22华夏银行二级资本债01 4.25%、22中国银行二级01 4.02%</td><td><b>前五大全是国有大行二级资本债</b>（合计 26.4%），券种集中度为 19 只之最；无低评级产业债</td></tr>
+      <tr><td class="fund">004897</td><td><b>高</b>：中票 46.61% + 短融 29.99% + 企业债 3.61%（信用合计约 80%）</td><td>23附息国债23 5.24%、25国债19 4.79%、22国开10 3.59%、26昆明交通CP002 3.33%、25国开15 3.29%</td><td>信用主体为<b>城投/产业中票与短融</b>（经理自述"短久期高票息城投品种为主"），含弱区域主体，与银行二永完全不同的信用来源</td></tr>
+      <tr><td class="fund">011489</td><td>中：金融债约 79%（2026-03-31），合同允许 AA~AAA</td><td>21中国银行二级03 5.80%、25农发清发12 5.37%、24中信银行债01 3.35%、25工行二级资本债03BC 3.33%、26建行二级资本债01BC 3.27%</td><td>高等级为主；含约 13% 二永持仓，"短久期"不等于"纯利率"</td></tr>
+      <tr><td class="fund">012931</td><td><b>高</b>：中票 69.78% + 企业债 20.97%（+其他 14.62%）</td><td>24锡产业MTN007 8.16%、25国开11 7.94%、25光大水务MTN003 7.91%、22国开20 7.67%、24工行二级资本债02BC 6.51%</td><td>产业与公用事业主体为主（无锡产业/光大水务/鲁高速），<b>前五合计 39.2%，集中度高</b>；含 1 只二永</td></tr>
+      <tr><td class="fund">015301</td><td>中：中票 71.75%</td><td>25超长特别国债02 5.02%、21国开08 4.93%、25国开11 4.87%、25农发31 4.87%、25超长特别国债05 3.74%</td><td><b>前五大全是利率债</b>（合计 23.43%），中票持仓分散在前五之外，信用风险实际低于 012931</td></tr>
+      <tr><td class="fund">004400</td><td><b>高</b>：企业债 20.43% + 中票 40.40% + 短融 4.44%（合计约 65%）</td><td>26农发11 5.96%、25农发清发32 5.54%、26附息国债08 5.50%、26农发03 4.72%、26广发02 3.15%</td><td>晨星穿透：信用债 66.73%、利率债 27.97%；无低评级下沉；ABS 另持 2.08%</td></tr>
+      <tr><td class="fund">510080</td><td>中：中票 40.81% + 企业债 7.24% + 转债 1.44%</td><td>宁德时代 0.68%、中际旭创 0.67%、美的集团 0.66%、立讯精密 0.54%、中国平安 0.52%（股票）</td><td>债券端分散；<b>权益端前十大合计 5.15%</b>（总股票估计 6–8%），科技股为主</td></tr>
+      <tr><td class="fund">006337</td><td>中：中票 22.90% + 企业债 6.48% + 金融债 58.14%（政金 18.35%）</td><td>24国开15 3.23%、24国开05 2.26%、25超长特别国债06 1.97%、26国开05 1.74%、21国开20 1.73%</td><td><b>前五大仅 10.93%，19 只中最分散</b>；政金 + 商金 + 中票混合，无显著集中度风险</td></tr>
+      <tr><td class="fund">217022</td><td><b>高</b>：中票 40.02% + 企业债 12.34% + 短融 3.54%（合计约 56%）</td><td>21中国信达债01 3.01%、23太保寿险永续债01 2.60%、23太平人寿永续债01 2.59%、25农发31 2.41%、17中国信达债03 2.24%</td><td>两只信达债（AMC，非银非城投的独立信用源）+ 两只保险永续债；分散度好于 012931</td></tr>
+      <tr><td class="fund">007888</td><td>中高：金融债 98.50%（政金仅 22.66%）</td><td>25国开05 6.69%、24杭州银行小微债 4.13%、21附息国债05 3.94%、25附息国债11 3.84%、24国开02 3.55%</td><td><b>无企业债/中票/短融</b>，信用敞口集中在商业银行债与小微债（杭州银行等），券商自营级审核</td></tr>
+      <tr><td class="fund">001258</td><td>中（债性）+ 高（含权）：转债 9.88% + 中票 6.48% + 企业债 1.21%</td><td>26农发11 6.30%、上银转债 3.98%、重银转债 3.79%、23国开05 2.12%、24国开清发02 1.77%（债券）；立讯精密 3.14%、中科曙光 2.62%、浪潮信息 2.14%（股票）</td><td>转债以银行转债为主 + 股票前十大 15.63%（科技股）；<b>含权合计约 26–28%</b></td></tr>
+      <tr><td class="fund">017173</td><td>中：恒丰银行永续债 + 城投 + 政金</td><td>25农发31 6.29%、23国开08 4.24%、26恒丰银行永续债01 3.86%、21经开国投债 3.35%、24国开08 3.20%</td><td>政金 13.73% + 普通金融债 3.86% + 企业债 3.35%（新浪口径），银行永续与城投零星敞口</td></tr>
+      <tr><td class="fund">519973</td><td><b>高</b>：城投短融 + 二永 + 政金</td><td>24国开03 15.88%、23国开08 7.88%、25永川高新CP002 7.79%、25温州现代SCP006 7.78%、25建行二级资本债03BC 3.96%</td><td>新浪券种口径：政金 23.76% + 企业债 15.57% + 金融债 3.96%；<b>弱区域城投短融（永川/温州）集中</b>，前五合计 43.29%</td></tr>
+      <tr><td class="fund">021282</td><td><b>高</b>：中票 27.49% + 短融 14.31% + 企业债 9.44%（合计 51.24%）</td><td>21建设银行二级01 3.16%、21邮储银行二级01 2.24%、21中国银行二级03 2.24%、23农发13 2.22%、25汇金MTN006 2.21%</td><td>"中短债"标签下信用敞口不低；前三全是国有大行二级资本债；汇金MTN为央企主体</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>解读</b>：用户担心的"低评级债、银行资本债、产业债敞口"——19 只中<b>无低评级下沉</b>（对照 2026Q2 行业：中长期纯债基金重仓非 AAA 占比仅 3.33%）；<b>银行资本债敞口最大的是 519188（几乎纯二级）和 003949（永续为主）</b>，021282/017173/519973/012931/011489 有零星二永，<b>全组合二永敞口需合并计算</b>；<b>产业/城投敞口集中在 004897（弱区域城投）、012931（前五 39%）、519973（永川/温州 15.6%）</b>；006670/003358/011062 为零信用敞口；006337 是分散度最好的纯债。</p>
+</section>
+
+<!-- ================= 6 杠杆 ================= -->
+<section id="s6">
+  <h2><span class="no">06</span>核心指标 ③ 杠杆率（债券占净值比）</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>基金</th><th class="num">债券/净值</th><th class="num">杠杆倍数</th><th>对照</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">519973</td><td class="num">≈127%（总资产 3.32亿 / 净资产 2.60亿）</td><td class="num"><b>≈1.27x</b></td><td>19 只最高；历史上 2021-09 曾达 1.46x</td></tr>
+      <tr><td class="fund">011062</td><td class="num">126.65%（2025-12-31 时点）</td><td class="num">≈1.27x</td><td>高于行业均值（118.2%），需以下期季报复核</td></tr>
+      <tr><td class="fund">000032</td><td class="num">119.12%</td><td class="num">≈1.19x</td><td>接近行业均值</td></tr>
+      <tr><td class="fund">012931</td><td class="num">123.41%</td><td class="num">≈1.23x</td><td>高于行业均值</td></tr>
+      <tr><td class="fund">015301</td><td class="num">123.05%</td><td class="num">≈1.23x</td><td>高于行业均值</td></tr>
+      <tr><td class="fund">510080</td><td class="num">113.18%</td><td class="num">≈1.13x</td><td>另有股票约 6–8%</td></tr>
+      <tr><td class="fund">007888</td><td class="num">112.10%</td><td class="num">≈1.12x</td><td>接近行业均值</td></tr>
+      <tr><td class="fund">003949</td><td class="num">109.28%</td><td class="num">≈1.09x</td><td>低于行业均值</td></tr>
+      <tr><td class="fund">519188</td><td class="num">109.03%</td><td class="num">≈1.09x</td><td>低于行业均值</td></tr>
+      <tr><td class="fund">003358</td><td class="num">约107%（平台口径 99%~107% 存在差异）</td><td class="num">≈1.0–1.1x</td><td>—</td></tr>
+      <tr><td class="fund">004897</td><td class="num">104.02%</td><td class="num">≈1.04x</td><td>低杠杆</td></tr>
+      <tr><td class="fund">011489</td><td class="num">104.40%</td><td class="num">≈1.04x</td><td>低杠杆</td></tr>
+      <tr><td class="fund">217022</td><td class="num">100.40%</td><td class="num">≈1.00x</td><td>无杠杆</td></tr>
+      <tr><td class="fund">017173</td><td class="num">99.35%</td><td class="num">≈0.99x</td><td>无杠杆</td></tr>
+      <tr><td class="fund">021282</td><td class="num">97.80%</td><td class="num">≈0.98x</td><td>无杠杆</td></tr>
+      <tr><td class="fund">004400</td><td class="num">96.10%</td><td class="num">≈0.96x</td><td>无杠杆</td></tr>
+      <tr><td class="fund">006670</td><td class="num">95.19%</td><td class="num">≈0.95x（无杠杆）</td><td>持续去杠杆：2025-06 为 132.57% → 2025-12 为 111.11% → 2026-03 为 108.01% → 2026-06 为 95.19%</td></tr>
+      <tr><td class="fund">006337</td><td class="num">92.57%</td><td class="num">≈0.93x</td><td>无杠杆，防御性最好</td></tr>
+      <tr><td class="fund">001258</td><td class="num">债券 89.08%（含转债 9.88%）</td><td class="num">债性无杠杆</td><td><b>股票+转债合计约 26–28%，含权属性主导</b>，"杠杆"概念已不适用——它的波动来源是股票和转债，不是回购</td></tr>
+    </tbody>
+  </table></div>
+  <div id="chart_leverage" class="chart tall"></div>
+  <p class="cap">图 2 · 杠杆倍数对比（虚线：1.0x 无杠杆线；点线：行业均值 1.18x；001258 为含权产品不纳入）</p>
+  <p><b>解读</b>：杠杆放大波动也放大票息收益。000032 的 1.19x、012931/015301 的 1.23x 在利率上行时会小幅放大回撤；006670 已降到 0.95x，进攻性下降但防御性最好；006337（0.93x）、021282/017173/004400/217022 无杠杆、防御性好；519973 的 1.27x 叠加迷你规模是风险点。</p>
+</section>
+
+<!-- ================= 7 回撤 ================= -->
+<section id="s7">
+  <h2><span class="no">07</span>核心指标 ④ 历史最大回撤（同一区间、同一口径，自行计算）</h2>
+  <div class="note blue">口径：分红再投资复权净值序列，峰谷法。近3年 = 2023-10-17~2026-10-16；最长区间 = 2021-06-10 起（基金成立更晚则自成立日起）。<b>未直接采用任何平台数字</b>——平台"累计净值"是加法序列，会系统性低估多分红基金的收益。</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>基金</th><th class="num">近3年最大回撤</th><th>发生时间（事件）</th><th class="num">近1年最大回撤</th><th class="num">最长区间最大回撤</th><th class="num">2022全年收益</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">001258 兴业收益增强C</td><td class="num down"><b>-6.57%</b></td><td>2024-05-22→09-12（权益+转债双杀）</td><td class="num down">-5.47%</td><td class="num down">-6.71%（2023-04-12→2024-02-05）</td><td class="num down">-3.67%</td></tr>
+      <tr><td class="fund">011062 广发7-10E</td><td class="num down"><b>-3.06%</b></td><td>2025-02-06→03-17（资金面收紧，5周）</td><td class="num down">-0.72%</td><td class="num down">-3.06%（同左）</td><td class="num up">+3.92%</td></tr>
+      <tr><td class="fund">003358 易方达7-10A</td><td class="num down"><b>-2.77%</b></td><td>2025-02-06→03-11（同上）</td><td class="num down">-0.79%</td><td class="num down">-2.77%（同左）</td><td class="num up">+3.57%</td></tr>
+      <tr><td class="fund">015301 博时双季乐</td><td class="num down">-1.68%</td><td>2025-07-07→09-24（股债跷跷板）</td><td class="num down">-0.89%</td><td class="num down">-1.89%（2022-11-02→12-13，理财赎回潮）</td><td class="num up">+1.49%</td></tr>
+      <tr><td class="fund">004897 长安泓源</td><td class="num down">-1.67%</td><td>2024-08-07→10-10（9·24政策 + 弱资质城投担忧，利率信用双杀）</td><td class="num down">-0.12%</td><td class="num down">-1.67%（同左）</td><td class="num up">+2.73%</td></tr>
+      <tr><td class="fund">006670 广发景秀</td><td class="num down">-1.57%</td><td>2025-02-07→03-13（资金面收紧）</td><td class="num down">-0.29%</td><td class="num down">-1.57%（同左）</td><td class="num up">+2.39%</td></tr>
+      <tr><td class="fund">004400 金信民兴</td><td class="num down">-1.53%</td><td>2024-08-05→10-09（9·24政策，信用利差走阔）</td><td class="num down">-0.18%</td><td class="num down">-1.53%（同左）</td><td class="num up">+1.38%</td></tr>
+      <tr><td class="fund">510080 长盛全债A/B</td><td class="num down">-1.53%</td><td>2025-02-07→03-11（资金面收紧）</td><td class="num down">-1.13%</td><td class="num down">-2.63%（2021-09-10→10-19）</td><td class="num up">+3.58%</td></tr>
+      <tr><td class="fund">000032 易方达信用债</td><td class="num down">-1.38%</td><td>2025-02-07→03-11（资金面收紧）</td><td class="num down">-0.32%</td><td class="num down">-2.41%（2022-11/12）</td><td class="num up">+1.75%</td></tr>
+      <tr><td class="fund">012931 平安双季盈</td><td class="num down">-1.22%</td><td>2024-08-05→10-09（同上）</td><td class="num down">-0.22%</td><td class="num down">-1.22%（同左，成立以来）</td><td class="num up">+2.85%</td></tr>
+      <tr><td class="fund">003949 兴全稳泰</td><td class="num down">-1.20%</td><td>2025-07-07→09-25（股债跷跷板，信用利差走阔）</td><td class="num down">-0.56%</td><td class="num down"><b>-2.46%</b>（2022-11/12）</td><td class="num up">+2.14%</td></tr>
+      <tr><td class="fund">007888 农银汇理金盈</td><td class="num down">-1.17%</td><td>2025-01-06→03-11（资金面收紧）</td><td class="num down">-0.36%</td><td class="num down">-1.45%（2022-10-31→12-13）</td><td class="num up">+2.79%</td></tr>
+      <tr><td class="fund">519973 长信纯债一年定开</td><td class="num down">-1.13%</td><td>2025-01-03→03-14（同上）</td><td class="num down">-0.18%</td><td class="num down">-1.13%（同左）</td><td class="num up">+4.50%</td></tr>
+      <tr><td class="fund">006337 华安安浦</td><td class="num down">-1.12%</td><td>2024-09-25→10-09（9·24政策）</td><td class="num down">-0.26%</td><td class="num down">-1.12%（同左）</td><td class="num up">+2.88%</td></tr>
+      <tr><td class="fund">519188 万家恒利</td><td class="num down">-0.69%</td><td>2024-09-25→10-09（同上）</td><td class="num down">-0.26%</td><td class="num down">-0.85%（2023-08/09）</td><td class="num up">+1.40%</td></tr>
+      <tr><td class="fund">217022 招商产业</td><td class="num down">-0.73%</td><td>2024-09-25→10-09（同上）</td><td class="num down">-0.10%</td><td class="num down">-2.02%（2022-10-31→12-13）</td><td class="num up">+2.52%</td></tr>
+      <tr><td class="fund">011489 双季享</td><td class="num down">-0.39%</td><td>2024-09-25→10-09（9·24政策后利率上行）</td><td class="num down">-0.10%</td><td class="num down">-1.36%（2022-11 理财赎回潮）</td><td class="num up">+4.24%</td></tr>
+      <tr><td class="fund">021282 上银慧元利</td><td class="num down">-0.39%</td><td>2024-09-25→10-09（同上）</td><td class="num down">-0.02%</td><td class="num down">-0.39%（同左，成立以来）</td><td class="num flat">N/A（2024-05 成立）</td></tr>
+      <tr><td class="fund">017173 创金合信季安盈C</td><td class="num down">-0.38%</td><td>2024-09-25→10-09（同上）</td><td class="num down">-0.16%</td><td class="num down">-0.38%（同左，成立以来）</td><td class="num flat">N/A（2023-02 成立）</td></tr>
+    </tbody>
+  </table></div>
+  <div id="chart_drawdown" class="chart tall"></div>
+  <p class="cap">图 3 · 近3年最大回撤横向对比（越靠上越稳；紫色 = 含权产品 001258，与纯债不同量级）</p>
+  <p><b>解读</b>：</p>
+  <ul class="dot">
+    <li>19 只的最差回撤集中在三轮事件：<b>2024年9·24政策、2025年1–3月资金面收紧、2025年夏股债跷跷板</b>。久期越长回撤越深（-3.06% vs -0.38%，相差约 8 倍），<b>久期是回撤的第一解释变量</b>。</li>
+    <li><b>001258 是唯一的"异类"</b>：-6.57% 的回撤量级（纯债基金的 4–16 倍），2022 年还亏了 -3.67%——这是股票+转债仓位的结果，不能用债券基金的标准衡量。</li>
+    <li>拉长到 2021-06 以来：<b>二永类在 2022-11 理财赎回潮中回撤 -2.4% 左右</b>（003949 -2.46%、000032 -2.41%），说明该类资产的尾部风险不是"低波动"，若再现理财赎回潮，二永仓位会明显拖累组合。</li>
+    <li>004897 回撤 -1.67% 排纯债第 4 高——"短久期城投"策略在利率信用双杀中并不抗跌，与直觉相反；015301 名为"中短债"回撤却排纯债第 2 高。</li>
+    <li>短端三只（021282/017173 近1年 -0.02%/-0.16%）确实验证了"短久期=低回撤"；021282 成立以来最大回撤 -0.39% 与中证网口径（2025-01~2026-06 仅 -0.08%、修复 12 天）互相印证。</li>
+    <li>利率下行年份（如 2022 年）011489 反而涨了 +4.24%（19 只最高），短久期+票息在顺风期并不落后太多。</li>
+  </ul>
+</section>
+
+<!-- ================= 8 收益 ================= -->
+<section id="s8">
+  <h2><span class="no">08</span>附加核实 ① 近3年收益（官方统一口径）</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>基金</th><th class="num">官方"过去三年"<br>（2023-07~2026-06）</th><th class="num">业绩基准同期</th><th class="num">超额</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">001258 兴业收益增强C</td><td class="num up"><b>23.80%</b></td><td class="num">7.80%</td><td class="num up">+16.00pp</td><td>用 -6.57% 回撤换的；A类 25.30%</td></tr>
+      <tr><td class="fund">011062 广发7-10E</td><td class="num up"><b>17.06%</b></td><td class="num">16.17%</td><td class="num up">+0.89pp</td><td>E类；免申购费</td></tr>
+      <tr><td class="fund">510080 长盛全债A/B</td><td class="num up">16.02%</td><td class="num">14.25%</td><td class="num up">+1.77pp</td><td>十年 70.61%（基准 47.24%），长期冠军相</td></tr>
+      <tr><td class="fund">003358 易方达7-10A</td><td class="num up">14.81%</td><td class="num">15.61%</td><td class="num down">-0.80pp</td><td>跟踪误差 0.93%</td></tr>
+      <tr><td class="fund">006670 广发景秀</td><td class="num up">11.95%</td><td class="num">11.97%</td><td class="num flat">-0.02pp</td><td>—</td></tr>
+      <tr><td class="fund">007888 农银汇理金盈</td><td class="num up">11.52%</td><td class="num">9.75%</td><td class="num up">+1.77pp</td><td>过去五年 21.13%（+0.36pp）</td></tr>
+      <tr><td class="fund">004897 长安泓源</td><td class="num up">11.26%</td><td class="num">5.12%</td><td class="num up"><b>+6.14pp</b></td><td>—</td></tr>
+      <tr><td class="fund">000032 易方达信用债</td><td class="num up">11.23%</td><td class="num">11.28%</td><td class="num flat">-0.05pp</td><td>—</td></tr>
+      <tr><td class="fund">003949 兴全稳泰</td><td class="num up">11.08%</td><td class="num">14.31%</td><td class="num down"><b>-3.23pp</b></td><td>过去3/5/7年均跑输基准（-3.23/-5.30/-6.00pp）</td></tr>
+      <tr><td class="fund">519973 长信纯债一年定开</td><td class="num up">10.45%</td><td class="num">9.59%</td><td class="num up">+0.86pp</td><td>过去五年 22.20%（+5.72pp）</td></tr>
+      <tr><td class="fund">004400 金信民兴</td><td class="num up">10.82%</td><td class="num">4.28%</td><td class="num up"><b>+6.54pp</b></td><td>过去五年 84.56%（+77.16pp，标准差 1.81，异常值需警惕）</td></tr>
+      <tr><td class="fund">015301 博时双季乐</td><td class="num up">10.29%</td><td class="num">11.96%</td><td class="num down">-1.67pp</td><td>跑输基准</td></tr>
+      <tr><td class="fund">519188 万家恒利</td><td class="num up">10.38%</td><td class="num">4.45%</td><td class="num up"><b>+5.93pp</b></td><td>—</td></tr>
+      <tr><td class="fund">006337 华安安浦</td><td class="num up">9.99%</td><td class="num">5.07%</td><td class="num up"><b>+4.92pp</b></td><td>过去五年 19.55%（+11.13pp）</td></tr>
+      <tr><td class="fund">011489 双季享</td><td class="num up">9.75%</td><td class="num">5.12%</td><td class="num up"><b>+4.63pp</b></td><td>—</td></tr>
+      <tr><td class="fund">012931 平安双季盈</td><td class="num up">9.19%</td><td class="num">11.96%</td><td class="num down"><b>-2.77pp</b></td><td>19 只中跑输最多</td></tr>
+      <tr><td class="fund">017173 创金合信季安盈C</td><td class="num up">8.64%</td><td class="num">8.29%</td><td class="num up">+0.35pp</td><td>过去一年 1.85%（-0.26pp）</td></tr>
+      <tr><td class="fund">217022 招商产业</td><td class="num up">8.50%</td><td class="num">8.25%</td><td class="num up">+0.25pp</td><td>过去十年 54.64%（+27.14pp），长期稳健</td></tr>
+      <tr><td class="fund">021282 上银慧元利</td><td class="num flat">无3年（2024-05成立）</td><td class="num flat">—</td><td class="num flat">—</td><td>过去一年 2.00%（基准 -0.78%，+2.78pp）；成立以来 7.06%（<b>+5.29pp</b>）</td></tr>
+    </tbody>
+  </table></div>
+  <div id="chart_return" class="chart tall"></div>
+  <p class="cap">图 4 · 官方近3年收益 vs 同期业绩基准（按收益降序）</p>
+  <p><b>解读</b>：绝对收益最高的是两只 7-10 指数和两只含权产品，但前者是用 -3% 回撤换的、后者含权益敞口，均不能直接与纯债同表比较。<b>纯债阵营里超额最扎实的是 004897（+6.14pp）、004400（+6.54pp 但已停购）、519188（+5.93pp）、006337（+4.92pp）、011489（+4.63pp）</b>——低基准产品靠票息和择券跑赢。003949 需警惕：过去三年/五年/七年均跑输基准，规模 354 亿 + 前五集中永续债 + 现金仅 0.22%，超额获取能力存疑；012931/015301 两只"双季"跑输基准，是与 011489 功能重复下的清退首选。</p>
+</section>
+
+<!-- ================= 9 费率 ================= -->
+<section id="s9">
+  <h2><span class="no">09</span>附加核实 ② 费率（年化，从基金资产中扣除）</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>基金</th><th class="num">管理费</th><th class="num">托管费</th><th class="num">销售服务费</th><th class="num">合计</th><th>申购费（1折后）</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">003358 易方达7-10A</td><td class="num">0.15%</td><td class="num">0.05%</td><td class="num">—</td><td class="num"><b>0.20%</b></td><td>0.50%（0.05%）</td></tr>
+      <tr><td class="fund">015301 博时双季乐</td><td class="num">0.20%</td><td class="num">0.05%</td><td class="num">—</td><td class="num"><b>0.25%</b></td><td>0.30%（0.03%）</td></tr>
+      <tr><td class="fund">021282 上银慧元利</td><td class="num">0.20%</td><td class="num">0.05%</td><td class="num">—（A类）</td><td class="num"><b>0.25%</b></td><td>0.30%（0.03%）</td></tr>
+      <tr><td class="fund">011062 广发7-10E</td><td class="num">0.15%</td><td class="num">0.05%</td><td class="num">0.10%（E类）</td><td class="num"><b>0.30%</b></td><td><b>0</b></td></tr>
+      <tr><td class="fund">519188 万家恒利</td><td class="num">0.30%</td><td class="num">0.075%</td><td class="num">—</td><td class="num"><b>0.375%</b></td><td>0.80%（0.08%）</td></tr>
+      <tr><td class="fund">006670 广发景秀</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.80%（0.08%）</td></tr>
+      <tr><td class="fund">003949 兴全稳泰</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.60%（0.06%）</td></tr>
+      <tr><td class="fund">004897 长安泓源</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.40%（0.04%）</td></tr>
+      <tr><td class="fund">012931 平安双季盈</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.30%（0.03%）</td></tr>
+      <tr><td class="fund">004400 金信民兴</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.80%（0.08%）</td></tr>
+      <tr><td class="fund">006337 华安安浦</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.80%（0.08%）</td></tr>
+      <tr><td class="fund">007888 农银汇理金盈</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.80%（0.08%）</td></tr>
+      <tr><td class="fund">519973 长信纯债一年定开</td><td class="num">0.30%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.40%</b></td><td>0.60%（约0.06%）</td></tr>
+      <tr><td class="fund">000032 易方达信用债</td><td class="num">0.35%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.45%</b></td><td>0.80%（0.08%）</td></tr>
+      <tr><td class="fund">017173 创金合信季安盈</td><td class="num">0.30%</td><td class="num">0.05%</td><td class="num">0.10%（C类）</td><td class="num"><b>0.45%</b></td><td>0（C类）</td></tr>
+      <tr><td class="fund">011489 双季享</td><td class="num">0.40%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.50%</b></td><td>0.40%（0.04%）</td></tr>
+      <tr><td class="fund">510080 长盛全债</td><td class="num">0.75%</td><td class="num">0.10%</td><td class="num">—</td><td class="num"><b>0.85%</b></td><td>1.00%（0.10%）</td></tr>
+      <tr><td class="fund">217022 招商产业</td><td class="num">0.70%</td><td class="num">0.20%</td><td class="num">—</td><td class="num"><b>0.90%</b></td><td>0.80%（0.08%）</td></tr>
+      <tr><td class="fund">001258 兴业收益增强</td><td class="num">0.70%</td><td class="num">0.20%</td><td class="num">0.40%（C类）</td><td class="num"><b>1.30%</b></td><td>0（C类）</td></tr>
+    </tbody>
+  </table></div>
+  <div id="chart_fee" class="chart tall"></div>
+  <p class="cap">图 5 · 年化综合费率拆解（管理费 + 托管费 + 销售服务费，按合计降序）</p>
+  <p><b>解读</b>：19 只中费率最低的是 003358（0.20%）、015301/021282（0.25%），最高的是 001258（1.30%，C类销售服务费 0.40% 是主因）。<b>5 年持有期费率累积差最高约 5.3 个百分点</b>（0.25% vs 1.30%）——001258 近三年 +16pp 的超额能否持续覆盖费率需要打问号；纯债阵营内 0.20%~0.50% 的差异（5 年最高约 1.5pp）也值得在权重中体现。注：519188 现行管理费 0.30%+托管费 0.075%（天天基金 F10），万家基金 2023 版产品资料概要列 0.40%+0.10%，期间已降费，以最新公告为准。</p>
+</section>
+
+<!-- ================= 10 赎回限制 ================= -->
+<section id="s10">
+  <h2><span class="no">10</span>附加核实 ③ 赎回限制与交易状态（截至 2026-10 中旬）</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:150px">基金</th><th>持有期锁定</th><th>赎回费</th><th>申购状态 / 限额</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">011489 双季享</td><td><b>6个月最短持有期</b>（到期后可随时赎回）</td><td>持有满 6 个月后 <b>0 赎回费</b></td><td>限大额 100万/日</td></tr>
+      <tr><td class="fund">012931 平安双季盈</td><td>6个月最短持有期</td><td>满 6 个月后 <b>0 赎回费</b></td><td>开放申购</td></tr>
+      <tr><td class="fund">015301 博时双季乐</td><td>6个月最短持有期</td><td><b>0 赎回费</b></td><td>限大额 1000万/日</td></tr>
+      <tr><td class="fund">017173 创金合信季安盈C</td><td>3个月最短持有期</td><td><b>0 赎回费</b></td><td>开放申购</td></tr>
+      <tr><td class="fund">021282 上银慧元利</td><td><b>90天最短持有期</b></td><td><b>0 赎回费</b></td><td>开放申购</td></tr>
+      <tr><td class="fund">519973 长信纯债一年定开</td><td><b>一年定开</b>（当前封闭期，约 2027-04 再开放）</td><td>&lt;7日 1.5%；7日–2年 0.05%；≥2年 0</td><td><b>暂停申购赎回（封闭期）</b></td></tr>
+      <tr><td class="fund">000032 易方达信用债</td><td>无</td><td>&lt;7日 1.5%；7-29日 0.75%；30-364日 0.1%；365-729日 0.05%；≥730日 0</td><td><b>暂停申购</b>（仅可赎回）</td></tr>
+      <tr><td class="fund">519188 万家恒利</td><td>无</td><td>&lt;7日 1.5%；7-365日 0.1%；365-730日 0.05%；≥730日 0</td><td>开放申购，无限额</td></tr>
+      <tr><td class="fund">006670 广发景秀</td><td>无</td><td>&lt;7日 1.5%；7-30日 0.1%；≥30日 0</td><td>限大额 550万/日</td></tr>
+      <tr><td class="fund">003949 兴全稳泰</td><td>无</td><td>同上</td><td>限大额 20万/日</td></tr>
+      <tr><td class="fund">004897 长安泓源</td><td>无</td><td>同上</td><td>限大额 <b>10万/日</b></td></tr>
+      <tr><td class="fund">003358 易方达7-10A</td><td>无</td><td>&lt;7日 1.5%，其余持有期以平台公示为准</td><td>开放申购</td></tr>
+      <tr><td class="fund">011062 广发7-10E</td><td>无</td><td>&lt;7日 1.5%；<b>≥7日 0</b></td><td>开放申购，0 申购费</td></tr>
+      <tr><td class="fund">004400 金信民兴</td><td>无</td><td>&lt;7日 1.5%；7日–1年 0.10%；1–2年 0.05%；≥2年 0</td><td><b>限大额：代销单日 500 元</b>（直销无限制，事实停止申购）</td></tr>
+      <tr><td class="fund">006337 华安安浦</td><td>无</td><td>&lt;7日 1.5%；7–90日 0.30%；≥90日 0</td><td>限大额 1000万/日</td></tr>
+      <tr><td class="fund">007888 农银汇理金盈</td><td>无</td><td>&lt;7日 1.5%；<b>≥7日 0</b></td><td>暂停大额申购（2026-06-09 公告）</td></tr>
+      <tr><td class="fund">510080 长盛全债</td><td>无</td><td>≤6月 1.5%；7–364日 0.30%；365–729日 0.20%；730–1094日 0.10%；≥1095日 0</td><td>开放申购</td></tr>
+      <tr><td class="fund">001258 兴业收益增强C</td><td>无</td><td>&lt;7日 1.5%</td><td>限大额 5000万/日</td></tr>
+      <tr><td class="fund">217022 招商产业</td><td>无</td><td><b>&lt;365日 1.5%；365–547日 1.0%；547–730日 0.5%；≥730日 0</b></td><td>限大额 10万/日</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>解读</b>：短期赎回惩罚（&lt;7日 1.5%）对所有基金一样，持有超 30 天即无成本。真正的限制是：<b>519973 一年定开（流动性最差，急用钱取不出）</b>；<b>217022 持有不满一年赎回费 1.5%（最狠的惩罚性费率）</b>；<b>000032 暂停申购</b>（想加仓二永只能用 003949/519188）；<b>004400 事实停止申购</b>；007888 暂停大额申购；011489 的 6 个月锁定（与 5 年计划匹配，但每笔买入都锁定 6 个月）；004897 限大额 10万/日（若想重仓需分批）。持有期产品中 <b>021282 的 90 天是 19 只里最短的锁定</b>。</p>
+</section>
+
+<!-- ================= 11 功能位重排 ================= -->
+<section id="s11">
+  <h2><span class="no">11</span>19 只全组合：重复敞口与功能位重排</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:150px">功能位</th><th>涉及的基金（代码）</th><th class="num">数量</th><th>重排建议</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">短久期 / 短持有期打底</td><td>011489、021282、017173、015301、012931</td><td class="num"><b>5只</b></td><td>保留 2 只：<b>021282</b>（90天 / 0.25% / -0.39%）+ <b>011489</b>（6个月 / 0.50% / -0.39%）；清退 012931、015301、017173</td></tr>
+      <tr><td class="fund">长久期利率弹性</td><td>003358、011062</td><td class="num">2只</td><td>同指数同久期，<b>二选一</b>（011062 收益高免申购费；003358 费率 0.20% 低）</td></tr>
+      <tr><td class="fund">中久期纯利率 / 分散</td><td>006670、006337、007888</td><td class="num">3只</td><td><b>保留 2 只</b>：006670（零信用，对冲二永仓）+ 006337 或 007888（二选一）</td></tr>
+      <tr><td class="fund">银行二永信用</td><td>003949、000032、519188（主仓）+ 011489/021282/017173/519973/012931（零星）</td><td class="num">3+N</td><td>主仓保留 1–2 只，<b>合计 ≤ 组合 25–30%</b>（含零星敞口合并计算）</td></tr>
+      <tr><td class="fund">产业 / 城投信用</td><td>004897、217022、004400、012931、015301、519973</td><td class="num">6只</td><td>保留 1–2 只：<b>004897</b>（纯产业城投）或 <b>217022</b>（低波动替代）；004400 停购只能持有</td></tr>
+      <tr><td class="fund">含权增强</td><td>001258、510080</td><td class="num">2只</td><td>按整体风险预算保留 0–1 只；<b>510080 温和（股 6–8%），001258 重度（股 16–18% + 转债 10%）</b></td></tr>
+      <tr><td class="fund">流动性特殊</td><td>519973</td><td class="num">1只</td><td>一年定开 + 封闭期，急用钱取不出，建议退出</td></tr>
+    </tbody>
+  </table></div>
+  <div id="chart_positions" class="chart short"></div>
+  <p class="cap">图 6 · 各功能位"保留 vs 清退/合并"数量（重排后 19 只 → 约 9 只，无任何两个功能位由同一风险因子主导）</p>
+</section>
+
+<!-- ================= 12 组合建议 ================= -->
+<section id="s12">
+  <h2><span class="no">12</span>更新后的 5 年互补组合建议（示例）</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:150px">功能位</th><th>工具</th><th class="num">建议权重</th><th>组合内承担的风险源</th></tr></thead>
+    <tbody>
+      <tr><td class="fund">短久期打底</td><td>021282 上银慧元利（90天）</td><td class="num">15%</td><td>短端票息（利率免疫 + 中短久期信用）</td></tr>
+      <tr><td class="fund">短久期打底</td><td>011489 双季享（6个月）</td><td class="num">10%</td><td>同上，与 021282 锁定周期错开</td></tr>
+      <tr><td class="fund">长久期利率弹性</td><td>011062 或 003358（二选一）</td><td class="num">15%</td><td>利率方向性敞口（降息受益 / 升息受损）</td></tr>
+      <tr><td class="fund">中久期零信用 / 分散</td><td>006670 景秀（或 006337 替代）</td><td class="num">20%</td><td>中段利率，零信用，对冲二永仓信用事件</td></tr>
+      <tr><td class="fund">银行二永信用</td><td>000032（存量）+ 003949 或 519188</td><td class="num">合计 20–25%</td><td>银行资本工具信用利差</td></tr>
+      <tr><td class="fund">产业 / 城投信用</td><td>004897 长安泓源（或 217022 替代）</td><td class="num">10–15%</td><td>非银信用（城投/产业），与二永低相关</td></tr>
+      <tr><td class="fund">（可选）温和含权</td><td>510080 长盛全债</td><td class="num">0–15%</td><td>小幅权益增强（股票约 6–8%），单列风险预算</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div><div id="chart_pie" class="chart short"></div><p class="cap">图 7 · 组合权重（按区间中值计，剩余约 5% 作现金/再平衡缓冲）</p></div>
+    <div>
+      <p><b>组合要点</b>：</p>
+      <ul class="dot">
+        <li><b>五类风险源互不重叠</b>：短端票息（021282+011489）/ 长久期利率（011062）/ 中久期零信用（006670）/ 银行信用（二永）/ 产业城投信用（004897）。</li>
+        <li>静态估算：加权久期约 <b>3.5–4 年</b>，近3年口径最大回撤约 <b>-0.8%~-1.0%</b>（参照 2025-02/03 与 2024-09/10 两轮事件各自成分回撤加权）。</li>
+        <li>若完全不能接受 -3% 级别回撤：长久期（011062/003358）降到 10%，缺口加到 021282 和 006337。</li>
+      </ul>
+      <div class="note warn"><b>清退清单</b>：012931、015301、017173（与打底位重复且跑输基准）、004400（停购只能持有）、519973（定开 + 迷你 + 高杠杆 + 弱区域城投）、001258（除非把整体风险预算升级为"固收+"）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 13 风险提示 ================= -->
+<section id="s13">
+  <h2><span class="no">13</span>主要风险提示</h2>
+  <ol class="risk">
+    <li><b>001258 不是债券基金</b>：近3年最大回撤 -6.57%、2022 年 -3.67%、近1年 -5.47%。它股票约 16–18% + 转债 9.88%，应按含权资产单独配额；若为"降低组合波动"而买入它，方向完全错误。</li>
+    <li><b>利率风险</b>：两只 7-10 指数在 2025-02/03 五周内回撤 -2.8%~-3.1%，是组合最大波动源，15–20% 仓位会拖累组合约 -0.5pp；若资金面再度收紧需重新评估。</li>
+    <li><b>信用风险的结构性盲区</b>：003949/000032/519188 的银行资本工具敞口在理财赎回潮（2022-11）中回撤约 -2.4%，"高等级"不等于"低回撤"；004897 与 519973 的弱区域城投敞口需持续跟踪（004897 经理已提示"评级终止案例增多、众邦银行被接管"；温州银行一年内三次被罚）。</li>
+    <li><b>519973 的流动性陷阱</b>：一年定开，当前处于封闭期（约 2027-04 才开放），规模仅 2.6 亿，杠杆 1.27x（历史 1.46x）。若持有人集中赎回，迷你规模 + 高杠杆的组合管理难度会放大。</li>
+    <li><b>015301 名不副实</b>："中短债"分类下持有 30 年超长特别国债 8.76%，久期 3.5–5 年，2025 年夏单独回撤 -1.68%。</li>
+    <li><b>个体风险</b>：000032 暂停申购；004400 事实停购；006670 经理古渥 2025-08 才接任（约 14 个月）且杠杆从 132% 趋势性降至 95%，历史风格不完全代表未来；003949 规模 354 亿 + 现金 0.22%，巨额赎回下流动性压力大。</li>
+    <li><b>经理变动风险</b>：006337（倪逸芸 2025-06 新任）、217022（刘万锋 2025-03 新任 19 个月）、519973（三经理，两位 2025-10 增聘）、021282（蔡唯峰 2024-05 上任约 2.5 年）、011062（古渥 2025-11 增聘）。新任经理的历史业绩不完全代表未来。</li>
+    <li><b>费率差</b>：5 年累积 0.25%~1.30%/年的差异最高约 5.3 个百分点；长期持有的权重应向低费率产品（021282、015301、006337、003358）倾斜——但需以风险匹配为前提。</li>
+    <li>本报告久期为估算值（季报不披露组合久期），最大回撤为本人按统一口径自行计算（已用官方季报收益与第三方平台回撤双重验证，19 只误差 ≤0.18pp），仅供参考，<b>不构成投资建议</b>。</li>
+  </ol>
+</section>
+
+<!-- ================= 14 数据来源 ================= -->
+<section id="s14">
+  <h2><span class="no">14</span>数据来源</h2>
+  <ul class="dot">
+    <li>持仓 / 杠杆 / 费率 / 交易状态：各基金 2026 年二季报及产品资料概要（基金公司官网、证监会 e 披露平台、天天基金 F10）；519973 取天天基金官方公告 AN202607211827192768（已剔除第三方平台与长信富全 519941 的数据混淆）。</li>
+    <li>近3年收益：各基金 2026 年二季报/中报"过去三年净值增长率"（统一区间 2023-07-01~2026-06-30）；021282 用"过去一年 / 自基金合同生效起至今"。</li>
+    <li>最大回撤 / 区间收益：本人基于天天基金历史净值 API（含精确分红记录）构建分红再投资复权序列计算，窗口 2023-10-17~2026-10-16 及 2021-06-10~2026-10-16（基金成立更晚则自成立日起）。</li>
+    <li>行业久期 / 杠杆锚点：中国银河证券、华福证券、国泰海通 2026Q2 债基季报专题。</li>
+    <li>021282 回撤交叉验证：中证网引 iFind（2025-01-01~2026-06-30，-0.08%，修复 12 天）。</li>
+  </ul>
+</section>
+
+<div class="foot">债券基金 19 只汇总评估报告 · 生成于 2026-10-18 · 由《8只候选横评》与《其余11只横评》合并 · 仅供参考，不构成投资建议</div>
+</div>
+
+<script>
+(function(){
+  if (!window.echarts) {
+    document.querySelectorAll('.chart').forEach(function(el){
+      el.innerHTML = '<div style="padding:40px;text-align:center;color:#8a919c;">图表加载失败：需要联网加载 ECharts（CDN）。表格数据不受影响。</div>';
+    });
+    return;
+  }
+  var INK='#1f2329', INK2='#4e5560', INK3='#8a919c', LINE='#e3e6ea';
+  var UP='#d93636', DOWN='#0f9d58', BLUE='#245bdb', ORANGE='#e8830c', PURPLE='#7b61ff', GREY='#b6bcc4';
+  var FONT='-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif';
+  var charts=[];
+  function mk(id, opt){ var el=document.getElementById(id); if(!el) return; var c=echarts.init(el); c.setOption(opt); charts.push(c); }
+  window.addEventListener('resize', function(){ charts.forEach(function(c){ c.resize(); }); });
+
+  // 全名简称映射
+  var N={'006670':'广发景秀','004897':'长安泓源','003949':'兴全稳泰','003358':'易方达7-10A','011062':'广发7-10E',
+    '000032':'易方达信用债','519188':'万家恒利','011489':'双季享','012931':'平安双季盈','015301':'博时双季乐',
+    '004400':'金信民兴','510080':'长盛全债','006337':'华安安浦','217022':'招商产业','007888':'农银金盈',
+    '001258':'兴业收益增强C','017173':'季安盈C','519973':'长信一年定开','021282':'上银慧元利'};
+  var axisCommon={axisLine:{lineStyle:{color:LINE}}, axisLabel:{color:INK2,fontSize:11}, splitLine:{lineStyle:{color:'#eef0f3'}}};
+  var tipCommon={trigger:'axis', axisPointer:{type:'shadow'}, textStyle:{fontSize:12}};
+
+  // ---- 图0：功能位分布（堆叠：保留 vs 清退/合并） ----
+  mk('chart_overview', {
+    tooltip:Object.assign({},tipCommon),
+    legend:{textStyle:{color:INK2,fontSize:11},top:0,right:0},
+    grid:{left:120,right:60,top:36,bottom:24},
+    xAxis:Object.assign({type:'value',minInterval:1},axisCommon,{splitLine:{show:false}}),
+    yAxis:Object.assign({type:'category',data:['流动性特殊','含权增强','产业/城投信用','银行二永信用','中久期纯利率/分散','长久期利率弹性','短久期/短持有期打底']},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:12}}),
+    series:[
+      {name:'保留',type:'bar',stack:'t',data:[0,1,2,2,2,1,2],itemStyle:{color:BLUE},barWidth:16,label:{show:true,position:'inside',color:'#fff',fontSize:11}},
+      {name:'清退/合并',type:'bar',stack:'t',data:[1,1,4,1,1,1,3],itemStyle:{color:'#f3b95f'},barWidth:16,label:{show:true,position:'inside',color:'#7a4d00',fontSize:11}}
+    ]
+  });
+
+  // ---- 图1：久期区间 ----
+  var dur=[['003358',7.5,8.5],['011062',7.5,8.5],['006670',4,5],['510080',4.5,5.5],['007888',4,5],['003949',3,5],['015301',3.5,5],['000032',3,4],['519188',3,4],['012931',3,4],['006337',3,4],['519973',3,4],['004897',2,4],['217022',2.5,3.5],['004400',2,3],['021282',2,3],['017173',2,3],['011489',1.5,2.5]];
+  mk('chart_duration', {
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},textStyle:{fontSize:12},formatter:function(ps){var p=ps[1]||ps[0];var d=dur[p.dataIndex];return N[d[0]]+'（'+d[0]+'）<br/>久期估算：'+d[1]+' – '+d[2]+' 年';}},
+    grid:{left:110,right:50,top:20,bottom:30},
+    xAxis:Object.assign({type:'value',min:0,max:9,name:'年',nameTextStyle:{color:INK3}},axisCommon),
+    yAxis:Object.assign({type:'category',data:dur.map(function(d){return N[d[0]];})},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:11}}),
+    series:[
+      {name:'low',type:'bar',stack:'d',data:dur.map(function(d){return d[1];}),itemStyle:{color:'transparent'},barWidth:13,emphasis:{disabled:true},tooltip:{show:false}},
+      {name:'high',type:'bar',stack:'d',data:dur.map(function(d){return d[2]-d[1];}),itemStyle:{color:BLUE,borderRadius:2},barWidth:13},
+      {name:'行业均值',type:'line',data:[],markLine:{symbol:'none',silent:true,label:{formatter:'行业均值 3.67年',color:ORANGE,fontSize:11},lineStyle:{color:ORANGE,type:'dashed'},data:[{xAxis:3.67}]}}
+    ]
+  });
+
+  // ---- 图2：杠杆 ----
+  var lev=[['519973',1.27],['011062',1.27],['000032',1.19],['012931',1.23],['015301',1.23],['510080',1.13],['007888',1.12],['003949',1.09],['519188',1.09],['003358',1.05],['004897',1.04],['011489',1.04],['217022',1.00],['017173',0.99],['021282',0.98],['004400',0.96],['006670',0.95],['006337',0.93]];
+  mk('chart_leverage', {
+    tooltip:Object.assign({formatter:function(ps){var p=ps[0];return N[lev[p.dataIndex][0]]+'（'+lev[p.dataIndex][0]+'）<br/>杠杆倍数：≈'+lev[p.dataIndex][1].toFixed(2)+'x';}},tipCommon),
+    grid:{left:110,right:50,top:20,bottom:30},
+    xAxis:Object.assign({type:'value',min:0.8,max:1.35},axisCommon),
+    yAxis:Object.assign({type:'category',data:lev.map(function(d){return N[d[0]];})},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:11}}),
+    series:[{type:'bar',data:lev.map(function(d){return {value:d[1],itemStyle:{color:d[1]>1.05?BLUE:(d[1]>=1?GREY:DOWN)}};}),barWidth:13,
+      markLine:{symbol:'none',silent:true,data:[
+        {xAxis:1.0,label:{formatter:'无杠杆 1.0x',color:INK3,fontSize:11},lineStyle:{color:INK3,type:'dashed'}},
+        {xAxis:1.18,label:{formatter:'行业均值 1.18x',color:ORANGE,fontSize:11},lineStyle:{color:ORANGE,type:'dotted'}}
+      ]}}]
+  });
+
+  // ---- 图3：回撤 ----
+  var dd=[['017173',-0.38],['011489',-0.39],['021282',-0.39],['519188',-0.69],['217022',-0.73],['006337',-1.12],['519973',-1.13],['007888',-1.17],['003949',-1.20],['012931',-1.22],['000032',-1.38],['004400',-1.53],['510080',-1.53],['006670',-1.57],['004897',-1.67],['015301',-1.68],['003358',-2.77],['011062',-3.06],['001258',-6.57]];
+  mk('chart_drawdown', {
+    tooltip:Object.assign({formatter:function(ps){var p=ps[0];return N[dd[p.dataIndex][0]]+'（'+dd[p.dataIndex][0]+'）<br/>近3年最大回撤：<b>'+dd[p.dataIndex][1].toFixed(2)+'%</b>';}},tipCommon),
+    grid:{left:110,right:60,top:20,bottom:30},
+    xAxis:Object.assign({type:'value',min:-7,max:0},axisCommon),
+    yAxis:Object.assign({type:'category',data:dd.map(function(d){return N[d[0]];})},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:11}}),
+    series:[{type:'bar',data:dd.map(function(d){return {value:d[1],itemStyle:{color:d[0]==='001258'?PURPLE:DOWN}};}),barWidth:13,
+      label:{show:true,position:'right',color:INK2,fontSize:11,formatter:function(p){return p.value.toFixed(2)+'%';}}}]
+  });
+
+  // ---- 图4：收益 vs 基准 ----
+  var rt=[['001258',23.80,7.80],['011062',17.06,16.17],['510080',16.02,14.25],['003358',14.81,15.61],['006670',11.95,11.97],['007888',11.52,9.75],['004897',11.26,5.12],['000032',11.23,11.28],['003949',11.08,14.31],['004400',10.82,4.28],['519973',10.45,9.59],['519188',10.38,4.45],['015301',10.29,11.96],['006337',9.99,5.07],['011489',9.75,5.12],['012931',9.19,11.96],['017173',8.64,8.29],['217022',8.50,8.25]];
+  mk('chart_return', {
+    tooltip:Object.assign({},tipCommon),
+    legend:{textStyle:{color:INK2,fontSize:11},top:0,right:0,data:['基金收益','业绩基准']},
+    grid:{left:110,right:50,top:36,bottom:30},
+    xAxis:Object.assign({type:'value',max:26},axisCommon),
+    yAxis:Object.assign({type:'category',data:rt.map(function(d){return N[d[0]];})},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:11}}),
+    series:[
+      {name:'基金收益',type:'bar',data:rt.map(function(d){return d[1];}),itemStyle:{color:UP},barWidth:11,label:{show:true,position:'top',color:INK2,fontSize:10,formatter:function(p){return p.value.toFixed(2);}}},
+      {name:'业绩基准',type:'bar',data:rt.map(function(d){return d[2];}),itemStyle:{color:GREY},barWidth:11}
+    ]
+  });
+
+  // ---- 图5：费率堆叠 ----
+  var fee=[['001258',0.70,0.20,0.40],['217022',0.70,0.20,0],['510080',0.75,0.10,0],['011489',0.40,0.10,0],['000032',0.35,0.10,0],['017173',0.30,0.05,0.10],['006670',0.30,0.10,0],['003949',0.30,0.10,0],['004897',0.30,0.10,0],['012931',0.30,0.10,0],['004400',0.30,0.10,0],['006337',0.30,0.10,0],['007888',0.30,0.10,0],['519973',0.30,0.10,0],['519188',0.30,0.075,0],['011062',0.15,0.05,0.10],['015301',0.20,0.05,0],['021282',0.20,0.05,0],['003358',0.15,0.05,0]];
+  mk('chart_fee', {
+    tooltip:Object.assign({formatter:function(ps){var i=ps[0].dataIndex,d=fee[i];return N[d[0]]+'（'+d[0]+'）<br/>管理费 '+d[1].toFixed(3)+'% + 托管费 '+d[2].toFixed(3)+'%'+(d[3]?' + 销售服务费 '+d[3].toFixed(2)+'%':'')+'<br/>合计：<b>'+(d[1]+d[2]+d[3]).toFixed(3)+'%</b>';}},tipCommon),
+    legend:{textStyle:{color:INK2,fontSize:11},top:0,right:0,data:['管理费','托管费','销售服务费']},
+    grid:{left:110,right:50,top:36,bottom:30},
+    xAxis:Object.assign({type:'value',max:1.4},axisCommon),
+    yAxis:Object.assign({type:'category',data:fee.map(function(d){return N[d[0]];})},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:11}}),
+    series:[
+      {name:'管理费',type:'bar',stack:'f',data:fee.map(function(d){return d[1];}),itemStyle:{color:BLUE},barWidth:13},
+      {name:'托管费',type:'bar',stack:'f',data:fee.map(function(d){return d[2];}),itemStyle:{color:'#7ba2ee'},barWidth:13},
+      {name:'销售服务费',type:'bar',stack:'f',data:fee.map(function(d){return d[3];}),itemStyle:{color:ORANGE},barWidth:13,label:{show:true,position:'right',color:INK2,fontSize:10,formatter:function(p){var d=fee[p.dataIndex];return (d[1]+d[2]+d[3]).toFixed(3)+'%';}}}
+    ]
+  });
+
+  // ---- 图6：功能位 保留 vs 清退/合并 ----
+  var posNames=['短久期/短持有期打底','长久期利率弹性','中久期纯利率/分散','银行二永信用','产业/城投信用','含权增强','流动性特殊'];
+  var posKeep=[2,1,2,2,2,1,0], posCut=[3,1,1,1,4,1,1];
+  mk('chart_positions', {
+    tooltip:Object.assign({formatter:function(ps){var i=ps[0].dataIndex;return posNames[i]+'<br/>涉及基金：'+(posKeep[i]+posCut[i])+' 只<br/>保留：'+posKeep[i]+' 只 ｜ 清退/合并：'+posCut[i]+' 只';}},tipCommon),
+    legend:{textStyle:{color:INK2,fontSize:11},top:0,right:0,data:['保留','清退/合并']},
+    grid:{left:150,right:50,top:36,bottom:24},
+    xAxis:Object.assign({type:'value',minInterval:1},axisCommon,{splitLine:{show:false}}),
+    yAxis:Object.assign({type:'category',data:posNames},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:12}}),
+    series:[
+      {name:'保留',type:'bar',stack:'p',data:posKeep,itemStyle:{color:BLUE},barWidth:16,label:{show:true,position:'inside',color:'#fff',fontSize:11}},
+      {name:'清退/合并',type:'bar',stack:'p',data:posCut,itemStyle:{color:'#f3b95f'},barWidth:16,label:{show:true,position:'inside',color:'#7a4d00',fontSize:11}}
+    ]
+  });
+
+  // ---- 图7：组合饼图 ----
+  mk('chart_pie', {
+    tooltip:{trigger:'item',textStyle:{fontSize:12},formatter:'{b}<br/>权重：{c}%（{d}%）'},
+    legend:{textStyle:{color:INK2,fontSize:11},bottom:0,left:'center'},
+    series:[{type:'pie',radius:['38%','68%'],center:['50%','44%'],
+      itemStyle:{borderColor:'#fff',borderWidth:2},
+      label:{color:INK,fontSize:12,formatter:'{b}\n{c}%'},
+      data:[
+        {name:'021282 上银慧元利',value:15,itemStyle:{color:BLUE}},
+        {name:'011489 双季享',value:10,itemStyle:{color:'#4a7de0'}},
+        {name:'7-10国开指数(二选一)',value:15,itemStyle:{color:'#8db3f0'}},
+        {name:'006670 广发景秀',value:20,itemStyle:{color:'#2f9e6e'}},
+        {name:'银行二永(1-2只)',value:22.5,itemStyle:{color:DOWN}},
+        {name:'004897 长安泓源',value:12.5,itemStyle:{color:ORANGE}},
+        {name:'现金/再平衡缓冲',value:5,itemStyle:{color:GREY}}
+      ]}]
+  });
+})();
+</script>
+</body>
+</html>
