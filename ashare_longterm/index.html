@@ -57,6 +57,11 @@
   .gpt .badge { background: var(--gpt); }
   .claude .badge { background: var(--claude); }
   .src-head .sub { color: #999; font-size: 12.5px; }
+  .src-head .src-link {
+    margin-left: auto; font-size: 12.5px; color: var(--brand); text-decoration: none;
+    border: 1px solid var(--brand); padding: 3px 10px; border-radius: 5px; white-space: nowrap;
+  }
+  .src-head .src-link:hover { background: var(--brand); color: #fff; }
   .gpt { --brand: var(--gpt); }
   .claude { --brand: var(--claude); }
 
@@ -98,6 +103,8 @@
 
   footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); }
   footer p { font-size: 12.5px; color: #999; margin: 6px 0; }
+  footer a { color: #2E6FB0; text-decoration: none; border-bottom: 1px solid #cfe2f3; }
+  footer a:hover { border-bottom-color: #2E6FB0; }
 
   @media (max-width: 640px) { body { padding: 28px 18px 56px; } }
 </style>
@@ -124,6 +131,7 @@
   <div class="src-head">
     <span class="badge">ChatGPT</span>
     <span class="sub">整理自对话「A股长期投资」· 回答中带机构来源标注（中国证券投资基金业协会 / Investor.gov / Vanguard）</span>
+    <a class="src-link" href="source/A%E8%82%A1%E9%95%BF%E6%9C%9F%E6%8A%95%E8%B5%84%20%2810_19_2026%208%EF%BC%9A10%EF%BC%9A24%20AM%29.html" target="_blank" rel="noopener">查看来源原文 ↗</a>
   </div>
 
   <h2>一、为什么愿意在 A 股长期投资？熊市真的熬得住吗？</h2>
@@ -238,6 +246,7 @@
   <div class="src-head">
     <span class="badge">Claude</span>
     <span class="sub">整理自对话「A股长期投资的可行性与挑战」· Sonnet · 强调序列风险、100 减年龄法则与下滑曲线</span>
+    <a class="src-link" href="source/A%E8%82%A1%E9%95%BF%E6%9C%9F%E6%8A%95%E8%B5%84%E7%9A%84%E5%8F%AF%E8%A1%8C%E6%80%A7%E4%B8%8E%E6%8C%91%E6%88%98%20-%20Claude%20%2810_19_2026%208%EF%BC%9A08%EF%BC%9A57%20AM%29.html" target="_blank" rel="noopener">查看来源原文 ↗</a>
   </div>
 
   <h2>一、为什么愿意长期投资？熊市真的熬得住吗？</h2>
@@ -341,7 +350,10 @@
 </section>
 
 <footer>
-  <p>原文来源：两份对话的 SingleFile HTML 导出（ChatGPT「A股长期投资」、Claude「A股长期投资的可行性与挑战」），整理时清理了界面噪声并保留原意，未做观点合并。</p>
+  <p>原文来源：两份对话的 SingleFile HTML 导出，整理时清理了界面噪声并保留原意，未做观点合并。来源文件：
+    <a href="source/A%E8%82%A1%E9%95%BF%E6%9C%9F%E6%8A%95%E8%B5%84%20%2810_19_2026%208%EF%BC%9A10%EF%BC%9A24%20AM%29.html" target="_blank" rel="noopener">ChatGPT 对话「A股长期投资」</a> ·
+    <a href="source/A%E8%82%A1%E9%95%BF%E6%9C%9F%E6%8A%95%E8%B5%84%E7%9A%84%E5%8F%AF%E8%A1%8C%E6%80%A7%E4%B8%8E%E6%8C%91%E6%88%98%20-%20Claude%20%2810_19_2026%208%EF%BC%9A08%EF%BC%9A57%20AM%29.html" target="_blank" rel="noopener">Claude 对话「A股长期投资的可行性与挑战」</a>
+  </p>
   <p>文中涉及的具体比例、案例均为对话中的示意性说明，不构成投资建议。</p>
 </footer>
 
