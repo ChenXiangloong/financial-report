@@ -96,23 +96,10 @@
     background: #f6f8fa; border: 1px solid #e6eaee; font-size: 13px; color: #6a737d;
   }
 
-  /* ---------- 共识对比 ---------- */
-  .compare { margin-top: 54px; }
-  .consensus { background: #fafdfb; border: 1px solid #d9ece1; border-left: 5px solid var(--green);
-    border-radius: 10px; padding: 20px 24px; }
-  .consensus h3 { border: none; padding: 0; margin: 0 0 12px; color: #1f6b42; }
-  .diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
-  .diff-grid .col { border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
-  .diff-grid .col.g { border-top: 4px solid var(--gpt); }
-  .diff-grid .col.c { border-top: 4px solid var(--claude); }
-  .diff-grid .col h4 { margin: 0 0 10px; font-size: 15px; }
-  .diff-grid .col ul { padding-left: 20px; margin: 0; }
-  .diff-grid .col li { margin: 8px 0; font-size: 14px; }
-
   footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); }
   footer p { font-size: 12.5px; color: #999; margin: 6px 0; }
 
-  @media (max-width: 640px) { .diff-grid { grid-template-columns: 1fr; } body { padding: 28px 18px 56px; } }
+  @media (max-width: 640px) { body { padding: 28px 18px 56px; } }
 </style>
 </head>
 <body>
@@ -351,47 +338,6 @@
   <div class="takeaway"><b>总结：</b>年龄只是一个代理指标，真正决定股票比例的是「这笔钱什么时候要用、你能承受多大波动、你还有多少未来收入」。年龄增长通常会让这三者都往保守方向变化，所以才有「随年龄降低股票占比」的说法。</div>
 
   <div class="disclaimer">以上是一般性的知识分享，不构成具体的投资建议，具体比例还需要结合你自己的情况来定。</div>
-</section>
-
-<!-- ==================== 共识与差异 ==================== -->
-<section class="compare">
-  <h2>两份回答的共识与各自亮点</h2>
-
-  <div class="consensus">
-    <h3>共识：长期投资真正考验的是「资金安排」，不是意志力</h3>
-    <ul class="plain">
-      <li><b>长期 ≠ 永不卖出：</b>两者都强调，长期投资是「不被短期波动牵着走」，而非买了就不动；卖出应有规则、最好在买入前想清楚。</li>
-      <li><b>资金期限管理是核心：</b>用钱时间越近，股票比例应越低；3 年内要用的钱不该放股市，应提前转入低波动资产。</li>
-      <li><b>再平衡纪律优先于择时：</b>都给出「偏离目标配置就再平衡」的规则，强调不需要预测市场顶部。</li>
-      <li><b>分散与宽基：</b>都倾向宽基指数而非押个股，用债券/现金作缓冲，留足应急资金。</li>
-      <li><b>接受不确定性：</b>长期投资提高的是「获得长期回报的机会」，不消除风险；两者都提示「不构成具体投资建议」。</li>
-    </ul>
-  </div>
-
-  <div class="diff-grid">
-    <div class="col g">
-      <h4>ChatGPT 的侧重</h4>
-      <ul>
-        <li>提出 <b>「终点风险」</b>：持有期末恰好遇到熊市被迫卖出，是最该管理的时点风险。</li>
-        <li>给出具体可落地的 <b>100 万 / 60–40 组合示例</b>与再平衡触发条件表。</li>
-        <li>强调 <b>资产配置与资金期限管理比「单纯长期持有」更重要</b>。</li>
-        <li>回答中引用机构来源（中国证券投资基金业协会、Investor.gov、Vanguard）。</li>
-      </ul>
-    </div>
-    <div class="col c">
-      <h4>Claude 的侧重</h4>
-      <ul>
-        <li>引入学术概念 <b>「序列风险」（sequence risk）</b>，解释起止时点为何影响结果。</li>
-        <li>给出经验法则 <b>「100 减年龄」（及 110/120 变体）</b>与 <b>「下滑曲线 glide path」</b>。</li>
-        <li>用 <b>「人力资本」</b> 解释年轻人可多配股票（未来收入像「类债券」资产）。</li>
-        <li>突出 <b>定投的心理价值</b>：不用纠结「现在是不是底」。</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="tip">
-    <span class="tip-t">互补点</span>ChatGPT 偏「操作规则与组合示例」，Claude 偏「风险概念与生命周期框架」。把两者合起来看：用 Claude 的序列风险/人力资本理解「为什么」，用 ChatGPT 的再平衡表与 100 万示例落地「怎么做」，刚好形成从认知到执行的闭环。
-  </div>
 </section>
 
 <footer>
