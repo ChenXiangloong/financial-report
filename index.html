@@ -51,5 +51,28 @@
 
 <p class="muted">页面均为静态 HTML，可直接在浏览器中打开。</p>
 
+<script>
+// 自动按发布日期从新到旧排序（取每条描述里最后一个 YYYY-MM-DD 作为发布日）
+(function () {
+  var items = Array.prototype.slice.call(document.querySelectorAll('a.item'));
+  if (items.length < 2) return;
+  function publishDate(el) {
+    var d = el.querySelector('.d');
+    var txt = d ? d.textContent : el.textContent;
+    var m = txt.match(/\d{4}-\d{2}-\d{2}/g);
+    return m ? m[m.length - 1] : null; // 最后出现的日期 = 发布日
+  }
+  items.sort(function (a, b) {
+    var da = publishDate(a), db = publishDate(b);
+    if (!da) return 1;   // 无日期的排到最后
+    if (!db) return -1;
+    return db.localeCompare(da); // 新 → 旧
+  });
+  var parent = items[0].parentNode;
+  var anchor = document.querySelector('p.muted') || null;
+  items.forEach(function (el) { parent.insertBefore(el, anchor); });
+})();
+</script>
+
 </body>
 </html>
