@@ -3,245 +3,468 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QDII 美股基金限购分析：成因、历史与十年规模趋势</title>
+<title>QDII 美股基金限购：成因、历史与十年规模趋势（ChatGPT 与 Claude 的两种回答）</title>
 <style>
-  body { font-family: -apple-system, "PingFang SC", "Heiti SC", "Microsoft YaHei", sans-serif;
-         max-width: 1080px; margin: 0 auto; padding: 32px 28px 64px; color: #2c2c2c; background: #fff; line-height: 1.75; }
-  h1 { font-size: 26px; border-bottom: 3px solid #D64541; padding-bottom: 10px; }
-  h2 { font-size: 19px; margin-top: 48px; border-left: 5px solid #D64541; padding-left: 10px; }
-  h3 { font-size: 16px; margin-top: 28px; }
-  h4 { font-size: 14.5px; margin-top: 22px; }
-  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13px; }
-  th, td { border: 1px solid #e3e3e3; padding: 6px 9px; text-align: center; }
-  th { background: #f7f7f7; font-weight: 600; }
+  :root {
+    --red: #D64541;
+    --green: #2E9E5B;
+    --gpt: #10A37F;
+    --claude: #C96442;
+    --ink: #2c2c2c;
+    --line: #e8e8e8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Heiti SC", "Microsoft YaHei", sans-serif;
+    max-width: 880px; margin: 0 auto; padding: 40px 28px 72px;
+    color: var(--ink); background: #fff; line-height: 1.78; font-size: 15.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 27px; line-height: 1.35; margin: 0 0 10px; letter-spacing: -.2px; }
+  h1 .accent { border-bottom: 4px solid var(--red); padding-bottom: 6px; }
+  h2 { font-size: 20px; margin: 52px 0 14px; padding-left: 12px; border-left: 5px solid var(--red); line-height: 1.4; }
+  h3 { font-size: 16.5px; margin: 30px 0 10px; }
+  h4 { font-size: 15px; margin: 22px 0 8px; }
+  p { margin: 12px 0; }
+  .meta { color: #8a8a8a; font-size: 13px; margin: 0 0 30px; line-height: 1.7; }
+  .muted { color: #999; font-size: 12.5px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .up { color: var(--red); font-weight: 600; }
+  .down { color: var(--green); font-weight: 600; }
+  b, strong { color: #1f1f1f; }
+  ol, ul { padding-left: 22px; margin: 12px 0; }
+  li { margin: 7px 0; }
+
+  /* ---------- 提问卡 ---------- */
+  .ask {
+    background: #fafafa; border: 1px solid var(--line);
+    border-radius: 12px; padding: 18px 22px; margin: 0 0 12px;
+  }
+  .ask .lbl {
+    font-size: 11.5px; letter-spacing: 1.5px; color: #aaa;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .ask ol { margin: 0; padding-left: 22px; }
+  .ask li { margin: 11px 0; line-height: 1.7; }
+  .ask .q { font-size: 16px; color: #444; }
+  .ask .note { color: #999; font-size: 12.5px; margin: 12px 0 0; }
+
+  /* ---------- 来源区块 ---------- */
+  .src { margin-top: 46px; }
+  .src-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+  .badge {
+    font-size: 13px; font-weight: 700; color: #fff;
+    padding: 4px 12px; border-radius: 5px; letter-spacing: .3px;
+  }
+  .gpt .badge { background: var(--gpt); }
+  .claude .badge { background: var(--claude); }
+  .src-head .sub { color: #999; font-size: 12.5px; }
+  .src-head .src-link {
+    margin-left: auto; font-size: 12.5px; color: var(--brand); text-decoration: none;
+    border: 1px solid var(--brand); padding: 3px 10px; border-radius: 5px; white-space: nowrap;
+  }
+  .src-head .src-link:hover { background: var(--brand); color: #fff; }
+  .gpt { --brand: var(--gpt); }
+  .claude { --brand: var(--claude); }
+
+  .src h2 { border-left-color: var(--brand); }
+  .src h3 { border-left: 3px solid var(--brand); padding-left: 10px; }
+
+  /* ---------- 阶段卡片 / 要点 ---------- */
+  .stage {
+    border: 1px solid var(--line); border-left: 4px solid var(--brand);
+    border-radius: 8px; padding: 16px 20px; margin: 16px 0; background: #fff;
+  }
+  .stage .st-title { font-weight: 700; font-size: 15.5px; margin-bottom: 8px; }
+  .stage p { margin: 8px 0; }
+  .takeaway {
+    margin-top: 12px; padding: 9px 14px; border-radius: 6px;
+    background: #f7f7f7; font-size: 14.5px; color: #444;
+  }
+  .takeaway b { color: #333; }
+
+  /* ---------- 表格 ---------- */
+  .tbl-wrap { overflow-x: auto; margin: 18px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 10px 13px; vertical-align: top; }
+  th { background: #f7f7f7; font-weight: 600; text-align: center; }
   td.left, th.left { text-align: left; }
-  .muted { color: #999; font-size: 12px; }
-  .meta { color: #888; font-size: 13px; margin: 4px 0 18px; }
-  .card { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
-  .concl { background: #FFF6F5; border: 1px solid #F3C6C3; border-radius: 8px; padding: 16px 20px; margin: 18px 0; }
-  .formula { background: #f7f7f7; border-radius: 6px; padding: 10px 16px; font-size: 15px; text-align: center;
-             margin: 14px 0; letter-spacing: .5px; }
-  .up { color: #D64541; } .down { color: #2E9E5B; }
-  code { background: #f2f2f2; padding: 1px 5px; border-radius: 3px; font-size: 12.5px; }
-  ol, ul { padding-left: 24px; }
-  li { margin: 4px 0; }
-  .stage { border: 1px solid #eee; border-left: 4px solid #D64541; border-radius: 6px;
-           padding: 12px 16px; margin: 12px 0; background: #fffdfd; }
-  .stage .stage-title { font-weight: 600; font-size: 14.5px; }
-  .chart-card { border: 1px solid #eee; border-radius: 8px; padding: 18px 18px 10px; margin: 18px 0; background: #fff; }
+  td.n { text-align: center; font-variant-numeric: tabular-nums; }
+  caption { caption-side: bottom; color: #999; font-size: 12px; padding-top: 8px; text-align: left; }
+
+  /* ---------- 来源小标注 ---------- */
+  .ref { color: #b0b0b0; font-size: 11.5px; white-space: nowrap; }
+
+  /* ---------- 公式框 ---------- */
+  .formula {
+    background: #f7f7f7; border-radius: 6px; padding: 12px 16px;
+    text-align: center; margin: 16px 0; font-size: 16px; letter-spacing: .5px;
+  }
+
+  /* ---------- 提示框 ---------- */
+  .tip {
+    background: #FFF9F0; border: 1px solid #F0DCBC; border-radius: 8px;
+    padding: 13px 18px; margin: 18px 0; font-size: 14px; color: #6b5637;
+  }
+  .tip .tip-t { font-weight: 700; color: #8a6a34; }
+  .disclaimer {
+    margin: 16px 0 0; padding: 10px 14px; border-radius: 6px;
+    background: #f6f8fa; border: 1px solid #e6eaee; font-size: 13px; color: #6a737d;
+  }
+
+  /* ---------- 图表 ---------- */
+  .chart-card {
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 18px 18px 12px; margin: 20px 0; background: #fff;
+  }
   .chart-card .chart-title { font-weight: 600; font-size: 14.5px; margin-bottom: 2px; }
   .chart-card .chart-sub { color: #888; font-size: 12px; margin-bottom: 6px; }
   .chart { width: 100%; height: 380px; }
   .chart-note { color: #999; font-size: 12px; margin-top: 8px; line-height: 1.6; }
-  .src { color: #aaa; font-size: 11px; }
-  .q { color: #666; }
-  @media (max-width: 720px) { .chart { height: 320px; } }
+  @media (max-width: 640px) {
+    body { padding: 28px 18px 56px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 18px; margin-top: 40px; }
+    .stage { padding: 14px 16px; }
+    .chart { height: 320px; }
+  }
 </style>
 </head>
 <body>
 
-<h1>QDII 美股基金限购分析：成因、历史与十年规模趋势</h1>
-<p class="meta">整理自一次 ChatGPT 公开对话 · 对话时间 2026-10-18 · 原文共两轮问答 · 本文为网页文章版（含可交互图表）</p>
+<h1><span class="accent">QDII 美股基金限购：成因、历史与十年规模趋势</span></h1>
+<p class="meta">
+  同一组两个问题，两个 AI 的完整回答 · ChatGPT 回答带联网来源标注（第一财经 / Reuters / 晨星 / CN Stock 等），
+  Claude 回答同样基于联网检索（21 世纪经济报道 / 财联社 / 新浪财经等）· 分别整理自两份对话的网页存档，未做观点合并 · 整理日期 2026-10-19
+</p>
 
-<div class="card">
-  <b>对话缘起（原始提问）</b>
-  <ol style="margin:8px 0 0">
-    <li class="q">“今年出现了大范围 QDII 美股基金限购的情况，而且持续了很长时间，这种情况以前出现过吗？为什么今年会出现这种情况呢？未来可能还会持续多久呢？”</li>
-    <li class="q">“帮我分析一下过去 10 年里美股 QDII 基金规模的变化趋势。”</li>
+<div class="ask">
+  <div class="lbl">向两个 AI 提出的同一组问题</div>
+  <ol>
+    <li><span class="q">今年出现了大范围 QDII 美股基金限购的情况，而且持续了很长时间，这种情况以前出现过吗？为什么今年会出现这种情况呢？未来可能还会持续多久呢？</span></li>
+    <li><span class="q">帮我分析一下过去 10 年里美股 QDII 基金规模的变化趋势。</span></li>
   </ol>
+  <p class="note">两份对话收到的是同一组问题。以下按来源分别整理，尽量保留原意；对界面噪声（检索提示、复制按钮、孤立的时间戳等）已清理。</p>
 </div>
 
-<div class="concl">
-  <b>核心结论（先看这里）</b>
-  <ol style="margin:8px 0 0">
-    <li><b>大范围限购不是今年才有。</b>2024 年上半年就出现过：截至 2024 年 5 月 17 日，617 只 QDII 基金中有 338 只限购或暂停申购，占 <span class="up">54.8%</span>（中国基金报）。2026 年的新特点是：热门美股基金限购极低（部分单日限额降至 10～20 元）、持续数月、反复调整。</li>
-    <li><b>今年的限购是三重因素叠加</b>：投资需求集中爆发 ＋ 外汇额度供给有限 ＋ 基金公司主动控制规模，不能简单归结为单一的外汇政策。</li>
-    <li><b>未来判断</b>：未来几个月仍可能反复限购，但不同基金的恢复时间会有很大差异；不宜假设某个解禁日期就会全面解除。</li>
-    <li><b>十年规模视角</b>：美股 QDII 规模增长主要集中在 2021 年以后，2024—2026 年进一步加速（2026 年中约 3692 亿元，约为 2021 年末的 11 倍以上）；但规模增长 ≠ 限购会放宽，热门产品限购与总额度扩张同步存在。</li>
-  </ol>
-</div>
-
-<h2>第一部分：今年的限购是怎么回事</h2>
-
-<p><b>结论先行：</b>QDII 美股基金限购并不是今年才出现的现象。但如果你观察到的是<b>大量基金同时限购、单日只能买 10 元或 20 元，而且持续数月</b>，那么这确实是一个值得单独分析的现象。</p>
-
-<p>它背后的核心矛盾是：<b>国内投资者想买的海外资产规模，超过了部分基金管理人愿意或能够承接的规模。</b>这与“海外股票是否值得投资、基金经理是否看好美股”，是两个不同的问题。</p>
-
-<h3>一、以前出现过吗？出现过，而且不止一次</h3>
-
-<table>
-  <tr><th class="left">时期</th><th class="left">限购情况</th><th class="left">主要背景</th></tr>
-  <tr>
-    <td class="left">2020—2021 年</td>
-    <td class="left">部分热门海外基金限购</td>
-    <td class="left">海外市场表现、投资需求增长及额度约束等因素</td>
-  </tr>
-  <tr>
-    <td class="left">2024 年上半年</td>
-    <td class="left">大范围限购</td>
-    <td class="left">截至 5 月 17 日，617 只 QDII 基金中有 338 只限购或暂停申购，占 54.8%<span class="src">（中国基金报）</span></td>
-  </tr>
-  <tr>
-    <td class="left">2026 年上半年</td>
-    <td class="left">再次大范围限购，部分单日限额降至 10～20 元</td>
-    <td class="left">美股科技资产受到追捧，QDII 额度紧张；截至 6 月，已有大量基金暂停或限制申购<span class="src">（第一财经）</span></td>
-  </tr>
-</table>
-
-<p>因此，<b>大范围限购并非今年独有，2024 年就出现过覆盖面很广的类似情况。</b>今年比较突出的是：热门美股基金的限购非常低，而且投资需求持续旺盛，导致限购反复调整。</p>
-
-<div class="chart-card">
-  <div class="chart-title">QDII 基金限购比例（2024 年 5 月 17 日）</div>
-  <div class="chart-sub">617 只 QDII 基金中，338 只限购或暂停申购，占比 54.8%</div>
-  <div id="chartLimit" class="chart"></div>
-  <div class="chart-note">数据来源：中国基金报（经原对话转引）。悬停扇区可查看具体只数与占比。</div>
-</div>
-
-<h3>二、为什么今年会出现这种情况？</h3>
-
-<p>可以从四个层面理解：</p>
-
-<h4>1. 投资需求增长，而额度供给有限</h4>
-<p>这是最直接的原因。国内投资者通过 QDII 基金投资美股，需要基金管理人拥有相应的<b>境外投资额度</b>。基金获批的额度并不等于全部可以用于某一只美股基金；公司还需要在旗下产品之间分配额度。当某只基金的申购需求超过它能承接的规模时，基金公司就能下调限购金额，甚至暂停申购。<span class="src">（CN Stock）</span></p>
-
-<h4>2. 美股科技资产的吸引力，进一步放大了需求</h4>
-<p>2026 年，海外科技、人工智能等投资主题持续吸引资金。与此同时，国内投资者对全球资产配置的需求上升，部分投资者希望通过标普 500、纳斯达克 100 等指数分散投资。</p>
-<p>这意味着，资金并不是均匀流入所有 QDII 基金，而是<b>集中涌向少数热门产品</b>。即使整个 QDII 市场获得了新增额度，热门基金也仍然可能出现额度不足。<span class="src">（edu.gffunds.com）</span></p>
-
-<h4>3. 新增 QDII 总额度，不等于投资者马上可以买到基金</h4>
-<p>这里有一个容易忽视的区别，至少包括四个环节：</p>
-<ul>
-  <li>外汇管理部门向市场新增 QDII 额度；</li>
-  <li>基金公司获得或调配可用额度；</li>
-  <li>基金公司决定是否向具体产品开放申购；</li>
-  <li>基金产品实际承接新增资金。</li>
-</ul>
-<p>这些环节需要时间，而且基金公司可能优先满足其他产品的运作需求。例如，2026 年 6 月，全市场累计获批 QDII 额度为 <b>1761.69 亿美元</b><span class="src">（第一财经）</span>，但总额度增加，并不意味着每一只标普 500 或纳斯达克 100 基金都能同步放开放购。</p>
-
-<h4>4. 基金公司也不希望规模无限增长</h4>
-<p>额度并不是唯一因素。短期内资金大量涌入，可能增加基金建仓、跨境交易和跟踪指数的难度；如果资金暂时无法有效投入目标资产，也可能影响基金运作。因此，基金公司还会<b>主动控制规模</b>，以维护持有人的利益。<span class="src">（fund.10jqka.com.cn）</span></p>
-
-<p>简而言之，今年的限购是<b>投资需求集中爆发、境外投资额度有限，以及基金公司主动控制规模</b>共同作用的结果，而不能简单归因于单一的外汇政策。</p>
-
-<h3>三、未来还会持续多久？</h3>
-
-<p><b>判断：未来几个月仍可能反复限购，但不同基金的恢复时间会有很大差异；不宜假设某个解禁日期就会全面解除。</b></p>
-
-<p>截至 2026 年 9 月，已经出现了一个很有代表性的现象：外汇管理部门<b>新增了 68 亿美元 QDII 额度</b>后，部分基金曾提高申购上限，但由于资金迅速涌入，又重新收紧限购。例如，万家旗下纳斯达克 100 指数基金的单日限额曾从 10 元提高到 5000 元，随后又降至 100 元。<span class="src">（Reuters）</span></p>
-
-<p>这说明，<b>新增额度能够缓解供给约束，却未必能持续满足热门基金的申购需求</b>。我会重点观察以下三种情景：</p>
-
-<table>
-  <tr><th class="left">情景</th><th class="left">可能出现的情况</th></tr>
-  <tr><td class="left">新增额度持续发放，投资热度回落</td><td class="left">限购逐步放宽，部分基金恢复正常申购</td></tr>
-  <tr><td class="left">新增额度发放，但资金继续集中流入</td><td class="left">部分基金放宽，另一些基金继续限购，反复调整</td></tr>
-  <tr><td class="left">境外额度供给增长赶不上需求</td><td class="left">低限额可能持续较长时间，场内 ETF 溢价也可能维持高位</td></tr>
-</table>
-
-<p>需要强调的是，这些是<b>情景分析，不是对限购解除日期的确定预测</b>。尤其不能因为某只基金短暂放宽限额，就认为整个市场已经恢复正常。</p>
-
-<h3>四、对你的长期投资计划，有什么影响？</h3>
-
-<p>结合你之前希望配置标普 500、同时维持股债平衡的计划，建议采取以下做法：</p>
-
-<div class="stage">
-  <div class="stage-title">第一，不要把美股仓位能否建完成，完全寄托于限购解除。</div>
-  你可以继续通过限购基金定投，但不要因为每天只能买 20 元，就为了尽快建仓而追逐高溢价的场内 ETF。
-</div>
-
-<div class="stage">
-  <div class="stage-title">第二，未能投入美股的资金，暂时放在低风险、流动性较好的资产中。</div>
-  如果这笔钱原本属于长期股票配置，可以暂时留在现金管理工具或合适的短债基金中，等待申购额度恢复。不要因为美股买不进去，就自动全部转投 A 股，否则会改变原定的地域分散比例。不过，短债基金也有净值波动和赎回规则，不能完全等同于现金。
-</div>
-
-<div class="stage">
-  <div class="stage-title">第三，把“额度恢复”和“市场估值”分开判断。</div>
-  限购是投资渠道的供给约束，不是美股高估或低估的信号。额度恢复时，不必因为担心再次限购就一次性追买；反过来，限购持续也不意味着应该放弃长期美股配置。
-</div>
-
-<div class="stage">
-  <div class="stage-title">第四，关注具体基金的限购公告，而不只是 QDII 总额度。</div>
-  真正影响你能否建仓的，是目标基金的<b>实际申购上限、基金公司的额度分配和申购开放状态</b>。
-</div>
-
-<p>核心建议是：<b>把 QDII 限购视为长期建仓中的一个执行约束，而不是改变资产配置目标的理由。</b>你需要解决的是如何让暂时无法投入的美股资金安全等待，以及如何在额度恢复后有纪律地完成建仓，而不是押注限购何时解除。</p>
-
-<h2>第二部分：过去 10 年，美股 QDII 基金规模怎么变的</h2>
-
-<p><b>先看结论：过去 10 年，美股 QDII 基金经历了明显的加速扩张。</b>查到的行业研究数据表明，美股 QDII 的规模增长主要集中在 2021 年以后，2024—2026 年进一步加速。</p>
-
-<div class="chart-card">
-  <div class="chart-title">美股 QDII 基金规模变化（2021—2026）</div>
-  <div class="chart-sub">单位：亿元人民币。2021 年末为反推近似值；2023、2024、2025 年为不同研究报告统计，2024 年为估算值</div>
-  <div id="chartScale" class="chart"></div>
-  <div class="chart-note">
-    数据说明：2021 年末约 325 亿元（由 2024 年 6 月底规模 1301.9 亿元约为其 4 倍反推）；2023 年末 939 亿元；2024 年末约 2070 亿元（由 2025 年末规模减去报告所述的 860 亿元增量估算）；2025 年末约 2930 亿元；2026 年中约 3692 亿元。不同研究机构的分类口径可能不同，图中数值适合观察趋势，不应视为完全同口径的精确序列。悬停柱体可查看数值。
+<!-- ==================== 第一部分：ChatGPT ==================== -->
+<section class="src gpt">
+  <div class="src-head">
+    <span class="badge">ChatGPT</span>
+    <span class="sub">整理自对话「QDII美股基金限购分析」· 回答中带联网检索来源标注（中国金融信息网 / 第一财经 / Reuters / CN Stock / 晨星统计等）</span>
+    <a class="src-link" href="source/QDII%E7%BE%8E%E8%82%A1%E5%9F%BA%E9%87%91%E9%99%90%E8%B4%AD%E5%88%86%E6%9E%90%20%2810_19_2026%209%EF%BC%9A53%EF%BC%9A50%20AM%29.html" target="_blank" rel="noopener">查看原始对话 ↗</a>
   </div>
-</div>
 
-<h3>一、把这 10 年拆成四个阶段</h3>
+  <h2>第一轮 · 今年的限购是怎么回事</h2>
 
-<div class="stage">
-  <div class="stage-title">第一阶段（2016—2020）：规模较小，缓慢发展</div>
-  整个 QDII 行业规模在这一时期经历了波动后逐步恢复。2019 年末，全行业规模约 817 亿元，2020 年末约 1129 亿元。美股投资还没有成为后来那样的热门方向。<span class="src">（pdf.chinaffwc.com）</span>
-</div>
+  <p><b>结论：</b>QDII 美股基金限购并不是今年才出现的现象。但如果你观察到的是<b>大量基金同时限购、单日只能买 10 元或 20 元，而且持续数月</b>，那么这确实是一个值得单独分析的现象。</p>
 
-<div class="stage">
-  <div class="stage-title">第二阶段（2021—2022）：海外投资需求明显上升</div>
-  国内市场表现与海外市场出现差异，投资者开始更积极地配置海外资产。2021 年以来，美股基金规模明显扩张；但这一时期的 QDII 资金流入也受到港股和中概互联网主题基金的显著影响，并非全部流向美股。<span class="src">（app-web.chfnf.com）</span>
-</div>
+  <p>它背后的核心矛盾是：<b>国内投资者想买的海外资产规模，超过了部分基金管理人愿意或能够承接的规模。</b>这与海外股票是否值得投资、基金经理是否看好美股，是两个不同的问题。</p>
 
-<div class="stage">
-  <div class="stage-title">第三阶段（2023—2024）：美股指数基金加速扩容</div>
-  标普 500、纳斯达克 100 等指数产品受到更多关注，新发产品增加。晨星统计显示，2024 年 6 月底美股基金规模达到约 1302 亿元，约为 2021 年末的 4 倍；2024 年以来，美股 QDII 的规模继续显著增长。<span class="src">（app-web.chfnf.com）</span>
-</div>
+  <p>对于你正在制定的长期资产配置计划，最重要的是区分三个问题：</p>
+  <ol>
+    <li>过去是否出现过类似的<b>长期、广泛限购</b>？</li>
+    <li>为什么今年会出现，究竟是<b>外汇额度、基金规模，还是其他因素</b>？</li>
+    <li><b>限购何时可能解除</b>，以及在此之前未投入的美股资金应该怎么安排？</li>
+  </ol>
 
-<div class="stage">
-  <div class="stage-title">第四阶段（2025—2026）：规模继续跃升，额度约束更突出</div>
-  研究报告统计，美股 QDII 规模在 2025 年末约为 2930 亿元；2026 年中约为 3692 亿元。与此同时，部分热门产品的限购仍然存在，说明基金规模增长并不意味着个人投资者申购渠道同步放宽。<span class="src">（新浪财经）</span>
-</div>
+  <h3>一、以前出现过吗？出现过，而且不止一次</h3>
 
-<h3>二、规模增长究竟来自哪里？</h3>
+  <p>比较有代表性的历史阶段如下：</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th class="left">时期</th><th class="left">限购情况</th><th class="left">主要背景</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="left">2020—2021 年</td>
+          <td class="left">部分热门海外基金限购</td>
+          <td class="left">海外市场表现、投资需求增长及额度约束等因素</td>
+        </tr>
+        <tr>
+          <td class="left">2024 年上半年</td>
+          <td class="left">大范围限购</td>
+          <td class="left">截至 5 月 17 日，617 只 QDII 基金中有 338 只限购或暂停申购，占 <b>54.8%</b> <span class="ref">（中国金融信息网）</span></td>
+        </tr>
+        <tr>
+          <td class="left">2026 年上半年</td>
+          <td class="left">再次大范围限购，部分单日限额降至 10～20 元</td>
+          <td class="left">美股科技资产受到追捧，QDII 额度紧张；截至 6 月，已有大量基金暂停或限制申购 <span class="ref">（fund.10jqka.com.cn）</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<p>这是解读数据时最关键的一点。基金规模变化可以粗略拆成：</p>
+  <p>因此，<b>大范围限购并非今年独有，2024 年就出现过覆盖面很广的类似情况。</b>今年比较突出的是，热门美股基金的<b>限额非常低</b>，而且投资需求持续旺盛，导致限购反复调整。</p>
 
-<div class="formula">规模增长 ≈ 净申购 ＋ 投资收益 ＋ 汇率影响</div>
+  <div class="chart-card">
+    <div class="chart-title">QDII 基金限购比例（2024 年 5 月 17 日）</div>
+    <div class="chart-sub">617 只 QDII 基金中，338 只限购或暂停申购，占比 54.8%</div>
+    <div id="chartLimit" class="chart"></div>
+    <div class="chart-note">数据来源：中国金融信息网（经原对话转引）。悬停扇区可查看具体只数与占比。</div>
+  </div>
 
-<p>此外，新基金成立和统计口径变化也会影响总规模：</p>
-<ul>
-  <li><b>净申购</b>：投资者持续把钱投进美股基金，是额度紧张的重要来源。</li>
-  <li><b>投资收益</b>：美股上涨会直接推高基金净值，即使没有新资金流入，基金规模也可能增长。</li>
-  <li><b>汇率影响</b>：美元资产折算成人民币后的价值会随汇率变化。</li>
-  <li><b>新产品发行</b>：新基金成立扩大了可投资产品的数量和总容量。</li>
-</ul>
+  <h3>二、为什么今年会出现这种情况？</h3>
 
-<p>晨星统计显示，2021 年以来至 2024 年 6 月，美股基金累计净流入约 <b>736 亿元</b>，同期美股基金规模增长至约 <b>1302 亿元</b>。两者不是同一个指标，<b>不能把规模增长直接视为申购</b>。<span class="src">（app-web.chfnf.com）</span></p>
+  <p>我认为可以从四个层面理解。</p>
 
-<div class="chart-card">
-  <div class="chart-title">净流入 vs 规模增长（2021 年以来 — 2024 年 6 月）</div>
-  <div class="chart-sub">美股基金累计净流入约 736 亿元，同期末规模约 1302 亿元</div>
-  <div id="chartInflow" class="chart"></div>
-  <div class="chart-note">数据来源：晨星统计（经原对话转引）。规模增长中包含投资收益、汇率变化等非申购因素，不能把规模增长直接视为申购。</div>
-</div>
+  <h4>1. 投资需求增长，而额度供给有限</h4>
+  <p>这是最直接的原因。国内投资者通过 QDII 基金投资美股，需要基金管理人拥有相应的<b>境外投资额度</b>。基金获批的额度并不等于全部可以用于某一只美股基金；公司还需要在旗下产品之间分配额度。当某只基金的申购需求超过<b>它能够承接的规模</b>时，基金公司<b>就可能</b>下调限购金额，甚至暂停申购。<span class="ref">（CN Stock）</span></p>
 
-<h3>三、对你判断未来购什么启示？</h3>
+  <h4>2. 美股科技资产的吸引力，进一步放大了需求</h4>
+  <p>2026 年，海外科技、人工智能等投资主题持续吸引资金。与此同时，国内投资者对全球资产配置的需求上升，部分投资者希望通过标普 500、纳斯达克 100 等指数分散投资。</p>
+  <p>这意味着，资金并不是均匀流入所有 QDII 基金，而是<b>集中涌向少数热门产品</b>。即使整个 QDII 市场获得了新增额度，热门基金也仍然可能出现额度不足。<span class="ref">（edu.gffunds.com.cn）</span></p>
 
-<p>过去 10 年的趋势说明了两件事：</p>
-<p><b>第一，QDII 美股基金的需求增长是一个长期趋势，不只是短期行情带来的现象。</b>但资金也会随市场表现、投资偏好而波动，不能假设未来每年都维持同样的增速。</p>
-<p><b>第二，基金规模继续增长，不代表限购一定会放宽。</b>如果投资者需求增长快于新增额度，规模越大的市场仍然可能出现热门基金持续限购、不同产品额度分化的情况。</p>
-<p>有一个数据限制需要说明：目前能查到的公开行业研究，对 2021 年以前的美股 QDII 独立规模没有提供完整、统一的年度序列，不同报告对美股、全球股票、港股及中概股的归类也存在差异。因此，本文图表主要用于判断近年增长趋势，不适合用来精确计算完整十年的复合增长率。</p>
-<p>对你的长期配置而言，建议把注意力放在<b>美股 QDII 的实际净申购、基金份额增长和新增额度</b>上，而不只是基金规模。只有把净申购与市场上涨的贡献分开，才能更准确判断：当前限购究竟是需求暂时过热，还是长期供给不足。</p>
+  <h4>3. 新增 QDII 总额度，不等于投资者马上可以买到基金</h4>
+  <p>这里有一个容易忽视的区别，至少包括四个环节：</p>
+  <ul>
+    <li>外汇管理部门向市场新增 QDII 额度；</li>
+    <li>基金公司获得或调配可用额度；</li>
+    <li>基金公司决定是否向具体产品开放申购；</li>
+    <li>基金产品实际承接新增资金。</li>
+  </ul>
+  <p>这些环节需要时间，而且基金公司可能优先满足其他产品的运作需求。例如，2026 年 6 月末，全市场累计获批 QDII 额度为 <b>1761.69 亿美元</b><span class="ref">（第一财经）</span>，但总额度增加，并不意味着每一只标普 500 或纳斯达克 100 基金都能同步放开限购。</p>
 
-<h2>数据与来源说明</h2>
-<ul>
-  <li>本文由一次 ChatGPT 公开对话整理而成，内容（含数据）转录自对话原文；图表数据均出自对话中引用的公开报道与研究统计。</li>
-  <li>原始对话 PDF：<a href="QDII美股基金限购分析.pdf">QDII美股基金限购分析.pdf</a>（点击下载，约 3.7MB）</li>
-  <li>主要来源：中国基金报（2024 年 5 月 17 日 QDII 限购统计）、第一财经（QDII 额度及 2026 年规模统计）、Reuters（万家纳斯达克 100 指数基金限额调整）、晨星统计（美股基金净流入与规模）、CN Stock、edu.gffunds.com、新浪财经等。</li>
-  <li>规模与限购数据存在统计口径差异，部分年份为估算或反推值，图表仅供观察趋势，不构成精确序列。</li>
-  <li>本文不构成投资建议。</li>
-</ul>
+  <h4>4. 基金公司也不希望规模无限增长</h4>
+  <p>额度并不是唯一因素。短期内资金大量涌入，可能增加基金建仓、跨境交易和跟踪指数的难度；如果资金暂时无法有效投入目标资产，也可能影响基金运作。因此，基金公司还会主动控制规模，以维护<b>现有</b>持有人的利益。<span class="ref">（fund.10jqka.com.cn）</span></p>
 
-<p class="muted">生成时间：2026-10-18 · 数据截至对话时间（2026 年 10 月）· 图表支持悬停查看数值，窗口缩放时自适应。</p>
+  <p>简而言之，今年的限购是<b>投资需求集中爆发、境外投资额度有限，以及基金主动控制规模</b>共同作用的结果，而不能简单归因于单一的外汇政策。</p>
+
+  <h3>三、未来还会持续多久？</h3>
+
+  <p>我的判断是：未来几个月仍可能<b>反复限购</b>，但不同基金的恢复时间会有很大差异；不宜假设某个<b>确定日期</b>就会全面解除。</p>
+
+  <p>截至 2026 年 9 月，已经出现了一个很有代表性的现象：外汇管理部门<b>新增了 68 亿美元 QDII 额度</b>后，部分基金曾提高申购上限，但由于资金迅速涌入，又重新收紧限购。例如，万家旗下<b>纳指 100</b> 指数基金的单日限额曾从 10 元提高到 5000 元，随后又降至 100 元。<span class="ref">（Reuters）</span></p>
+
+  <p>这说明，<b>新增额度能够缓解供给约束，却未必能持续满足热门基金的申购需求</b>。我会重点观察以下三种情景：</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th class="left">情景</th><th class="left">可能出现的情况</th></tr></thead>
+      <tbody>
+        <tr><td class="left">新增额度持续发放，投资热度回落</td><td class="left">限购逐步放宽，部分基金恢复正常申购</td></tr>
+        <tr><td class="left">新增额度发放，但资金继续集中流入</td><td class="left">部分基金放宽，另一些基金继续限购，反复调整</td></tr>
+        <tr><td class="left">境外额度供给增长赶不上需求</td><td class="left">低额限购可能持续较长时间，场内 ETF 溢价也可能维持高位</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>需要强调的是，这些是<b>情景分析，不是对限购解除日期的确定预测</b>。尤其不能因为某只基金短暂放宽限额，就认为整个市场已经恢复正常。</p>
+
+  <h3>四、对你的长期投资计划，有什么影响？</h3>
+
+  <p>结合你之前希望配置标普 500、同时维持股债平衡的计划，我建议采取以下做法：</p>
+
+  <div class="stage">
+    <div class="st-title">第一，不要把美股仓位能否建成，完全寄托于限购解除。</div>
+    你可以继续通过限购基金定投，但不要因为每天只能买 20 元，就为了尽快建仓而追逐高溢价的场内 ETF。
+  </div>
+
+  <div class="stage">
+    <div class="st-title">第二，未能投入美股的资金，暂时放在低风险、流动性较好的资产中。</div>
+    <p>如果这笔钱原本属于长期股票配置，可以暂时留在现金管理工具或合适的短债基金中，等待申购额度恢复。不要因为美股买不进去，就自动全部转投 A 股，否则会改变原定的地域分散比例。</p>
+    <p>不过，短债基金也有净值波动和赎回规则，不能完全等同于现金。</p>
+  </div>
+
+  <div class="stage">
+    <div class="st-title">第三，把「额度恢复」和「市场估值」分开判断。</div>
+    限购是投资渠道的供给约束，不是美股高估或低估的信号。额度恢复时，不必因为担心再次限购就一次性追买；反过来，限购持续也不意味着应该放弃长期美股配置。
+  </div>
+
+  <div class="stage">
+    <div class="st-title">第四，关注具体基金的限购公告，而不只是 QDII 总额度。</div>
+    真正影响你能否建仓的，是目标基金的<b>实际申购上限、基金公司的额度分配和申购开放状态</b>。
+  </div>
+
+  <div class="takeaway"><b>核心建议：</b>把 QDII 限购视为长期建仓中的一个<b>执行约束</b>，而不是改变资产配置目标的理由。你需要解决的是如何让暂时无法投入的美股资金安全等待，以及如何在额度恢复后有纪律地完成建仓，而不是押注限购何时解除。</div>
+
+  <h2>第二轮 · 过去 10 年，美股 QDII 基金规模怎么变的</h2>
+
+  <h3>一、先看结论：过去 10 年，美股 QDII 基金经历了明显的加速扩张</h3>
+
+  <p>我查到的行业研究数据表明，美股 QDII 的规模增长主要集中在 2021 年以后，2024—2026 年进一步加速。</p>
+
+  <div class="chart-card">
+    <div class="chart-title">美股 QDII 基金规模变化（2021—2026）</div>
+    <div class="chart-sub">单位：亿元人民币。2021 年末为根据「2024 年 6 月底规模约为其 4 倍」反推的近似值；2023、2024、2025 年为不同研究报告的地区分类统计，2024 年为估算值</div>
+    <div id="chartScale" class="chart"></div>
+    <div class="chart-note">
+      数据说明：2021 年末约 325 亿元，由晨星统计的 2024 年 6 月底美股基金规模 1301.9 亿元约为其 4 倍反推；2023 年末为 939 亿元；2024 年末约 2070 亿元，由 2025 年末规模减去报告所述的 860 亿元增量估算；2026 年中为 3692 亿元。不同研究机构的分类口径可能不同，因此图中数值适合观察趋势，不应视为完全同口径的精确序列。悬停柱体可查看数值。
+    </div>
+  </div>
+
+  <p>从这些数据看，2021 年末到 2026 年中，美股 QDII 规模扩大到原来的约 <b>11 倍</b>。不过，这并不意味着全部增长都来自投资者净申购：<b>美股上涨、人民币汇率变化、新基金发行和资金流入</b>都会推高人民币计价的基金规模。</p>
+
+  <h3>二、把这 10 年拆成四个阶段</h3>
+
+  <div class="stage">
+    <div class="st-title">2016—2020 · 第一阶段：规模较小，缓慢发展</div>
+    整个 QDII 行业规模在这一时期经历了波动后逐步恢复。2019 年末，全行业规模约 817 亿元，2020 年末约 1129 亿元。美股投资还没有成为后来那样的热门方向。<span class="ref">（pdf.dfcfw.com）</span>
+  </div>
+
+  <div class="stage">
+    <div class="st-title">2021—2022 · 第二阶段：海外投资需求明显上升</div>
+    国内市场表现与海外市场出现差异，投资者开始更积极地配置海外资产。2021 年以来，美股基金规模明显扩张；但这一时期的 QDII 资金流入也受到港股和中概互联网主题基金的显著影响，并非全部流向美股。<span class="ref">（app-web.chnfund.com）</span>
+  </div>
+
+  <div class="stage">
+    <div class="st-title">2023—2024 · 第三阶段：美股指数基金加速扩容</div>
+    标普 500、纳斯达克 100 等指数产品受到更多关注，新发产品增加。晨星统计显示，2024 年 6 月底美股基金规模达到约 1302 亿元，约为 2021 年末的 4 倍；2024 年以来，美股 QDII 的规模继续显著增长。<span class="ref">（app-web.chnfund.com）</span>
+  </div>
+
+  <div class="stage">
+    <div class="st-title">2025—2026 · 第四阶段：规模继续跃升，额度约束更突出</div>
+    研究报告统计，美股 QDII 规模在 2025 年末约为 2930 亿元；2026 年中约为 3692 亿元。与此同时，部分热门产品的限购仍然存在，说明基金规模增长并不意味着个人投资者申购渠道同步放宽。<span class="ref">（新浪财经）</span>
+  </div>
+
+  <h3>三、规模增长究竟来自哪里？</h3>
+
+  <p>这是解读数据时最关键的一点。基金规模变化可以粗略拆成：</p>
+
+  <div class="formula">规模增长 ≈ 净申购 ＋ 投资收益 ＋ 汇率影响</div>
+
+  <p>此外，新基金成立和统计口径变化也会影响总规模：</p>
+  <ul>
+    <li><b>净申购：</b>投资者持续把资金投入美股基金，是额度紧张的重要来源。</li>
+    <li><b>投资收益：</b>美股上涨会直接推高基金净值，即使没有新资金流入，基金规模也可能增长。</li>
+    <li><b>汇率影响：</b>美元资产折算成人民币后的价值会随汇率变化。</li>
+    <li><b>新产品发行：</b>新基金成立扩大了可投资产品的数量和总容量。</li>
+  </ul>
+
+  <p>晨星统计显示，2021 年以来至 2024 年 6 月，美股基金累计净流入约 <b>736 亿元</b>；同期美股基金规模增长至约 <b>1302 亿元</b>。两者不是同一个指标，<b>不能把规模增量直接视为净申购</b>。<span class="ref">（app-web.chnfund.com）</span></p>
+
+  <div class="chart-card">
+    <div class="chart-title">净流入 vs 规模增长（2021 年以来 — 2024 年 6 月）</div>
+    <div class="chart-sub">美股基金累计净流入约 736 亿元，同期末规模约 1302 亿元</div>
+    <div id="chartInflow" class="chart"></div>
+    <div class="chart-note">数据来源：晨星统计（经原对话转引）。规模增长中包含投资收益、汇率变化等非申购因素，不能把规模增长直接视为申购。</div>
+  </div>
+
+  <h3>四、对你判断未来限购有什么启示？</h3>
+
+  <p>我认为，过去 10 年的趋势说明了两件事：</p>
+  <p><b>第一，QDII 美股基金的需求增长是一个长期趋势，不只是短期行情带来的现象。</b>但资金也会随市场表现、投资偏好而波动，不能假设未来每年都维持同样的增速。</p>
+  <p><b>第二，基金规模继续增长，不代表限购一定会放宽。</b>如果投资者需求增长快于新增额度，规模越大的市场仍然可能出现热门基金持续限购、不同产品额度分化的情况。</p>
+  <p>有一个数据限制需要说明：目前能查到的公开行业研究，对 2021 年以前的美股 QDII 独立规模没有提供完整、统一的年度序列，不同报告对美股、全球股票、港股及中概股的归类也存在差异。因此，上面的图表主要用于判断近年增长趋势，不适合用来精确计算完整十年的复合增长率。</p>
+  <p>对你的长期配置而言，我更建议把注意力放在<b>美股 QDII 的实际净申购、基金份额增长和新增额度</b>上，而不只是基金规模。只有把净申购与市场上涨的贡献分开，才能更准确判断：当前限购究竟是需求暂时过热，还是长期供给不足。</p>
+</section>
+
+<!-- ==================== 第二部分：Claude ==================== -->
+<section class="src claude">
+  <div class="src-head">
+    <span class="badge">Claude</span>
+    <span class="sub">整理自对话「QDII美股基金限购原因与前景」· 回答基于联网检索（财联社 / 21 世纪经济报道 / 第一财经 / 新浪财经 / 东方财富等）</span>
+    <a class="src-link" href="source/QDII%E7%BE%8E%E8%82%A1%E5%9F%BA%E9%87%91%E9%99%90%E8%B4%AD%E5%8E%9F%E5%9B%A0%E4%B8%8E%E5%89%8D%E6%99%AF%20-%20Claude%20%2810_19_2026%209%EF%BC%9A58%EF%BC%9A48%20AM%29.html" target="_blank" rel="noopener">查看原始对话 ↗</a>
+  </div>
+
+  <h2>第一轮 · 限购的历史、成因与前景</h2>
+
+  <p><b>简短回答：</b>以前出现过，但这一轮<b>持续时间更长、覆盖面更广</b>。根本原因是 <b>QDII 额度（供给）远远跟不上居民配置美股的需求</b>。至于会持续多久，没人能给出确切答案，只能从供需两端帮你判断。</p>
+
+  <h3>一、以前出现过吗？</h3>
+
+  <p>出现过，<b>2024 年就是一个明显的先例</b>。2024 年 7 月 9 日一天，至少有 34 只 QDII 基金宣布限制申购；据 7 月初统计，年内逾 200 只 QDII 基金处于限购状态。当时的原因是财富效应带动申购规模大增，加上人民币走贬形成短线套利机会。</p>
+
+  <p>不同的是，那一轮更像是<b>短期集中爆发</b>，今年则是<b>反复出现、几乎没有真正放开的时段</b>：</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th class="left">时间</th><th class="left">限购动态</th></tr></thead>
+      <tbody>
+        <tr><td class="left">2025 年 7 月</td><td class="left">新一批额度下发不到一个月，QDII 基金又开始限购 <span class="ref">（cls）</span></td></tr>
+        <tr><td class="left">2025 年 11 月</td><td class="left">多家公司暂停大额申购，美股类 QDII 成为限购重灾区 <span class="ref">（21jingji）</span></td></tr>
+        <tr><td class="left">2025 年 12 月</td><td class="left">摩根纳指基金的人民币份额申购上限一度降到 10 元 <span class="ref">（cs）</span></td></tr>
+        <tr><td class="left">2026 年 2 月</td><td class="left">建信纳指基金放宽限额仅一天就又收紧，一些产品单日最多只能申购 10 元 <span class="ref">（21jingji）</span></td></tr>
+        <tr><td class="left">2026 年 4 月</td><td class="left">银华、广发、华夏、天弘、摩根等多家公司集中对美股系 QDII 限购 <span class="ref">（21jingji）</span></td></tr>
+        <tr><td class="left">2026 年 9 月</td><td class="left">万家纳指基金 9 月 9 日把限额从 10 元提到 5000 元，第二天又降到 100 元 <span class="ref">（10jqka）</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>二、为什么今年这么严重？</h3>
+
+  <p>我认为主要有三个原因。</p>
+
+  <h4>1. 额度是硬约束，而且长期没有增加</h4>
+  <p>QDII 额度由外汇局核定，基金公司自己无法扩大。3 月那次新增 53 亿美元，距上一次下发隔了约 9 个月，是 2021 年以来最大的单次增量，但这相对于需求仍然偏小。<span class="ref">（sina）</span></p>
+
+  <h4>2. 美股表现强，需求集中涌入</h4>
+  <p>美股仓位高的 QDII 业绩居前，而今年恒生科技指数跌了 11%，资金自然集中到美股产品，港股 QDII 基本不受影响。<span class="ref">（sina）</span></p>
+
+  <h4>3. 场外买不到，需求被挤到场内</h4>
+  <p>不限购的场内 ETF 普遍出现大幅溢价，基金公司限购也有保护持有人的考虑。此外有分析认为，整治非法跨境证券业务后，合规渠道的需求集中释放，进一步加大了压力。<span class="ref">（21jingji）</span></p>
+
+  <h3>三、未来还会持续多久？</h3>
+
+  <p>我不能给出确定的时间表，但可以看几个信号。</p>
+
+  <p><b>缓解因素：</b>监管层态度偏正面。外汇局表示将常态化发放 QDII 额度，并进一步向公募产品倾斜。8 月底新增额度 68.4 亿美元，累计批准额度达到 <b>1830.09 亿美元</b>，其中证券基金类机构新增 37.2 亿美元。<span class="ref">（yicai / qq）</span></p>
+
+  <p><b>但从实际效果看，缓解有限：</b>9 月新额度下发后，各家产品依然是「放开一天、收紧一天」，说明新增额度很快就被申购消化了。</p>
+
+  <div class="takeaway"><b>我的判断是：</b>只要美股持续有吸引力、额度供给仍是「小步慢放」，限购大概率会成为常态，至少短期内难以根本改变。几个值得观察的变量是：外汇局发放额度的频率和规模；美股走势（如果大幅回调，申购热情会降温）；人民币汇率；场内 ETF 的溢价率。</div>
+
+  <div class="tip">
+    <span class="tip-t">提醒</span>——如果你因为场外买不到而转向场内 ETF，要注意溢价风险。溢价率高时买入，等溢价回落会有额外损失，有些产品溢价曾超过 10% 甚至 20%。以上只是对现象的梳理，不构成投资建议，具体决策需要结合你自己的情况，必要时咨询专业投顾。
+  </div>
+
+  <h2>第二轮 · 过去 10 年规模趋势</h2>
+
+  <p><b>先说明一点：</b>我没有找到「美股 QDII」单独统计的连续十年规模数据，公开口径多是整个 QDII 基金或跨境 ETF 的总规模。下面用这些数据加上几个代表性美股产品，拼出一个大致的趋势。数字来自不同机构、不同口径，只能看量级，不宜精确比较。</p>
+
+  <h3>三个阶段</h3>
+
+  <div class="stage">
+    <div class="st-title">阶段一：2016—2019 年，基本沉寂</div>
+    <p>从 2007 年到 2019 年，QDII 整体规模基本维持在固定水平，业绩不理想，长期坐冷板凳。美股 QDII 当时只是小众品种。以 2022 年的数据为例，国内以美国资产为投资对象的 QDII 共 25 只，规模最大的国泰纳指 100 ETF 约 43 亿元，博时标普 500 ETF 约 73 亿元。这些数字也说明，早期的美股 QDII 单只规模以几十亿元计。<span class="ref">（21jingji / zhihu）</span></p>
+  </div>
+
+  <div class="stage">
+    <div class="st-title">阶段二：2019—2023 年，温和起量</div>
+    <p>2019 到 2023 年 QDII 体量全面爆发，五年复合增速约 <b>40%</b>，2023 年底共 281 只，总规模 4100 多亿元，仅占公募基金的 1.5%。业内认为主因是 A 股表现欠佳，资金出海配置的需求增加。这一阶段基数小、增速快，但还谈不上拥挤。<span class="ref">（21jingji）</span></p>
+  </div>
+
+  <div class="stage">
+    <div class="st-title">阶段三：2024 年至今，快速膨胀并撞上额度</div>
+    <p>2024 年 QDII 基金数量突破 650 只（主从份额分开计算），合计规模超过 <b>7300 亿元</b>，创历史新高。<span class="ref">（21jingji）</span></p>
+    <p>跨境 ETF 的增长更猛：2025 年初规模为 4242 亿元，2026 年 1 月首次突破<b>万亿</b>，一年多增幅约 <b>138%</b>。不过要注意，跨境 ETF 中无论数量还是规模都以港股为主，份额超百亿的产品里只有 4 只是纳指 ETF。<span class="ref">（eastmoney）</span></p>
+    <p>美股产品集中度很高：截至 2026 年 2 月，纳指 100 相关 ETF 共 12 只，合计规模约 1090 亿元。单只来看，广发纳指 ETF 二季度末规模接近 347 亿元，百亿级的美股场内基金有 7 只，其中 6 只跟踪纳指。<span class="ref">（eastmoney / caiwennews）</span></p>
+    <p>今年资金仍在涌入：QDII 基金总份额从 2025 年底约 8197 亿份增至 2026 年 5 月底的 9169 亿份，资金大量涌向纳指 100、标普 500 等美股指数产品。以南方标普 500 ETF 为例，到 5 月底份额较去年底增加约 46%，规模增加约 56%。<span class="ref">（sh / sina）</span></p>
+    <p>另有一篇博客称，QDII 总规模已从 2019 年 8 月约 800 亿元增长到 2026 年 7 月突破一万亿元（约 12 倍），但我没能找到权威来源核实，仅供参考。</p>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">Claude 回答中引用的规模数据点（不同口径，仅看量级）</div>
+    <div class="chart-sub">QDII 基金总规模 vs 跨境 ETF 总规模 · 单位：亿元人民币</div>
+    <div id="chartClaudeScale" class="chart"></div>
+    <div class="chart-note">
+      口径说明：QDII 基金总规模为场内外全部 QDII 的口径；跨境 ETF 只是其中一类（且以港股为主）。两者统计范围不同，图中并列仅用于观察量级，不宜直接比较增速。悬停柱体可查看数值。
+    </div>
+  </div>
+
+  <h3>我的判断</h3>
+  <ul>
+    <li><b>趋势是长期上行，但前半段几乎没有存在感。</b>过去十年里，真正的增长集中在最近五年，尤其是 2024 年之后。</li>
+    <li><b>美股 QDII 的增速大概快于 QDII 整体。</b>这是推断，依据是新增资金明显集中在纳指和标普产品上，但缺乏精确数据支持。</li>
+    <li><b>增长的真实幅度被额度「压住」了。</b>场外产品频繁限购，资金被挤到场内 ETF，所以我们看到的规模增长，已经是被额度约束过的结果。如果额度充足，规模可能更大。这也呼应了你上一个问题。</li>
+    <li><b>规模与业绩有一定的「追涨」特征。</b>美股走强、财富效应显现后，资金加速涌入。这意味着如果美股大幅回调，规模也可能出现明显回落，所以这一趋势并非单向。</li>
+  </ul>
+
+  <h3>数据局限</h3>
+  <ul>
+    <li>2016—2018 年美股 QDII 的具体数字我没有查到，上面对这一阶段的描述主要依据 QDII 整体情况。</li>
+    <li>跨境 ETF、场外 QDII 基金、联接基金之间存在重复统计的可能（联接基金会投资于 ETF）。</li>
+  </ul>
+
+  <div class="takeaway">如果你需要精确的十年时间序列，建议用 Wind 或中基协的数据，按「投资美国市场的 QDII」筛选后自行汇总。如果你有这类数据，我可以帮你做进一步的分析和图表。</div>
+</section>
+
+<footer>
+  <p>原文来源：两份对话的网页存档（浏览器保存），整理时清理了界面噪声并保留原意，未做观点合并。ChatGPT 部分已逐段对照网页版原材料校对。来源文件：
+    <a href="source/QDII%E7%BE%8E%E8%82%A1%E5%9F%BA%E9%87%91%E9%99%90%E8%B4%AD%E5%88%86%E6%9E%90%20%2810_19_2026%209%EF%BC%9A53%EF%BC%9A50%20AM%29.html" target="_blank" rel="noopener">ChatGPT 对话「QDII美股基金限购分析」</a> ·
+    <a href="source/QDII%E7%BE%8E%E8%82%A1%E5%9F%BA%E9%87%91%E9%99%90%E8%B4%AD%E5%8E%9F%E5%9B%A0%E4%B8%8E%E5%89%8D%E6%99%AF%20-%20Claude%20%2810_19_2026%209%EF%BC%9A58%EF%BC%9A48%20AM%29.html" target="_blank" rel="noopener">Claude 对话「QDII美股基金限购原因与前景」</a>
+  </p>
+  <p>两家引用的统计口径存在差异（如 2024 年 5 月限购统计来源、QDII 额度时点），文中已按各来源原文分别标注；规模数据多为估算或反推值，图表仅供观察趋势。文中内容为对话整理，不构成投资建议。</p>
+</footer>
 
 <script>
 /*
@@ -292,6 +515,7 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
 <script>
 (function () {
   var RED = '#D64541', RED_L = '#F1948A', GRAY = '#d9d9d9', TXT = '#2c2c2c', MUT = '#999';
+  var GPT = '#10A37F', GPT_L = '#7CCFB6', CLAUDE = '#C96442', CLAUDE_L = '#E5A783';
   function mk(id, opt) {
     var el = document.getElementById(id);
     var c = echarts.init(el);
@@ -299,10 +523,7 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
     window.addEventListener('resize', function () { c.resize(); });
     return c;
   }
-  var tooltipBase = {
-    trigger: 'axis', axisPointer: { type: 'shadow' },
-    textStyle: { fontSize: 12 }
-  };
+  var tooltipBase = { trigger: 'axis', axisPointer: { type: 'shadow' }, textStyle: { fontSize: 12 } };
 
   // 图 1：QDII 限购比例（环形图）
   mk('chartLimit', {
@@ -314,8 +535,7 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
       textStyle: { fontSize: 22, color: TXT }, subtextStyle: { fontSize: 11, color: MUT }
     },
     series: [{
-      type: 'pie', radius: ['48%', '70%'], center: ['50%', '46%'],
-      avoidLabelOverlap: true,
+      type: 'pie', radius: ['48%', '70%'], center: ['50%', '46%'], avoidLabelOverlap: true,
       itemStyle: { borderColor: '#fff', borderWidth: 2 },
       label: { formatter: '{b}\n{c} 只 · {d}%', fontSize: 12, color: TXT },
       data: [
@@ -348,26 +568,25 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
     series: [{
       type: 'bar', barWidth: '52%',
       data: [
-        { value: 325, itemStyle: { color: RED_L } },
-        { value: 939, itemStyle: { color: RED_L } },
-        { value: 2070, itemStyle: { color: RED_L } },
-        { value: 2930, itemStyle: { color: RED } },
-        { value: 3692, itemStyle: { color: RED } }
+        { value: 325, itemStyle: { color: GPT_L } },
+        { value: 939, itemStyle: { color: GPT_L } },
+        { value: 2070, itemStyle: { color: GPT } },
+        { value: 2930, itemStyle: { color: GPT } },
+        { value: 3692, itemStyle: { color: GPT } }
       ],
       label: { show: true, position: 'top', color: TXT, fontSize: 12,
                formatter: function (p) { return p.value.toLocaleString(); } }
     }]
   });
 
-  // 图 3：净流入 vs 规模增长（柱状图）
+  // 图 3：净流入 vs 规模增长（分组柱图）
   mk('chartInflow', {
     tooltip: Object.assign({}, tooltipBase, {
       formatter: function (ps) { return ps[0].name + '：约 ' + ps[0].value + ' 亿元'; }
     }),
     grid: { left: 64, right: 24, top: 36, bottom: 44 },
     xAxis: {
-      type: 'category',
-      data: ['累计净流入\n（净申购贡献）', '2024 年 6 月末\n基金规模'],
+      type: 'category', data: ['累计净流入\n（净申购贡献）', '2024 年 6 月末\n基金规模'],
       axisLabel: { color: TXT, fontSize: 12, interval: 0, lineHeight: 16 },
       axisLine: { lineStyle: { color: '#ccc' } }, axisTick: { show: false }
     },
@@ -376,14 +595,58 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
       axisLabel: { color: MUT }, splitLine: { lineStyle: { color: '#f0f0f0' } }
     },
     series: [{
-      type: 'bar', barWidth: '40%',
+      type: 'bar', barWidth: '42%',
       data: [
-        { value: 736, itemStyle: { color: RED } },
-        { value: 1302, itemStyle: { color: RED_L } }
+        { value: 736, itemStyle: { color: GPT } },
+        { value: 1302, itemStyle: { color: GPT_L } }
       ],
       label: { show: true, position: 'top', color: TXT, fontSize: 12,
                formatter: function (p) { return p.value.toLocaleString(); } }
     }]
+  });
+
+  // 图 4：Claude 引用的规模数据点（双口径分组柱图）
+  mk('chartClaudeScale', {
+    color: [CLAUDE, CLAUDE_L],
+    tooltip: Object.assign({}, tooltipBase, {
+      formatter: function (ps) {
+        var lines = ps.map(function (p) {
+          return p.seriesName + '：' + (p.value >= 10000 ? '突破 ' + (p.value / 10000) + ' 万亿' : '约 ' + p.value + ' 亿元');
+        });
+        return ps[0].name + '<br/>' + lines.join('<br/>');
+      }
+    }),
+    legend: { bottom: 0, textStyle: { color: TXT, fontSize: 12 } },
+    grid: { left: 64, right: 24, top: 36, bottom: 60 },
+    xAxis: {
+      type: 'category', data: ['2019 年末\n（QDII 基金，281 只）', '2024 年\n（QDII 基金，650+ 只）', '2025 年初\n（跨境 ETF）', '2026 年 1 月\n（跨境 ETF）'],
+      axisLabel: { color: TXT, fontSize: 11.5, interval: 0, lineHeight: 15 },
+      axisLine: { lineStyle: { color: '#ccc' } }, axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: '亿元人民币', nameTextStyle: { color: MUT },
+      axisLabel: { color: MUT,
+        formatter: function (v) { return v >= 10000 ? (v / 10000) + '万亿' : v; } },
+      splitLine: { lineStyle: { color: '#f0f0f0' } }
+    },
+    series: [
+      {
+        name: 'QDII 基金总规模', type: 'bar', barWidth: '34%',
+        data: [
+          { value: 4100, itemStyle: { color: CLAUDE } },
+          { value: 7300, itemStyle: { color: CLAUDE } },
+          null, null
+        ],
+        label: { show: true, position: 'top', color: TXT, fontSize: 12,
+                 formatter: function (p) { return p.value >= 7000 ? '7300+' : p.value; } }
+      },
+      {
+        name: '跨境 ETF 总规模', type: 'bar', barWidth: '34%',
+        data: [null, null, { value: 4242, itemStyle: { color: CLAUDE_L } }, { value: 10000, itemStyle: { color: CLAUDE_L } }],
+        label: { show: true, position: 'top', color: TXT, fontSize: 12,
+                 formatter: function (p) { return p.value >= 10000 ? '10000+' : p.value; } }
+      }
+    ]
   });
 })();
 </script>
