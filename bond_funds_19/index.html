@@ -527,7 +527,7 @@
     return;
   }
   var INK='#1f2329', INK2='#4e5560', INK3='#8a919c', LINE='#e3e6ea';
-  var UP='#d93636', DOWN='#0f9d58', BLUE='#1f2329', ORANGE='#8a919c', PURPLE='#b6bcc4', GREY='#b6bcc4';
+  var UP='#d93636', DOWN='#0f9d58', BLUE='#245bdb', ORANGE='#e8830c', PURPLE='#7b61ff', GREY='#b6bcc4';
   var FONT='-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif';
   var charts=[];
   function mk(id, opt){ var el=document.getElementById(id); if(!el) return; var c=echarts.init(el); c.setOption(opt); charts.push(c); }
@@ -550,7 +550,7 @@
     yAxis:Object.assign({type:'category',data:['流动性特殊','含权增强','产业/城投信用','银行二永信用','中久期纯利率/分散','长久期利率弹性','短久期/短持有期打底']},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:12}}),
     series:[
       {name:'保留',type:'bar',stack:'t',data:[0,1,2,2,2,1,2],itemStyle:{color:BLUE},barWidth:16,label:{show:true,position:'inside',color:'#fff',fontSize:11}},
-      {name:'清退/合并',type:'bar',stack:'t',data:[1,1,4,1,1,1,3],itemStyle:{color:'#b6bcc4'},barWidth:16,label:{show:true,position:'inside',color:'#4e5560',fontSize:11}}
+      {name:'清退/合并',type:'bar',stack:'t',data:[1,1,4,1,1,1,3],itemStyle:{color:'#f3b95f'},barWidth:16,label:{show:true,position:'inside',color:'#7a4d00',fontSize:11}}
     ]
   });
 
@@ -633,7 +633,7 @@
     yAxis:Object.assign({type:'category',data:posNames},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:12}}),
     series:[
       {name:'保留',type:'bar',stack:'p',data:posKeep,itemStyle:{color:BLUE},barWidth:16,label:{show:true,position:'inside',color:'#fff',fontSize:11}},
-      {name:'清退/合并',type:'bar',stack:'p',data:posCut,itemStyle:{color:'#b6bcc4'},barWidth:16,label:{show:true,position:'inside',color:'#4e5560',fontSize:11}}
+      {name:'清退/合并',type:'bar',stack:'p',data:posCut,itemStyle:{color:'#f3b95f'},barWidth:16,label:{show:true,position:'inside',color:'#7a4d00',fontSize:11}}
     ]
   });
 
