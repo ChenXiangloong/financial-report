@@ -6,6 +6,7 @@
 
 - [纯债基金对话存档](pure_bond_fund/)：什么是纯债基金 / 纯债基金的定义（ChatGPT 与 Claude 两份对话存档入口）
 - [可转债与债基对话存档](convertible_bond_fund/)：可转债、一级债基、二级债基与纯债的区别，以及一级/二级市场含义（ChatGPT 与 Claude 两份对话存档入口）
+- [指数与ETF更新频率对话存档](index_etf_update_freq/)：沪深300、标普500等指数与 ETF 持仓的更新频率（ChatGPT 与 Claude 两份对话存档入口）
 - [A股长期投资对话存档](ashare_longterm/)：A股长期投资 / A股长期投资的可行性与挑战（ChatGPT 与 Claude 两份对话存档入口）
 - [10年20万元A股债券投资计划对话存档](ashare_20w_10y_plan/)：同一份投资需求的四轮对话（ChatGPT 与 Claude 两份存档入口）
 - [日本股市与经济关联对话存档](japan_stock_economy/)：过去 40 年日本股市与经济状况的关联（ChatGPT 与 Claude 两份对话存档入口）
