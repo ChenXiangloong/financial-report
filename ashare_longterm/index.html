@@ -6,12 +6,13 @@
 <title>A股长期投资：可行性与挑战（ChatGPT 与 Claude 的两种回答）</title>
 <style>
   :root {
-    --red: #D64541;
+    --red: #d93636;
     --green: #2E9E5B;
     --gpt: #10A37F;
     --claude: #C96442;
     --ink: #2c2c2c;
     --line: #e8e8e8;
+    --accent: #a8772e; --accent-soft: #f7f0e3;
   }
   * { box-sizing: border-box; }
   body {
@@ -21,8 +22,8 @@
     -webkit-font-smoothing: antialiased;
   }
   h1 { font-size: 27px; line-height: 1.35; margin: 0 0 10px; letter-spacing: -.2px; }
-  h1 .accent { border-bottom: 4px solid var(--red); padding-bottom: 6px; }
-  h2 { font-size: 20px; margin: 52px 0 14px; padding-left: 12px; border-left: 5px solid var(--red); line-height: 1.4; }
+  h1 .accent { border-bottom: 4px solid var(--accent); padding-bottom: 6px; }
+  h2 { font-size: 20px; margin: 52px 0 14px; padding-left: 12px; border-left: 5px solid var(--accent); line-height: 1.4; }
   h3 { font-size: 16.5px; margin: 30px 0 10px; }
   p { margin: 12px 0; }
   .meta { color: #8a8a8a; font-size: 13px; margin: 0 0 30px; line-height: 1.7; }
@@ -103,8 +104,8 @@
 
   footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); }
   footer p { font-size: 12.5px; color: #999; margin: 6px 0; }
-  footer a { color: #2E6FB0; text-decoration: none; border-bottom: 1px solid #cfe2f3; }
-  footer a:hover { border-bottom-color: #2E6FB0; }
+  footer a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+  footer a:hover { border-bottom-color: var(--accent); }
 
   @media (max-width: 640px) { body { padding: 28px 18px 56px; } }
 </style>

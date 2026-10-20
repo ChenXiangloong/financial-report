@@ -6,8 +6,9 @@
 <title>10年20万元A股债券投资计划（ChatGPT 与 Claude 的两种回答）</title>
 <style>
   :root {
-    --red:#D64541; --green:#2E9E5B; --gpt:#10A37F; --claude:#C96442;
+    --red:#d93636; --green:#2E9E5B; --gpt:#10A37F; --claude:#C96442;
     --ink:#2c2c2c; --line:#e8e8e8;
+    --accent:#a8772e; --accent-soft:#f7f0e3;
   }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -20,8 +21,8 @@
     max-width:880px; margin:0 auto; padding:40px 28px 72px;
   }
   h1 { font-size:27px; line-height:1.35; margin:0 0 10px; letter-spacing:-.2px; }
-  h1 .accent { border-bottom:4px solid var(--red); padding-bottom:6px; }
-  h2 { font-size:20px; margin:40px 0 14px; padding-left:12px; border-left:5px solid var(--red); line-height:1.4; }
+  h1 .accent { border-bottom:4px solid var(--accent); padding-bottom:6px; }
+  h2 { font-size:20px; margin:40px 0 14px; padding-left:12px; border-left:5px solid var(--accent); line-height:1.4; }
   h3 { font-size:16.5px; margin:26px 0 10px; }
   h4 { font-size:15px; margin:16px 0 8px; color:#444; }
   p { margin:12px 0; }
@@ -72,8 +73,8 @@
   .disclaimer { margin:16px 0 0; padding:10px 14px; border-radius:6px; background:#f6f8fa; border:1px solid #e6eaee; font-size:13px; color:#6a737d; }
   footer { margin-top:56px; padding-top:18px; border-top:1px solid var(--line); }
   footer p { font-size:12.5px; color:#999; margin:6px 0; }
-  footer a { color:#2E6FB0; text-decoration:none; border-bottom:1px solid #cfe2f3; }
-  footer a:hover { border-bottom-color:#2E6FB0; }
+  footer a { color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent-soft); }
+  footer a:hover { border-bottom-color:var(--accent); }
 
   /* ---------- left TOC ---------- */
   .toc {
@@ -88,14 +89,14 @@
     padding:8px 10px; border-radius:6px; line-height:1.4;
   }
   .toc-round .logo { flex:0 0 auto; width:17px; height:17px; }
-  .toc-round:hover { background:#eef2f4; color:#111; }
+  .toc-round:hover { background:var(--accent-soft); color:#111; }
   .toc-sub { list-style:none; margin:0; padding:2px 0 4px 6px; }
   .toc-sub li { margin:1px 0; }
   .toc-sub a {
     display:block; text-decoration:none; color:#777; font-size:13px;
     padding:5px 10px; border-radius:6px; border-left:2px solid transparent;
   }
-  .toc-sub a:hover { background:#eef2f4; color:#333; }
+  .toc-sub a:hover { background:var(--accent-soft); color:#333; }
   .toc-sub a.active { font-weight:600; }
   .toc-item[data-sec="gpt"] .toc-sub a.active { color:var(--gpt); border-left-color:var(--gpt); background:#f1f7f4; }
   .toc-item[data-sec="claude"] .toc-sub a.active { color:var(--claude); border-left-color:var(--claude); background:#fbf2ee; }

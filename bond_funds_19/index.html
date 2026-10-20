@@ -8,40 +8,41 @@
 <style>
   :root{
     --bg:#f4f5f7; --card:#ffffff; --ink:#1f2329; --ink2:#4e5560; --ink3:#8a919c;
-    --line:#e3e6ea; --blue:#245bdb; --blue-soft:#eef3fe; --blue-line:#c9d8f7;
+    --line:#e3e6ea; --blue:#1f2329; --blue-soft:#f2f3f5; --blue-line:#e3e6ea;
     --up:#d93636; --up-soft:#fdeeee; --down:#0f9d58; --down-soft:#e9f7f0;
-    --orange:#e8830c; --orange-soft:#fdf3e4; --purple:#7b61ff; --purple-soft:#f1eeff;
+    --orange:#8a919c; --orange-soft:#f2f3f5; --purple:#b6bcc4; --purple-soft:#f2f3f5;
     --grey-soft:#f2f3f5;
+    --accent:#a8772e; --accent-soft:#f7f0e3; --accent-line:#ecdcc0;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size:14px; line-height:1.65;}
   .wrap{max-width:1180px; margin:0 auto; padding:28px 20px 60px;}
   /* ===== header ===== */
-  header.hero{background:linear-gradient(135deg,#ffffff 0%,#f0f4fd 100%); border:1px solid var(--line); border-radius:14px; padding:30px 34px; margin-bottom:22px;}
+  header.hero{background:linear-gradient(135deg,#ffffff 0%,#f4f5f7 100%); border:1px solid var(--line); border-radius:14px; padding:30px 34px; margin-bottom:22px;}
   header.hero h1{font-size:24px; letter-spacing:.5px;}
   header.hero h1 small{font-size:13px; font-weight:400; color:var(--ink3); margin-left:10px;}
   .meta{margin-top:12px; display:flex; flex-wrap:wrap; gap:8px 18px; color:var(--ink2); font-size:12.5px;}
   .meta b{color:var(--ink); font-weight:600;}
   .toc{margin-top:16px; display:flex; flex-wrap:wrap; gap:6px;}
-  .toc a{font-size:12px; color:var(--blue); background:var(--blue-soft); border:1px solid var(--blue-line); border-radius:20px; padding:3px 12px; text-decoration:none;}
-  .toc a:hover{background:#dfe9fd;}
+  .toc a{font-size:12px; color:var(--accent); background:var(--accent-soft); border:1px solid var(--accent-line); border-radius:20px; padding:3px 12px; text-decoration:none;}
+  .toc a:hover{background:var(--accent-line);}
   /* ===== sections ===== */
   section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 30px; margin-bottom:22px;}
-  section>h2{font-size:18px; padding-bottom:12px; border-bottom:2px solid var(--ink); margin-bottom:16px; display:flex; align-items:baseline; gap:10px;}
-  section>h2 .no{color:var(--blue); font-size:13px; font-weight:700; letter-spacing:1px;}
+  section>h2{font-size:18px; padding-bottom:12px; border-bottom:2px solid var(--accent); margin-bottom:16px; display:flex; align-items:baseline; gap:10px;}
+  section>h2 .no{color:var(--accent); font-size:13px; font-weight:700; letter-spacing:1px;}
   h3{font-size:15px; margin:22px 0 10px; color:var(--ink);}
   h3 .tag{font-size:11px; font-weight:600; color:var(--blue); background:var(--blue-soft); border-radius:4px; padding:2px 8px; margin-left:8px; vertical-align:2px;}
   p{margin:8px 0; color:var(--ink2);}
   p b, li b{color:var(--ink);}
   .note{background:var(--grey-soft); border-left:3px solid var(--ink3); border-radius:0 8px 8px 0; padding:10px 14px; font-size:12.5px; color:var(--ink2); margin:12px 0;}
-  .note.blue{background:var(--blue-soft); border-left-color:var(--blue);}
+  .note.blue{background:var(--accent-soft); border-left-color:var(--accent);}
   .note.warn{background:var(--orange-soft); border-left-color:var(--orange);}
   /* ===== conclusion cards ===== */
   .concl{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0;}
   .concl .c{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:#fcfcfd;}
   .concl .c h4{font-size:13.5px; margin-bottom:6px;}
   .concl .c p{font-size:12.5px; margin:0; color:var(--ink2);}
-  .concl .c.imp{border-color:#f0cfa8; background:#fffaf3;}
+  .concl .c.imp{border-color:#e3e6ea; background:#f2f3f5;}
   .concl .c.good{border-color:#bcdcc9; background:#f6fbf8;}
   .concl .c.bad{border-color:#f0b8b8; background:#fff7f7;}
   @media (max-width:900px){.concl{grid-template-columns:1fr;}}
@@ -64,9 +65,9 @@
   .badge{display:inline-block; font-size:11px; font-weight:600; border-radius:4px; padding:2px 8px; white-space:nowrap;}
   .b-core{background:var(--blue); color:#fff;}
   .b-keep{background:var(--blue-soft); color:var(--blue); border:1px solid var(--blue-line);}
-  .b-opt{background:var(--orange-soft); color:var(--orange); border:1px solid #f3d9b0;}
+  .b-opt{background:var(--orange-soft); color:var(--orange); border:1px solid #e3e6ea;}
   .b-cut{background:#fdeeee; color:var(--up); border:1px solid #f3c6c6;}
-  .b-out{background:var(--purple-soft); color:var(--purple); border:1px solid #d9d0f7;}
+  .b-out{background:var(--purple-soft); color:var(--purple); border:1px solid #e3e6ea;}
   .b-hold{background:var(--grey-soft); color:var(--ink2); border:1px solid var(--line);}
   /* ===== charts ===== */
   .chart{width:100%; height:430px; margin:10px 0 4px;}
@@ -487,7 +488,7 @@
     return;
   }
   var INK='#1f2329', INK2='#4e5560', INK3='#8a919c', LINE='#e3e6ea';
-  var UP='#d93636', DOWN='#0f9d58', BLUE='#245bdb', ORANGE='#e8830c', PURPLE='#7b61ff', GREY='#b6bcc4';
+  var UP='#d93636', DOWN='#0f9d58', BLUE='#1f2329', ORANGE='#8a919c', PURPLE='#b6bcc4', GREY='#b6bcc4';
   var FONT='-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif';
   var charts=[];
   function mk(id, opt){ var el=document.getElementById(id); if(!el) return; var c=echarts.init(el); c.setOption(opt); charts.push(c); }
@@ -510,7 +511,7 @@
     yAxis:Object.assign({type:'category',data:['流动性特殊','含权增强','产业/城投信用','银行二永信用','中久期纯利率/分散','长久期利率弹性','短久期/短持有期打底']},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:12}}),
     series:[
       {name:'保留',type:'bar',stack:'t',data:[0,1,2,2,2,1,2],itemStyle:{color:BLUE},barWidth:16,label:{show:true,position:'inside',color:'#fff',fontSize:11}},
-      {name:'清退/合并',type:'bar',stack:'t',data:[1,1,4,1,1,1,3],itemStyle:{color:'#f3b95f'},barWidth:16,label:{show:true,position:'inside',color:'#7a4d00',fontSize:11}}
+      {name:'清退/合并',type:'bar',stack:'t',data:[1,1,4,1,1,1,3],itemStyle:{color:'#b6bcc4'},barWidth:16,label:{show:true,position:'inside',color:'#4e5560',fontSize:11}}
     ]
   });
 
@@ -593,7 +594,7 @@
     yAxis:Object.assign({type:'category',data:posNames},axisCommon,{splitLine:{show:false},axisLabel:{color:INK,fontSize:12}}),
     series:[
       {name:'保留',type:'bar',stack:'p',data:posKeep,itemStyle:{color:BLUE},barWidth:16,label:{show:true,position:'inside',color:'#fff',fontSize:11}},
-      {name:'清退/合并',type:'bar',stack:'p',data:posCut,itemStyle:{color:'#f3b95f'},barWidth:16,label:{show:true,position:'inside',color:'#7a4d00',fontSize:11}}
+      {name:'清退/合并',type:'bar',stack:'p',data:posCut,itemStyle:{color:'#b6bcc4'},barWidth:16,label:{show:true,position:'inside',color:'#4e5560',fontSize:11}}
     ]
   });
 
