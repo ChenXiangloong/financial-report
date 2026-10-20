@@ -37,6 +37,10 @@
   .note{background:var(--grey-soft); border-left:3px solid var(--ink3); border-radius:0 8px 8px 0; padding:10px 14px; font-size:12.5px; color:var(--ink2); margin:12px 0;}
   .note.blue{background:var(--accent-soft); border-left-color:var(--accent);}
   .note.warn{background:var(--orange-soft); border-left-color:var(--orange);}
+  /* ===== prompt 原文 ===== */
+  .prompt{border:1px dashed var(--accent-line); background:#fffdf8; border-radius:10px; padding:16px 22px; margin:12px 0;}
+  .prompt>p:first-child, .prompt>ul:first-child, .prompt>.tbl-wrap:first-child{margin-top:0;}
+  .prompt>p:last-child, .prompt>ul:last-child, .prompt>.tbl-wrap:last-child{margin-bottom:0;}
   /* ===== conclusion cards ===== */
   .concl{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0;}
   .concl .c{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:#fcfcfd;}
@@ -98,12 +102,47 @@
     <span><b>口径</b> 与两份分报告完全一致，可逐项回溯</span>
   </div>
   <nav class="toc">
-    <a href="#s1">结论先行</a><a href="#s2">口径说明</a><a href="#s3">19只总览</a><a href="#s4">久期</a>
+    <a href="#s0">需求原文</a><a href="#s1">结论先行</a><a href="#s2">口径说明</a><a href="#s3">19只总览</a><a href="#s4">久期</a>
     <a href="#s5">信用持仓</a><a href="#s6">杠杆</a><a href="#s7">最大回撤</a><a href="#s8">近3年收益</a>
     <a href="#s9">费率</a><a href="#s10">赎回限制</a><a href="#s11">功能位重排</a><a href="#s12">组合建议</a>
     <a href="#s13">风险提示</a><a href="#s14">数据来源</a>
   </nav>
 </header>
+
+<!-- ================= 0 需求原文 ================= -->
+<section id="s0">
+  <h2><span class="no">00</span>分析需求原文（Prompt）</h2>
+  <div class="note blue">本报告的原始分析需求如下（原文存档于 <a href="prompt.md">prompt.md</a>）：两步评估框架、四项核心指标，以及"选互补组合而非历史收益最高"的目标，均出自该需求，全文结论可逐项回溯。</div>
+  <div class="prompt">
+    <p>帮我分析一下文件里的这19只债券基金。</p>
+    <p>我建议分两步评估。</p>
+    <p><b>第一步：先筛选8只重点候选基金。</b></p>
+    <ul class="dot">
+      <li>广发景秀纯债A（006670）</li>
+      <li>长安泓源纯债A（004897）</li>
+      <li>兴全稳泰债券A（003949）</li>
+      <li>易方达中债7–10年期国开行债券指数A（003358）</li>
+      <li>广发中债7–10年期国开行债券指数E（011062）</li>
+      <li>易方达信用债债券A（000032）</li>
+      <li>万家信用恒利债券A（519188）</li>
+      <li>创金合信双季享债券A（011489）</li>
+    </ul>
+    <p>这8只基本覆盖了政策性金融债、普通纯债、信用债增强和中长债等不同定位，先做一轮横向比较。</p>
+    <p><b>第二步：重点比较4项指标。</b></p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th style="width:190px">指标</th><th>主要判断目的</th></tr></thead>
+      <tbody>
+        <tr><td class="fund">久期</td><td>判断利率上升时可能面临多大价格压力</td></tr>
+        <tr><td class="fund">信用评级及持仓分布</td><td>判断信用风险，尤其是低评级债、银行资本债和产业债敞口</td></tr>
+        <tr><td class="fund">杠杆率</td><td>判断基金是否通过融资放大债券仓位及潜在波动</td></tr>
+        <tr><td class="fund">历史最大回撤</td><td>观察过去最差阶段的实际损失幅度</td></tr>
+      </tbody>
+    </table></div>
+    <p>此外，我建议额外核实近3年收益、管理费与托管费、赎回限制。历史最大回撤应尽量采用同一统计区间、同一计算口径，不能直接拿不同平台的数字比较。</p>
+    <p>最终目标不是从19只基金中挑出历史收益最高的3只，而是选出彼此互补、风险来源不同、适合持有5年以上的债券组合。</p>
+    <p>我的建议：先评估这8只。如果其中找不到合适的短久期或信用债工具，再扩大到其余11只。这样能减少重复研究，也更容易形成清晰的配置方案。</p>
+  </div>
+</section>
 
 <!-- ================= 1 结论先行 ================= -->
 <section id="s1">
