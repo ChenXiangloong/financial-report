@@ -52,8 +52,9 @@ p{margin:0 0 16px;font-size:16px;text-align:justify;text-justify:inter-ideograph
 .note a{color:var(--accent);}
 
 @media (min-width:980px){
-  body:not(.toc-collapsed) .content{margin-left:300px;margin-right:auto;}
-  body.toc-collapsed .content{margin:0 auto;}
+  .content{margin-left:300px;margin-right:auto;transition:transform .25s ease;}
+  body:not(.toc-collapsed) .content{transform:translateX(0);}
+  body.toc-collapsed .content{transform:translateX(calc(50vw - 680px));}
 }
 @media (max-width:979px){
   body:not(.toc-collapsed) .toc-overlay{display:block;}
